@@ -8,14 +8,10 @@
 
 import SwiftUI
 
-public class Tremolo {
+public class Tremolo: ObservableObject {
 
     public init() {
 
-    }
-
-    public func view() -> some View {
-        Spacer()
     }
 
 }
