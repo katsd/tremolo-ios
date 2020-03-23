@@ -10,7 +10,7 @@ import SwiftUI
 
 public struct TremoloView: View {
 
-    @ObservableObject var tremolo: Tremolo
+    @ObservedObject var tremolo: Tremolo
 
     init(_ tremolo: Tremolo) {
         self.tremolo = tremolo
