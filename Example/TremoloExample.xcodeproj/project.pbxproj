@@ -14,6 +14,13 @@
 		0EADF17B24277E4B00D62E82 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0EADF17A24277E4B00D62E82 /* Preview Assets.xcassets */; };
 		0EADF17E24277E4B00D62E82 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0EADF17C24277E4B00D62E82 /* LaunchScreen.storyboard */; };
 		0EADF18724277E5F00D62E82 /* Tremolo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EADF18624277E5F00D62E82 /* Tremolo.swift */; };
+		611AC1320BB13F42CB72CD5D /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611AC152457A44AA0E62EB0A /* Variable.swift */; };
+		611AC62706E3CD749A2BDC9B /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611AC69CAF223272C910AC34 /* Block.swift */; };
+		611AC91F2FC8125769324A20 /* Argument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611AC041E3383E83139A7F4E /* Argument.swift */; };
+		611AC93D063B4350A003EBD3 /* Value.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611ACB39804646E2027C9165 /* Value.swift */; };
+		611AC974D54A5B7B773016DC /* Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611ACA5481FADF20E9D0CC41 /* Content.swift */; };
+		611ACA60C9D147BFA6F5786B /* Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611AC599BB88EB2F800AABA8 /* Type.swift */; };
+		611ACE8CCF67AF36CA56965B /* TremoloView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611AC5FB0E97A6B8A66370CC /* TremoloView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +33,13 @@
 		0EADF17D24277E4B00D62E82 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0EADF17F24277E4B00D62E82 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0EADF18624277E5F00D62E82 /* Tremolo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tremolo.swift; sourceTree = "<group>"; };
+		611AC041E3383E83139A7F4E /* Argument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Argument.swift; sourceTree = "<group>"; };
+		611AC152457A44AA0E62EB0A /* Variable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Variable.swift; sourceTree = "<group>"; };
+		611AC599BB88EB2F800AABA8 /* Type.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Type.swift; sourceTree = "<group>"; };
+		611AC5FB0E97A6B8A66370CC /* TremoloView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TremoloView.swift; sourceTree = "<group>"; };
+		611AC69CAF223272C910AC34 /* Block.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
+		611ACA5481FADF20E9D0CC41 /* Content.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Content.swift; sourceTree = "<group>"; };
+		611ACB39804646E2027C9165 /* Value.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Value.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,9 +96,24 @@
 			isa = PBXGroup;
 			children = (
 				0EADF18624277E5F00D62E82 /* Tremolo.swift */,
+				611AC69CAF223272C910AC34 /* Block.swift */,
+				611AC599BB88EB2F800AABA8 /* Type.swift */,
+				611AC152457A44AA0E62EB0A /* Variable.swift */,
+				611ACB39804646E2027C9165 /* Value.swift */,
+				611AC041E3383E83139A7F4E /* Argument.swift */,
+				611ACA5481FADF20E9D0CC41 /* Content.swift */,
+				611AC1D476CC55AB6F06410F /* View */,
 			);
 			name = Tremolo;
 			path = ../Tremolo;
+			sourceTree = "<group>";
+		};
+		611AC1D476CC55AB6F06410F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				611AC5FB0E97A6B8A66370CC /* TremoloView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -162,6 +191,13 @@
 				0EADF17424277E4A00D62E82 /* SceneDelegate.swift in Sources */,
 				0EADF18724277E5F00D62E82 /* Tremolo.swift in Sources */,
 				0EADF17624277E4A00D62E82 /* ContentView.swift in Sources */,
+				611AC62706E3CD749A2BDC9B /* Block.swift in Sources */,
+				611ACA60C9D147BFA6F5786B /* Type.swift in Sources */,
+				611AC1320BB13F42CB72CD5D /* Variable.swift in Sources */,
+				611AC93D063B4350A003EBD3 /* Value.swift in Sources */,
+				611AC91F2FC8125769324A20 /* Argument.swift in Sources */,
+				611AC974D54A5B7B773016DC /* Content.swift in Sources */,
+				611ACE8CCF67AF36CA56965B /* TremoloView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

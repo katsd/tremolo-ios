@@ -9,9 +9,11 @@
 import SwiftUI
 
 struct ContentView: View {
+
     var body: some View {
-        Text("Hello, World!")
+        TremoloView(Tremolo())
     }
+
 }
 
 struct ContentView_Previews: PreviewProvider {
