@@ -6,12 +6,16 @@
 //  Copyright © 2020 Katsu Matsuda. All rights reserved.
 //
 
-import Foundation
+import SwiftUI
 
 public class Tremolo {
 
     public init() {
 
+    }
+
+    public func view() -> some View {
+        Spacer()
     }
 
 }
