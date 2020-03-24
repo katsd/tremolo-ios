@@ -1,5 +1,5 @@
 //
-//  Content.swift
+//  CodeUnit.swift
 //  Tremolo
 //  
 //  Created by Katsu Matsuda on 2020/03/23.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol Content {
+protocol CodeUnit {
 
     func toCode() -> String
 

@@ -16,7 +16,7 @@ public struct Variable {
 
 }
 
-extension Variable: Content {
+extension Variable: CodeUnit {
 
     func toCode() -> String {
         name

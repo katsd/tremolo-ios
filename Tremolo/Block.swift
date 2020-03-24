@@ -45,7 +45,7 @@ public struct Block {
         }
     }
 
-    public enum BlockContent {
+    public enum BlockContent: Hashable {
 
         case label(String)
 
@@ -55,7 +55,7 @@ public struct Block {
 
 }
 
-extension Block: Content {
+extension Block: CodeUnit {
 
     func toCode() -> String {
         fatalError("toCode() has not been implemented")

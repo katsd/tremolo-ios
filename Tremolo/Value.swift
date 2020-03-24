@@ -16,7 +16,7 @@ public struct Value {
 
 }
 
-extension Value: Content {
+extension Value: CodeUnit {
 
     func toCode() -> String {
         value
