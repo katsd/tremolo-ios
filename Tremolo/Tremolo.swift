@@ -10,8 +10,10 @@ import SwiftUI
 
 public class Tremolo: ObservableObject {
 
-    public init() {
+    @Published var blocks: [Block]
 
+    public init(blocks: [Block]) {
+        self.blocks = blocks
     }
 
 }

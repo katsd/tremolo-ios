@@ -17,7 +17,15 @@ public struct TremoloView: View {
     }
 
     public var body: some View {
-        Spacer()
+        ScrollView {
+            ForEach(0..<tremolo.blocks.count) { idx in
+                HStack {
+                    BlockView(block: self.$tremolo.blocks[idx])
+                        .padding(.leading, 20)
+                    Spacer()
+                }
+            }
+        }
     }
 
 }
