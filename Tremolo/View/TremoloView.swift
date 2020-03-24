@@ -24,6 +24,7 @@ public struct TremoloView: View {
                         .padding(.leading, 20)
                     Spacer()
                 }
+                    .padding(.vertical, 3)
             }
         }
     }
