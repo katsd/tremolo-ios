@@ -18,6 +18,9 @@ struct BlockView: View {
                 self.contentView(content)
             }
         }
+            .padding(10)
+            .background(Color.secondary)
+            .cornerRadius(7)
     }
 
     func contentView(_ content: Block.BlockContent) -> some View {
