@@ -24,6 +24,10 @@ public struct Block {
 
     static let defaultLanguage = "en"
 
+    public init(name: String, type: Type, argTypes: [Type], argValues: [Argument], contents: [BlockContent]) {
+        self.init(name: name, type: type, argTypes: argTypes, argValues: argValues, contents: [Block.defaultLanguage: contents])
+    }
+
     public init(name: String, type: Type, argTypes: [Type], argValues: [Argument], contents: Dictionary<String, [BlockContent]>) {
 
         self.name = name
