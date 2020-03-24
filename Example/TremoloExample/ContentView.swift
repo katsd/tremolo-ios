@@ -10,8 +10,17 @@ import SwiftUI
 
 struct ContentView: View {
 
+    @ObservedObject var tremolo = Tremolo(
+        blocks: [
+            Block(name: "test",
+                  type: .void,
+                  argTypes: [.custom("type")],
+                  argValues: [.variable(Variable(type: .custom("type"), name: "var"))],
+                  contents: [.label("Test"), .arg(0), .label("Yay")])
+        ])
+
     var body: some View {
-        TremoloView(Tremolo())
+        TremoloView(tremolo)
     }
 
 }
