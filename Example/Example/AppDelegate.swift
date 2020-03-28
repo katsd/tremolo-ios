@@ -1,8 +1,8 @@
 //
 //  AppDelegate.swift
-//  TremoloExample
+//  Example
 //
-//  Created by Katsu Matsuda on 2020/03/22.
+//  Created by Katsu Matsuda on 2020/03/28.
 //  Copyright © 2020 Katsu Matsuda. All rights reserved.
 //
 

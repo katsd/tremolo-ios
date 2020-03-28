@@ -3,33 +3,46 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0E77EB09242F4C14007D0042 /* Value.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E77EAFF242F4C14007D0042 /* Value.swift */; };
-		0E77EB0A242F4C14007D0042 /* TremoloView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E77EB01242F4C14007D0042 /* TremoloView.swift */; };
-		0E77EB0B242F4C14007D0042 /* BlockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E77EB02242F4C14007D0042 /* BlockView.swift */; };
-		0E77EB0C242F4C14007D0042 /* Argument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E77EB03242F4C14007D0042 /* Argument.swift */; };
-		0E77EB0D242F4C14007D0042 /* Tremolo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E77EB04242F4C14007D0042 /* Tremolo.swift */; };
-		0E77EB0E242F4C14007D0042 /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E77EB05242F4C14007D0042 /* Variable.swift */; };
-		0E77EB0F242F4C14007D0042 /* Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E77EB06242F4C14007D0042 /* Type.swift */; };
-		0E77EB10242F4C14007D0042 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E77EB07242F4C14007D0042 /* Block.swift */; };
-		0E77EB11242F4C14007D0042 /* CodeUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E77EB08242F4C14007D0042 /* CodeUnit.swift */; };
+		0E6137D9242F737A003DF031 /* Argument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6137CE242F737A003DF031 /* Argument.swift */; };
+		0E6137DA242F737A003DF031 /* Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6137CF242F737A003DF031 /* Type.swift */; };
+		0E6137DB242F737A003DF031 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6137D0242F737A003DF031 /* Block.swift */; };
+		0E6137DC242F737A003DF031 /* TremoloView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6137D2242F737A003DF031 /* TremoloView.swift */; };
+		0E6137DD242F737A003DF031 /* BlockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6137D3242F737A003DF031 /* BlockView.swift */; };
+		0E6137DE242F737A003DF031 /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6137D4242F737A003DF031 /* Variable.swift */; };
+		0E6137DF242F737A003DF031 /* CodeUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6137D5242F737A003DF031 /* CodeUnit.swift */; };
+		0E6137E0242F737A003DF031 /* Value.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6137D6242F737A003DF031 /* Value.swift */; };
+		0E6137E1242F737A003DF031 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0E6137D7242F737A003DF031 /* Info.plist */; };
+		0E6137E2242F737A003DF031 /* Tremolo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6137D8242F737A003DF031 /* Tremolo.swift */; };
+		0E613840242F78EF003DF031 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0E61383F242F78EF003DF031 /* SnapKit */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		0E613824242F787F003DF031 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0E613820242F787F003DF031 /* Example.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0E613809242F787E003DF031;
+			remoteInfo = Example;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		0E6137CE242F737A003DF031 /* Argument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Argument.swift; sourceTree = "<group>"; };
+		0E6137CF242F737A003DF031 /* Type.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Type.swift; sourceTree = "<group>"; };
+		0E6137D0242F737A003DF031 /* Block.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
+		0E6137D2242F737A003DF031 /* TremoloView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TremoloView.swift; sourceTree = "<group>"; };
+		0E6137D3242F737A003DF031 /* BlockView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockView.swift; sourceTree = "<group>"; };
+		0E6137D4242F737A003DF031 /* Variable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Variable.swift; sourceTree = "<group>"; };
+		0E6137D5242F737A003DF031 /* CodeUnit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeUnit.swift; sourceTree = "<group>"; };
+		0E6137D6242F737A003DF031 /* Value.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Value.swift; sourceTree = "<group>"; };
+		0E6137D7242F737A003DF031 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0E6137D8242F737A003DF031 /* Tremolo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tremolo.swift; sourceTree = "<group>"; };
+		0E613820242F787F003DF031 /* Example.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Example.xcodeproj; path = Example/Example.xcodeproj; sourceTree = "<group>"; };
 		0E77EAF4242F4BBA007D0042 /* Tremolo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Tremolo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		0E77EAF8242F4BBA007D0042 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0E77EAFF242F4C14007D0042 /* Value.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Value.swift; sourceTree = "<group>"; };
-		0E77EB01242F4C14007D0042 /* TremoloView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TremoloView.swift; sourceTree = "<group>"; };
-		0E77EB02242F4C14007D0042 /* BlockView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockView.swift; sourceTree = "<group>"; };
-		0E77EB03242F4C14007D0042 /* Argument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Argument.swift; sourceTree = "<group>"; };
-		0E77EB04242F4C14007D0042 /* Tremolo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tremolo.swift; sourceTree = "<group>"; };
-		0E77EB05242F4C14007D0042 /* Variable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Variable.swift; sourceTree = "<group>"; };
-		0E77EB06242F4C14007D0042 /* Type.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Type.swift; sourceTree = "<group>"; };
-		0E77EB07242F4C14007D0042 /* Block.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
-		0E77EB08242F4C14007D0042 /* CodeUnit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeUnit.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,17 +50,52 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E613840242F78EF003DF031 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E6137CD242F737A003DF031 /* Tremolo */ = {
+			isa = PBXGroup;
+			children = (
+				0E6137CE242F737A003DF031 /* Argument.swift */,
+				0E6137CF242F737A003DF031 /* Type.swift */,
+				0E6137D0242F737A003DF031 /* Block.swift */,
+				0E6137D1242F737A003DF031 /* View */,
+				0E6137D4242F737A003DF031 /* Variable.swift */,
+				0E6137D5242F737A003DF031 /* CodeUnit.swift */,
+				0E6137D6242F737A003DF031 /* Value.swift */,
+				0E6137D7242F737A003DF031 /* Info.plist */,
+				0E6137D8242F737A003DF031 /* Tremolo.swift */,
+			);
+			path = Tremolo;
+			sourceTree = "<group>";
+		};
+		0E6137D1242F737A003DF031 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0E6137D2242F737A003DF031 /* TremoloView.swift */,
+				0E6137D3242F737A003DF031 /* BlockView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0E613821242F787F003DF031 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0E613825242F787F003DF031 /* Example.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		0E77EAEA242F4BBA007D0042 = {
 			isa = PBXGroup;
 			children = (
-				0E77EAF6242F4BBA007D0042 /* Tremolo */,
+				0E613820242F787F003DF031 /* Example.xcodeproj */,
 				0E77EAF5242F4BBA007D0042 /* Products */,
+				0E6137CD242F737A003DF031 /* Tremolo */,
 			);
 			sourceTree = "<group>";
 		};
@@ -57,31 +105,6 @@
 				0E77EAF4242F4BBA007D0042 /* Tremolo.framework */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		0E77EAF6242F4BBA007D0042 /* Tremolo */ = {
-			isa = PBXGroup;
-			children = (
-				0E77EAF8242F4BBA007D0042 /* Info.plist */,
-				0E77EB03242F4C14007D0042 /* Argument.swift */,
-				0E77EB07242F4C14007D0042 /* Block.swift */,
-				0E77EB08242F4C14007D0042 /* CodeUnit.swift */,
-				0E77EB04242F4C14007D0042 /* Tremolo.swift */,
-				0E77EB06242F4C14007D0042 /* Type.swift */,
-				0E77EAFF242F4C14007D0042 /* Value.swift */,
-				0E77EB05242F4C14007D0042 /* Variable.swift */,
-				0E77EB00242F4C14007D0042 /* View */,
-			);
-			path = Tremolo;
-			sourceTree = "<group>";
-		};
-		0E77EB00242F4C14007D0042 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				0E77EB01242F4C14007D0042 /* TremoloView.swift */,
-				0E77EB02242F4C14007D0042 /* BlockView.swift */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -112,6 +135,7 @@
 			);
 			name = Tremolo;
 			packageProductDependencies = (
+				0E61383F242F78EF003DF031 /* SnapKit */,
 			);
 			productName = Tremolo;
 			productReference = 0E77EAF4242F4BBA007D0042 /* Tremolo.framework */;
@@ -142,9 +166,16 @@
 			);
 			mainGroup = 0E77EAEA242F4BBA007D0042;
 			packageReferences = (
+				0E61383E242F78EF003DF031 /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = 0E77EAF5242F4BBA007D0042 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 0E613821242F787F003DF031 /* Products */;
+					ProjectRef = 0E613820242F787F003DF031 /* Example.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				0E77EAF3242F4BBA007D0042 /* Tremolo */,
@@ -152,11 +183,22 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		0E613825242F787F003DF031 /* Example.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = Example.app;
+			remoteRef = 0E613824242F787F003DF031 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
 /* Begin PBXResourcesBuildPhase section */
 		0E77EAF2242F4BBA007D0042 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E6137E1242F737A003DF031 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -167,15 +209,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0E77EB0C242F4C14007D0042 /* Argument.swift in Sources */,
-				0E77EB10242F4C14007D0042 /* Block.swift in Sources */,
-				0E77EB0E242F4C14007D0042 /* Variable.swift in Sources */,
-				0E77EB11242F4C14007D0042 /* CodeUnit.swift in Sources */,
-				0E77EB0D242F4C14007D0042 /* Tremolo.swift in Sources */,
-				0E77EB09242F4C14007D0042 /* Value.swift in Sources */,
-				0E77EB0F242F4C14007D0042 /* Type.swift in Sources */,
-				0E77EB0B242F4C14007D0042 /* BlockView.swift in Sources */,
-				0E77EB0A242F4C14007D0042 /* TremoloView.swift in Sources */,
+				0E6137DB242F737A003DF031 /* Block.swift in Sources */,
+				0E6137DF242F737A003DF031 /* CodeUnit.swift in Sources */,
+				0E6137DE242F737A003DF031 /* Variable.swift in Sources */,
+				0E6137E0242F737A003DF031 /* Value.swift in Sources */,
+				0E6137DD242F737A003DF031 /* BlockView.swift in Sources */,
+				0E6137DC242F737A003DF031 /* TremoloView.swift in Sources */,
+				0E6137E2242F737A003DF031 /* Tremolo.swift in Sources */,
+				0E6137D9242F737A003DF031 /* Argument.swift in Sources */,
+				0E6137DA242F737A003DF031 /* Type.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -375,6 +417,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		0E61383E242F78EF003DF031 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0E61383F242F78EF003DF031 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0E61383E242F78EF003DF031 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0E77EAEB242F4BBA007D0042 /* Project object */;
 }
