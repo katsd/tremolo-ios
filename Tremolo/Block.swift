@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import SnapKit
+
 public struct Block {
 
     public let name: String
