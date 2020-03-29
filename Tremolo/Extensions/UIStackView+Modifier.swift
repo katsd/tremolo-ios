@@ -30,4 +30,12 @@ extension UIStackView {
         return self
     }
 
+    func contents(_ contents: [UIView]) -> UIStackView {
+        contents.forEach {
+            self.addArrangedSubview($0)
+        }
+
+        return self
+    }
+
 }
