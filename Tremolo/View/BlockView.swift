@@ -13,9 +13,12 @@ class BlockView: UIView {
     init(block: Block) {
         super.init(frame: .zero)
 
+        self.backgroundColor(.systemGray)
+            .cornerRadius(5)
+
         let contents = blockContents(block: block)
         self.addSubview(contents)
-        contents.equalTo(self, inset: .init(top: 3, left: 3, bottom: 3, right: 3))
+        contents.equalTo(self, inset: .init(top: 5, left: 5, bottom: 5, right: 5))
     }
 
     required init?(coder: NSCoder) {
