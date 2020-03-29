@@ -10,6 +10,10 @@ import UIKit
 
 class ArgView: UIView {
 
+    init(arg: Argument) {
+        super.init(frame: .zero)
+    }
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
