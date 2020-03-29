@@ -18,16 +18,7 @@ public struct TremoloView: View {
     }
 
     public var body: some View {
-        ScrollView {
-            ForEach(0..<tremolo.blocks.count) { idx in
-                HStack {
-                    BlockView(block: self.$tremolo.blocks[idx])
-                        .padding(.leading, 20)
-                    Spacer()
-                }
-                    .padding(.vertical, 3)
-            }
-        }
+        CodeViewRepresentable(blocks: $tremolo.blocks)
     }
 
 }

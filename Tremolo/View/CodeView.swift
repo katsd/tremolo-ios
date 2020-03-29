@@ -8,13 +8,53 @@
 
 import SwiftUI
 
-struct CodeView: UIViewRepresentable {
+class CodeView: UIView {
 
-    func makeUIView(context: Context) -> UIView {
-        fatalError("makeUIView(context:) has not been implemented")
+    private let blocks: [Block]
+
+    init(blocks: [Block]) {
+        self.blocks = blocks
+        super.init(frame: .zero)
+
+        let scrollView = UIScrollView()
+        self.addSubview(scrollView)
+        scrollView.equalTo(self)
+
+        let blockStackView =
+            UIStackView()
+                .axis(.vertical)
+                .distribution(.fill)
+                .spacing(5)
+                .alignment(.leading)
+                .contents(
+                    blocks.map {
+                        BlockView(block: $0)
+                    }
+                )
+
+        scrollView.addSubview(blockStackView)
+        blockStackView.equalTo(scrollView)
     }
 
-    func updateUIView(_ uiView: UIView, context: Context) {
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
+
+}
+
+struct CodeViewRepresentable: UIViewRepresentable {
+
+    @Binding private var blocks: [Block]
+
+    init(blocks: Binding<[Block]>) {
+        self._blocks = blocks
+    }
+
+    func makeUIView(context: Context) -> CodeView {
+        CodeView(blocks: blocks)
+    }
+
+    func updateUIView(_ uiView: CodeView, context: Context) {
 
     }
 
