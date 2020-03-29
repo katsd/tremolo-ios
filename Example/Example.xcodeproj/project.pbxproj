@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -22,7 +22,7 @@
 		0E61383A242F78D0003DF031 /* CodeUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E613830242F78CF003DF031 /* CodeUnit.swift */; };
 		0E61383B242F78D0003DF031 /* Value.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E613831242F78CF003DF031 /* Value.swift */; };
 		0E61383D242F78D0003DF031 /* Tremolo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E613833242F78CF003DF031 /* Tremolo.swift */; };
-		0E613843242F791E003DF031 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0E613842242F791E003DF031 /* SnapKit */; };
+		611ACF3BE4A5023663436686 /* UIView+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611ACA550CD2F83ABCE4237C /* UIView+Constraint.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +44,7 @@
 		0E613831242F78CF003DF031 /* Value.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Value.swift; sourceTree = "<group>"; };
 		0E613832242F78CF003DF031 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0E613833242F78CF003DF031 /* Tremolo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tremolo.swift; sourceTree = "<group>"; };
+		611ACA550CD2F83ABCE4237C /* UIView+Constraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Constraint.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,7 +52,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0E613843242F791E003DF031 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,6 +109,7 @@
 				0E613831242F78CF003DF031 /* Value.swift */,
 				0E613832242F78CF003DF031 /* Info.plist */,
 				0E613833242F78CF003DF031 /* Tremolo.swift */,
+				611ACC5A5FF46EE0BFDFBE3A /* Extensions */,
 			);
 			name = Tremolo;
 			path = ../Tremolo;
@@ -121,6 +122,14 @@
 				0E61382E242F78CF003DF031 /* BlockView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		611ACC5A5FF46EE0BFDFBE3A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				611ACA550CD2F83ABCE4237C /* UIView+Constraint.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -140,7 +149,6 @@
 			);
 			name = Example;
 			packageProductDependencies = (
-				0E613842242F791E003DF031 /* SnapKit */,
 			);
 			productName = Example;
 			productReference = 0E613809242F787E003DF031 /* Tremolo.app */;
@@ -171,7 +179,6 @@
 			);
 			mainGroup = 0E613800242F787E003DF031;
 			packageReferences = (
-				0E613841242F791E003DF031 /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = 0E61380A242F787E003DF031 /* Products */;
 			projectDirPath = "";
@@ -212,6 +219,7 @@
 				0E61380F242F787E003DF031 /* SceneDelegate.swift in Sources */,
 				0E61383A242F78D0003DF031 /* CodeUnit.swift in Sources */,
 				0E613827242F78AF003DF031 /* ContentView.swift in Sources */,
+				611ACF3BE4A5023663436686 /* UIView+Constraint.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,25 +413,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		0E613841242F791E003DF031 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.1;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		0E613842242F791E003DF031 /* SnapKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0E613841242F791E003DF031 /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = SnapKit;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0E613801242F787E003DF031 /* Project object */;
 }
