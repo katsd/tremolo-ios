@@ -27,6 +27,22 @@ extension UIView {
         )
     }
 
+    func equalToCenter(_ view: UIView, x: Bool = true, y: Bool = true) {
+        guard  let _ = self.superview else {
+            return
+        }
+
+        self.translatesAutoresizingMaskIntoConstraints = false
+
+        if x {
+            self.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        }
+
+        if y {
+            self.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        }
+    }
+
     func equalToSize(width: CGFloat? = nil, height: CGFloat? = nil) {
         guard  let _ = self.superview else {
             return
