@@ -69,6 +69,7 @@
 				0E6137D6242F737A003DF031 /* Value.swift */,
 				0E6137D7242F737A003DF031 /* Info.plist */,
 				0E6137D8242F737A003DF031 /* Tremolo.swift */,
+				611AC303215E103FBE932EFA /* UIView+Modifier.swift */,
 			);
 			path = Tremolo;
 			sourceTree = "<group>";

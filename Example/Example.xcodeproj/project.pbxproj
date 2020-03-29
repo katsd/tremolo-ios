@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E012C4A2430BB00002662EC /* CodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E012C492430BB00002662EC /* CodeView.swift */; };
 		0E61380D242F787E003DF031 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E61380C242F787E003DF031 /* AppDelegate.swift */; };
 		0E61380F242F787E003DF031 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E61380E242F787E003DF031 /* SceneDelegate.swift */; };
 		0E613813242F787F003DF031 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E613812242F787F003DF031 /* Assets.xcassets */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0E012C492430BB00002662EC /* CodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeView.swift; sourceTree = "<group>"; };
 		0E613809242F787E003DF031 /* Tremolo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tremolo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E61380C242F787E003DF031 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0E61380E242F787E003DF031 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				0E61382D242F78CF003DF031 /* TremoloView.swift */,
+				0E012C492430BB00002662EC /* CodeView.swift */,
 				0E61382E242F78CF003DF031 /* BlockView.swift */,
 			);
 			path = View;
@@ -213,6 +216,7 @@
 				0E613838242F78D0003DF031 /* BlockView.swift in Sources */,
 				0E613839242F78D0003DF031 /* Variable.swift in Sources */,
 				0E61383B242F78D0003DF031 /* Value.swift in Sources */,
+				0E012C4A2430BB00002662EC /* CodeView.swift in Sources */,
 				0E613835242F78D0003DF031 /* Type.swift in Sources */,
 				0E613834242F78D0003DF031 /* Argument.swift in Sources */,
 				0E613837242F78D0003DF031 /* TremoloView.swift in Sources */,
