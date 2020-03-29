@@ -8,41 +8,40 @@
 
 import SwiftUI
 
-@available(iOS 13.0, macOS 10.15, *)
-struct BlockView: View {
+class BlockView: UIView {
 
-    @Binding var block: Block
+    init(block: Block) {
+        super.init(frame: .zero)
 
-    var body: some View {
-        HStack {
-            ForEach(block.contents, id: \.self) { (content: Block.BlockContent) in
-                self.contentView(content)
-            }
-        }
-            .padding(10)
-            .background(Color.secondary)
-            .cornerRadius(7)
+        let contents = blockContents(block: block)
+        self.addSubview(contents)
+        contents.equalTo(self, inset: .init(top: 3, left: 3, bottom: 3, right: 3))
     }
 
-    func contentView(_ content: Block.BlockContent) -> some View {
-
-        var text: String?
-        var argIdx: Int?
-
-        switch content {
-        case let .label(str):
-            text = str
-        case let .arg(idx):
-            argIdx = idx
-        }
-
-        return Group {
-            if text != nil {
-                Text(text ?? "")
-            } else if argIdx != nil {
-                Text("not implemented")
-            }
-        }
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
     }
 
+    private func blockContents(block: Block) -> UIView {
+        UIStackView()
+            .axis(.horizontal)
+            .distribution(.fill)
+            .alignment(.center)
+            .spacing(5)
+            .contents(
+                block.contents.map {
+                    switch $0 {
+                    case let .label(text):
+                        return self.label(text: text)
+                    case let .arg(idx):
+                        return ArgView(arg: block.argValues[idx])
+                    }
+                }
+            )
+    }
+
+    private func label(text: String) -> UIView {
+        UILabel()
+            .text(text)
+    }
 }
