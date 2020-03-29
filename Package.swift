@@ -14,12 +14,11 @@ let package = Package(
             targets: ["Tremolo"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/SnapKit/SnapKit", from: "5.0.0")
     ],
     targets: [
         .target(
             name: "Tremolo",
-            dependencies: ["SnapKit"],
+            dependencies: [],
             path : "Tremolo"),
         .testTarget(
             name: "TremoloTests",
