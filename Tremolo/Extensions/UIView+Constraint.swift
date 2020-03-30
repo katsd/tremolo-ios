@@ -1,6 +1,6 @@
 //
 //  UIView+Constraint.swift
-//  Example
+//  Tremolo
 //  
 //  Created by Katsu Matsuda on 2020/03/29.
 //  Copyright (c) 2020 Katsu Matsuda. All rights reserved.
