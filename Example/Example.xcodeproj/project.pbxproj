@@ -24,6 +24,7 @@
 		0E61383B242F78D0003DF031 /* Value.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E613831242F78CF003DF031 /* Value.swift */; };
 		0E61383D242F78D0003DF031 /* Tremolo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E613833242F78CF003DF031 /* Tremolo.swift */; };
 		611AC0BE90BFD4D036CF3B9C /* ArgView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611AC18D2020798F9A6D3916 /* ArgView.swift */; };
+		611AC1D906E4FF4C2A35C09A /* UIView+GestureClosure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611ACF77CD245D64F52A55CD /* UIView+GestureClosure.swift */; };
 		611AC39A0189B9FFC9B095DE /* UIView+Modifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611AC2273C86119745EB354C /* UIView+Modifier.swift */; };
 		611ACC08DD95073553571B9D /* UILabel+Modifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611AC4BE1718B2A52C404A19 /* UILabel+Modifier.swift */; };
 		611ACCB02C8BD4E9B4D05FBE /* UIScrollView+Modifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611ACB39B7A58E199515C5A8 /* UIScrollView+Modifier.swift */; };
@@ -57,6 +58,7 @@
 		611ACA550CD2F83ABCE4237C /* UIView+Constraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Constraint.swift"; sourceTree = "<group>"; };
 		611ACB39B7A58E199515C5A8 /* UIScrollView+Modifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Modifier.swift"; sourceTree = "<group>"; };
 		611ACD1FA286BD6DE3C67691 /* UIStackView+Modifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStackView+Modifier.swift"; sourceTree = "<group>"; };
+		611ACF77CD245D64F52A55CD /* UIView+GestureClosure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+GestureClosure.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +145,7 @@
 			children = (
 				611ACA550CD2F83ABCE4237C /* UIView+Constraint.swift */,
 				611ACC64013C8CB441000ABB /* Modifiers */,
+				611ACF77CD245D64F52A55CD /* UIView+GestureClosure.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -252,6 +255,7 @@
 				611ACE46E910368A17C6B858 /* UIStackView+Modifier.swift in Sources */,
 				611ACC08DD95073553571B9D /* UILabel+Modifier.swift in Sources */,
 				611ACCB02C8BD4E9B4D05FBE /* UIScrollView+Modifier.swift in Sources */,
+				611AC1D906E4FF4C2A35C09A /* UIView+GestureClosure.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
