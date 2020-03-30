@@ -24,9 +24,9 @@
 		0E61383B242F78D0003DF031 /* Value.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E613831242F78CF003DF031 /* Value.swift */; };
 		0E61383D242F78D0003DF031 /* Tremolo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E613833242F78CF003DF031 /* Tremolo.swift */; };
 		611AC0BE90BFD4D036CF3B9C /* ArgView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611AC18D2020798F9A6D3916 /* ArgView.swift */; };
-		611AC235A1C7B7C63EAE3A77 /* UILabel+Modifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611AC0631027622360138769 /* UILabel+Modifier.swift */; };
-		611AC2AECD12DC86DEE9C3C9 /* UIStackView+Modifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611ACF21637C460DC7A6A894 /* UIStackView+Modifier.swift */; };
-		611AC2D3F5DC3B7B073E16B4 /* UIView+Modifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611ACD7C0AC07F24C7569566 /* UIView+Modifier.swift */; };
+		611AC39A0189B9FFC9B095DE /* UIView+Modifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611AC2273C86119745EB354C /* UIView+Modifier.swift */; };
+		611ACC08DD95073553571B9D /* UILabel+Modifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611AC4BE1718B2A52C404A19 /* UILabel+Modifier.swift */; };
+		611ACE46E910368A17C6B858 /* UIStackView+Modifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611ACD1FA286BD6DE3C67691 /* UIStackView+Modifier.swift */; };
 		611ACF3BE4A5023663436686 /* UIView+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611ACA550CD2F83ABCE4237C /* UIView+Constraint.swift */; };
 /* End PBXBuildFile section */
 
@@ -50,11 +50,11 @@
 		0E613831242F78CF003DF031 /* Value.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Value.swift; sourceTree = "<group>"; };
 		0E613832242F78CF003DF031 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0E613833242F78CF003DF031 /* Tremolo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tremolo.swift; sourceTree = "<group>"; };
-		611AC0631027622360138769 /* UILabel+Modifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+Modifier.swift"; sourceTree = "<group>"; };
 		611AC18D2020798F9A6D3916 /* ArgView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArgView.swift; sourceTree = "<group>"; };
+		611AC2273C86119745EB354C /* UIView+Modifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Modifier.swift"; sourceTree = "<group>"; };
+		611AC4BE1718B2A52C404A19 /* UILabel+Modifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+Modifier.swift"; sourceTree = "<group>"; };
 		611ACA550CD2F83ABCE4237C /* UIView+Constraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Constraint.swift"; sourceTree = "<group>"; };
-		611ACD7C0AC07F24C7569566 /* UIView+Modifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Modifier.swift"; sourceTree = "<group>"; };
-		611ACF21637C460DC7A6A894 /* UIStackView+Modifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStackView+Modifier.swift"; sourceTree = "<group>"; };
+		611ACD1FA286BD6DE3C67691 /* UIStackView+Modifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStackView+Modifier.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,11 +140,19 @@
 			isa = PBXGroup;
 			children = (
 				611ACA550CD2F83ABCE4237C /* UIView+Constraint.swift */,
-				611ACD7C0AC07F24C7569566 /* UIView+Modifier.swift */,
-				611AC0631027622360138769 /* UILabel+Modifier.swift */,
-				611ACF21637C460DC7A6A894 /* UIStackView+Modifier.swift */,
+				611ACC64013C8CB441000ABB /* Modifiers */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		611ACC64013C8CB441000ABB /* Modifiers */ = {
+			isa = PBXGroup;
+			children = (
+				611AC2273C86119745EB354C /* UIView+Modifier.swift */,
+				611ACD1FA286BD6DE3C67691 /* UIStackView+Modifier.swift */,
+				611AC4BE1718B2A52C404A19 /* UILabel+Modifier.swift */,
+			);
+			path = Modifiers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -236,10 +244,10 @@
 				0E61383A242F78D0003DF031 /* CodeUnit.swift in Sources */,
 				0E613827242F78AF003DF031 /* ContentView.swift in Sources */,
 				611ACF3BE4A5023663436686 /* UIView+Constraint.swift in Sources */,
-				611AC2D3F5DC3B7B073E16B4 /* UIView+Modifier.swift in Sources */,
 				611AC0BE90BFD4D036CF3B9C /* ArgView.swift in Sources */,
-				611AC235A1C7B7C63EAE3A77 /* UILabel+Modifier.swift in Sources */,
-				611AC2AECD12DC86DEE9C3C9 /* UIStackView+Modifier.swift in Sources */,
+				611AC39A0189B9FFC9B095DE /* UIView+Modifier.swift in Sources */,
+				611ACE46E910368A17C6B858 /* UIStackView+Modifier.swift in Sources */,
+				611ACC08DD95073553571B9D /* UILabel+Modifier.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
