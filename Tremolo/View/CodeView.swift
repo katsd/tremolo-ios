@@ -16,10 +16,13 @@ class CodeView: UIView {
         self.blocks = blocks
         super.init(frame: .zero)
 
-        let scrollView = UIScrollView()
+        let scrollView =
+            UIScrollView()
+                .alwaysBounceVertical(true)
         self.addSubview(scrollView)
-        scrollView.equalTo(self)
-
+        scrollView.equalToEach(self, top: 0, left: 20, bottom: 0, right: 0, priority: 900)
+        scrollView.lessThanOrEqualToEach(self, left: 20, priority: 1000)
+        
         let blockStackView =
             UIStackView()
                 .axis(.vertical)
