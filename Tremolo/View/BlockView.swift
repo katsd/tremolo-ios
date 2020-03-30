@@ -10,11 +10,17 @@ import SwiftUI
 
 class BlockView: UIView {
 
-    init(block: Block) {
+    private let blockController: BlockController
+
+    init(block: Block, blockController: BlockController) {
+
+        self.blockController = blockController
+
         super.init(frame: .zero)
 
-        self.backgroundColor(.systemGray)
-            .cornerRadius(5)
+        setStyle()
+
+        setGesture()
 
         let contents = blockContents(block: block)
         self.addSubview(contents)
@@ -22,7 +28,28 @@ class BlockView: UIView {
     }
 
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
+        fatalError()
+    }
+
+    private func setStyle() {
+        self.backgroundColor(.systemGray)
+            .cornerRadius(5)
+    }
+
+    private func setGesture() {
+        self.isUserInteractionEnabled = true
+        self.drag { gesture in
+            switch gesture.state {
+            case .began:
+                self.blockController.floatBlock(blockView: self, gesture: gesture)
+            case .changed:
+                self.blockController.dragBlock(blockView: self, gesture: gesture)
+            case .ended:
+                self.blockController.dropBlock(blockView: self, gesture: gesture)
+            default:
+                break
+            }
+        }
     }
 
     private func blockContents(block: Block) -> UIView {
