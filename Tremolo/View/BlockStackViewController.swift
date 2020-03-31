@@ -10,4 +10,8 @@ import UIKit
 
 protocol BlockStackViewController {
 
+    func addBlankViewAt(_ idx: Int, size: CGSize)
+
+    func removeBlankViewAt(_ idx: Int)
+
 }
