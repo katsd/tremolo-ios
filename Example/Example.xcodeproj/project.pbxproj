@@ -28,6 +28,7 @@
 		611AC39A0189B9FFC9B095DE /* UIView+Modifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611AC2273C86119745EB354C /* UIView+Modifier.swift */; };
 		611AC46E3F3147F18E8D0B8C /* BlockFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611ACF724A70F22B29838447 /* BlockFinder.swift */; };
 		611ACA5974BFEAA100D44054 /* SelectedBlockPos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611ACAC69F1E21AC9C8FCE58 /* SelectedBlockPos.swift */; };
+		611ACAE09DF6C2F087C19FDB /* BlockStackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611AC151274F317F4F82DB33 /* BlockStackViewController.swift */; };
 		611ACB626ACDBE0479A03C79 /* BlockController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611AC749D2631E0F892BCAA9 /* BlockController.swift */; };
 		611ACC08DD95073553571B9D /* UILabel+Modifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611AC4BE1718B2A52C404A19 /* UILabel+Modifier.swift */; };
 		611ACCB02C8BD4E9B4D05FBE /* UIScrollView+Modifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611ACB39B7A58E199515C5A8 /* UIScrollView+Modifier.swift */; };
@@ -55,6 +56,7 @@
 		0E613831242F78CF003DF031 /* Value.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Value.swift; sourceTree = "<group>"; };
 		0E613832242F78CF003DF031 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0E613833242F78CF003DF031 /* Tremolo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tremolo.swift; sourceTree = "<group>"; };
+		611AC151274F317F4F82DB33 /* BlockStackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockStackViewController.swift; sourceTree = "<group>"; };
 		611AC18D2020798F9A6D3916 /* ArgView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArgView.swift; sourceTree = "<group>"; };
 		611AC2273C86119745EB354C /* UIView+Modifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Modifier.swift"; sourceTree = "<group>"; };
 		611AC4BE1718B2A52C404A19 /* UILabel+Modifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+Modifier.swift"; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 				611ACF724A70F22B29838447 /* BlockFinder.swift */,
 				611ACAC69F1E21AC9C8FCE58 /* SelectedBlockPos.swift */,
 				611AC749D2631E0F892BCAA9 /* BlockController.swift */,
+				611AC151274F317F4F82DB33 /* BlockStackViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -268,6 +271,7 @@
 				611AC46E3F3147F18E8D0B8C /* BlockFinder.swift in Sources */,
 				611ACA5974BFEAA100D44054 /* SelectedBlockPos.swift in Sources */,
 				611ACB626ACDBE0479A03C79 /* BlockController.swift in Sources */,
+				611ACAE09DF6C2F087C19FDB /* BlockStackViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
