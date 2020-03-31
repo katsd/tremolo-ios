@@ -54,11 +54,20 @@ extension CodeView: BlockController {
 
     func floatBlock(blockView: UIView, gesture: UIPanGestureRecognizer) {
         selectedBlockPos = findBlockPos(blockView: blockView)
-        print(selectedBlockPos)
+
+        blockView.translatesAutoresizingMaskIntoConstraints = true
+        addSubViewKeepingGlobalFrame(blockView)
+
+        if let pos = selectedBlockPos {
+            pos.blockStackViewController.addBlankViewAt(pos.idx, size: blockView.frame.size)
+        }
     }
 
     func dragBlock(blockView: UIView, gesture: UIPanGestureRecognizer) {
-        //print("dragBlock")
+        blockView.frame.origin.x += gesture.translation(in: nil).x
+        blockView.frame.origin.y += gesture.translation(in: nil).y
+
+        gesture.setTranslation(.zero, in: nil)
     }
 
     func dropBlock(blockView: UIView, gesture: UIPanGestureRecognizer) {
@@ -89,6 +98,16 @@ extension CodeView: BlockFinder {
 }
 
 extension CodeView: BlockStackViewController {
+
+    func addBlankViewAt(_ idx: Int, size: CGSize) {
+        let blankView = UIView()
+        blockStackView.insertArrangedSubview(blankView, at: idx)
+        blankView.equalToSize(width: 0, height: size.height)
+    }
+
+    func removeBlankViewAt(_ idx: Int) {
+
+    }
 
 }
 
