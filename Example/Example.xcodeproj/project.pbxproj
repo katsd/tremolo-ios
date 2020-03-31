@@ -26,6 +26,7 @@
 		611AC0BE90BFD4D036CF3B9C /* ArgView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611AC18D2020798F9A6D3916 /* ArgView.swift */; };
 		611AC1D906E4FF4C2A35C09A /* UIView+GestureClosure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611ACF77CD245D64F52A55CD /* UIView+GestureClosure.swift */; };
 		611AC39A0189B9FFC9B095DE /* UIView+Modifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611AC2273C86119745EB354C /* UIView+Modifier.swift */; };
+		611AC46500B59EBCF36B74B4 /* UIView+Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611ACD0281C06CBF38387176 /* UIView+Frame.swift */; };
 		611AC46E3F3147F18E8D0B8C /* BlockFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611ACF724A70F22B29838447 /* BlockFinder.swift */; };
 		611ACA5974BFEAA100D44054 /* SelectedBlockPos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611ACAC69F1E21AC9C8FCE58 /* SelectedBlockPos.swift */; };
 		611ACAE09DF6C2F087C19FDB /* BlockStackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611AC151274F317F4F82DB33 /* BlockStackViewController.swift */; };
@@ -34,7 +35,6 @@
 		611ACCB02C8BD4E9B4D05FBE /* UIScrollView+Modifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611ACB39B7A58E199515C5A8 /* UIScrollView+Modifier.swift */; };
 		611ACE46E910368A17C6B858 /* UIStackView+Modifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611ACD1FA286BD6DE3C67691 /* UIStackView+Modifier.swift */; };
 		611ACF3BE4A5023663436686 /* UIView+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611ACA550CD2F83ABCE4237C /* UIView+Constraint.swift */; };
-		611ACF6E143FE32E37D2E6DF /* UIView+Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611AC24AFA5C4442288F79FE /* UIView+Frame.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,12 +60,12 @@
 		611AC151274F317F4F82DB33 /* BlockStackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockStackViewController.swift; sourceTree = "<group>"; };
 		611AC18D2020798F9A6D3916 /* ArgView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArgView.swift; sourceTree = "<group>"; };
 		611AC2273C86119745EB354C /* UIView+Modifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Modifier.swift"; sourceTree = "<group>"; };
-		611AC24AFA5C4442288F79FE /* UIView+Frame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Frame.swift"; sourceTree = "<group>"; };
 		611AC4BE1718B2A52C404A19 /* UILabel+Modifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+Modifier.swift"; sourceTree = "<group>"; };
 		611AC749D2631E0F892BCAA9 /* BlockController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockController.swift; sourceTree = "<group>"; };
 		611ACA550CD2F83ABCE4237C /* UIView+Constraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Constraint.swift"; sourceTree = "<group>"; };
 		611ACAC69F1E21AC9C8FCE58 /* SelectedBlockPos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedBlockPos.swift; sourceTree = "<group>"; };
 		611ACB39B7A58E199515C5A8 /* UIScrollView+Modifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Modifier.swift"; sourceTree = "<group>"; };
+		611ACD0281C06CBF38387176 /* UIView+Frame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Frame.swift"; sourceTree = "<group>"; };
 		611ACD1FA286BD6DE3C67691 /* UIStackView+Modifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStackView+Modifier.swift"; sourceTree = "<group>"; };
 		611ACF724A70F22B29838447 /* BlockFinder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockFinder.swift; sourceTree = "<group>"; };
 		611ACF77CD245D64F52A55CD /* UIView+GestureClosure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+GestureClosure.swift"; sourceTree = "<group>"; };
@@ -160,6 +160,7 @@
 				611ACA550CD2F83ABCE4237C /* UIView+Constraint.swift */,
 				611ACC64013C8CB441000ABB /* Modifiers */,
 				611ACF77CD245D64F52A55CD /* UIView+GestureClosure.swift */,
+				611ACD0281C06CBF38387176 /* UIView+Frame.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -171,7 +172,6 @@
 				611ACD1FA286BD6DE3C67691 /* UIStackView+Modifier.swift */,
 				611AC4BE1718B2A52C404A19 /* UILabel+Modifier.swift */,
 				611ACB39B7A58E199515C5A8 /* UIScrollView+Modifier.swift */,
-				611AC24AFA5C4442288F79FE /* UIView+Frame.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -275,7 +275,7 @@
 				611ACA5974BFEAA100D44054 /* SelectedBlockPos.swift in Sources */,
 				611ACB626ACDBE0479A03C79 /* BlockController.swift in Sources */,
 				611ACAE09DF6C2F087C19FDB /* BlockStackViewController.swift in Sources */,
-				611ACF6E143FE32E37D2E6DF /* UIView+Frame.swift in Sources */,
+				611AC46500B59EBCF36B74B4 /* UIView+Frame.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
