@@ -14,4 +14,12 @@ extension UIView {
         convert(frame, to: nil)
     }
 
+    func addSubViewKeepingGlobalFrame(_ view: UIView) {
+        let center = view.superview?.convert(view.center, to: self)
+        addSubview(view)
+        if let center = center {
+            view.center = center
+        }
+    }
+
 }
