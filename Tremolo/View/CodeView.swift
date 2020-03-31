@@ -53,38 +53,37 @@ class CodeView: UIView {
 extension CodeView: BlockController {
 
     func floatBlock(blockView: UIView, gesture: UIPanGestureRecognizer) {
-        print("floatBlock")
+        selectedBlockPos = findBlockPos(blockView: blockView)
+        print(selectedBlockPos)
     }
 
     func dragBlock(blockView: UIView, gesture: UIPanGestureRecognizer) {
-        print("dragBlock")
+        //print("dragBlock")
     }
 
     func dropBlock(blockView: UIView, gesture: UIPanGestureRecognizer) {
-        print("dropBlock")
+        //print("dropBlock")
     }
 
 }
 
 extension CodeView: BlockFinder {
 
-    func findBlockView(blockFrame: CGRect) -> SelectedBlockPos? {
-        var l = -1
+    func findBlockPos(blockView: UIView) -> SelectedBlockPos? {
+        var l = 0
         var r = blockStackView.arrangedSubviews.count
 
         while r - l > 1 {
             let mid = (r + l) / 2
 
-            if blockFrame.midY > blockStackView.arrangedSubviews[mid].frame.midY {
-                r = mid
-            } else {
+            if blockView.globalFrame.origin.y >= blockStackView.arrangedSubviews[mid].globalFrame.origin.y {
                 l = mid
+            } else {
+                r = mid
             }
         }
 
-        let idx = l + 1
-
-        return SelectedBlockPos(blockStackViewController: self, idx: idx)
+        return SelectedBlockPos(blockStackViewController: self, idx: l)
     }
 
 }
