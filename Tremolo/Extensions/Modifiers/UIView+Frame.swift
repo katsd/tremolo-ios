@@ -11,7 +11,7 @@ import UIKit
 extension UIView {
 
     var globalFrame: CGRect {
-        convert(frame, from: nil)
+        convert(frame, to: nil)
     }
 
 }
