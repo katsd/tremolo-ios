@@ -10,6 +10,8 @@ import SwiftUI
 
 class CodeView: UIView {
 
+    private var selectedBlockPos: SelectedBlockPos? = nil
+
     private let blocks: [Block]
 
     init(blocks: [Block]) {
@@ -40,6 +42,31 @@ class CodeView: UIView {
 
     required init?(coder: NSCoder) {
         fatalError()
+    }
+
+}
+
+extension CodeView: BlockController {
+
+    func floatBlock(blockView: UIView, gesture: UIPanGestureRecognizer) {
+        print("floatBlock")
+    }
+
+    func dragBlock(blockView: UIView, gesture: UIPanGestureRecognizer) {
+        print("dragBlock")
+    }
+
+    func dropBlock(blockView: UIView, gesture: UIPanGestureRecognizer) {
+        print("dropBlock")
+    }
+
+}
+
+extension CodeView: BlockFinder {
+
+    func findBlockView(blockFrame: CGRect) -> SelectedBlockPos? {
+
+        return nil
     }
 
 }
