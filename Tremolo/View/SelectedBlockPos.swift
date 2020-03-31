@@ -10,7 +10,7 @@ import UIKit
 
 struct SelectedBlockPos {
 
-    let blockView: BlockView
+    let blockStackViewController: BlockStackViewController
 
     let idx: Int
 

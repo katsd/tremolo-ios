@@ -14,8 +14,12 @@ class CodeView: UIView {
 
     private let blocks: [Block]
 
+    private var blockStackView = UIStackView()
+
     init(blocks: [Block]) {
+
         self.blocks = blocks
+
         super.init(frame: .zero)
 
         let scrollView =
@@ -25,7 +29,7 @@ class CodeView: UIView {
         scrollView.equalToEach(self, top: 0, left: 20, bottom: 0, right: 0, priority: 900)
         scrollView.lessThanOrEqualToEach(self, left: 20, priority: 1000)
 
-        let blockStackView =
+        blockStackView =
             UIStackView()
                 .axis(.vertical)
                 .distribution(.fill)
@@ -65,9 +69,27 @@ extension CodeView: BlockController {
 extension CodeView: BlockFinder {
 
     func findBlockView(blockFrame: CGRect) -> SelectedBlockPos? {
+        var l = -1
+        var r = blockStackView.arrangedSubviews.count
 
-        return nil
+        while r - l > 1 {
+            let mid = (r + l) / 2
+
+            if blockFrame.midY > blockStackView.arrangedSubviews[mid].frame.midY {
+                r = mid
+            } else {
+                l = mid
+            }
+        }
+
+        let idx = l + 1
+
+        return SelectedBlockPos(blockStackViewController: self, idx: idx)
     }
+
+}
+
+extension CodeView: BlockStackViewController {
 
 }
 
