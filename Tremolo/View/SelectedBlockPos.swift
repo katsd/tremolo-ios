@@ -12,12 +12,14 @@ struct SelectedBlockPos: Equatable {
 
     let blockStackViewController: BlockStackViewController
 
-    let section: Int
+    let path: (Int, Int)
 
     let idx: Int
 
     static func ==(lhs: SelectedBlockPos, rhs: SelectedBlockPos) -> Bool {
-        lhs.blockStackViewController === rhs.blockStackViewController && lhs.idx == rhs.idx
+        lhs.blockStackViewController === rhs.blockStackViewController &&
+            lhs.path == rhs.path &&
+            lhs.idx == rhs.idx
     }
 
 }
