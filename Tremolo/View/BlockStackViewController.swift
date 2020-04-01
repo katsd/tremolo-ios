@@ -8,9 +8,11 @@
 
 import UIKit
 
-protocol BlockStackViewController : AnyObject {
+protocol BlockStackViewController: AnyObject {
 
-    func addBlankViewAt(_ idx: Int, size: CGSize)
+    func addBlockView(_ blockView: UIView, at idx: Int)
+
+    func addBlankView(size: CGSize, at idx: Int)
 
     func removeBlankViewAt(_ idx: Int)
 

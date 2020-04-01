@@ -59,19 +59,39 @@ extension CodeView: BlockController {
         addSubViewKeepingGlobalFrame(blockView)
 
         if let pos = selectedBlockPos {
-            pos.blockStackViewController.addBlankViewAt(pos.idx, size: blockView.frame.size)
+            pos.blockStackViewController.addBlankView(size: blockView.frame.size, at: pos.idx)
         }
     }
 
     func dragBlock(blockView: UIView, gesture: UIPanGestureRecognizer) {
         blockView.frame.origin.x += gesture.translation(in: nil).x
         blockView.frame.origin.y += gesture.translation(in: nil).y
-
         gesture.setTranslation(.zero, in: nil)
+
+        let newSelectedBlockPos = findBlockPos(blockView: blockView)
+
+        if selectedBlockPos != newSelectedBlockPos {
+            if let pos = selectedBlockPos {
+                pos.blockStackViewController.removeBlankViewAt(pos.idx)
+            }
+
+            if let pos = newSelectedBlockPos {
+                pos.blockStackViewController.addBlankView(size: blockView.frame.size, at: pos.idx)
+            }
+        }
+
+        selectedBlockPos = newSelectedBlockPos
     }
 
     func dropBlock(blockView: UIView, gesture: UIPanGestureRecognizer) {
-        //print("dropBlock")
+
+        selectedBlockPos = findBlockPos(blockView: blockView)
+
+        if let pos = selectedBlockPos {
+            pos.blockStackViewController.addBlockView(blockView, at: pos.idx)
+        } else {
+            blockView.removeFromSuperview()
+        }
     }
 
 }
@@ -85,7 +105,7 @@ extension CodeView: BlockFinder {
         while r - l > 1 {
             let mid = (r + l) / 2
 
-            if blockView.globalFrame.origin.y >= blockStackView.arrangedSubviews[mid].globalFrame.origin.y {
+            if blockView.globalFrame.midY >= blockStackView.arrangedSubviews[mid].globalFrame.minY {
                 l = mid
             } else {
                 r = mid
@@ -99,14 +119,23 @@ extension CodeView: BlockFinder {
 
 extension CodeView: BlockStackViewController {
 
-    func addBlankViewAt(_ idx: Int, size: CGSize) {
+    func addBlockView(_ blockView: UIView, at idx: Int) {
+        if idx < blockStackView.arrangedSubviews.count &&
+               !(blockStackView.arrangedSubviews[idx] is BlockView) {
+            blockStackView.arrangedSubviews[idx].removeFromSuperview()
+        }
+
+        blockStackView.insertArrangedSubview(blockView, at: idx)
+    }
+
+    func addBlankView(size: CGSize, at idx: Int) {
         let blankView = UIView()
         blockStackView.insertArrangedSubview(blankView, at: idx)
         blankView.equalToSize(width: 0, height: size.height)
     }
 
     func removeBlankViewAt(_ idx: Int) {
-
+        blockStackView.arrangedSubviews[idx].removeFromSuperview()
     }
 
 }
