@@ -12,6 +12,8 @@ struct SelectedBlockPos: Equatable {
 
     let blockStackViewController: BlockStackViewController
 
+    let section: Int
+
     let idx: Int
 
     static func ==(lhs: SelectedBlockPos, rhs: SelectedBlockPos) -> Bool {

@@ -59,7 +59,7 @@ extension CodeView: BlockController {
         addSubViewKeepingGlobalFrame(blockView)
 
         if let pos = selectedBlockPos {
-            pos.blockStackViewController.addBlankView(size: blockView.frame.size, at: pos.idx)
+            pos.blockStackViewController.addBlankView(size: blockView.frame.size, section: 0, at: pos.idx)
         }
     }
 
@@ -72,11 +72,11 @@ extension CodeView: BlockController {
 
         if selectedBlockPos != newSelectedBlockPos {
             if let pos = selectedBlockPos {
-                pos.blockStackViewController.removeBlankViewAt(pos.idx)
+                pos.blockStackViewController.removeBlankView(section: 0, at: pos.idx)
             }
 
             if let pos = newSelectedBlockPos {
-                pos.blockStackViewController.addBlankView(size: blockView.frame.size, at: pos.idx)
+                pos.blockStackViewController.addBlankView(size: blockView.frame.size, section: 0, at: pos.idx)
             }
         }
 
@@ -88,7 +88,7 @@ extension CodeView: BlockController {
         selectedBlockPos = findBlockPos(blockView: blockView)
 
         if let pos = selectedBlockPos {
-            pos.blockStackViewController.addBlockView(blockView, at: pos.idx)
+            pos.blockStackViewController.addBlockView(blockView, section: 0, at: pos.idx)
         } else {
             blockView.removeFromSuperview()
         }
@@ -112,16 +112,16 @@ extension CodeView: BlockFinder {
             }
         }
 
-        return SelectedBlockPos(blockStackViewController: self, idx: l)
+        return SelectedBlockPos(blockStackViewController: self, section: 0, idx: l)
     }
 
 }
 
 extension CodeView: BlockStackViewController {
 
-    func addBlockView(_ blockView: UIView, at idx: Int) {
+    func addBlockView(_ blockView: UIView, section: Int, at idx: Int) {
         if idx < blockStackView.arrangedSubviews.count &&
-               !(blockStackView.arrangedSubviews[idx] is BlockView) {
+           !(blockStackView.arrangedSubviews[idx] is BlockView) {
             blockStackView.arrangedSubviews[idx].removeFromSuperview()
         }
 
@@ -134,7 +134,7 @@ extension CodeView: BlockStackViewController {
         }
     }
 
-    func addBlankView(size: CGSize, at idx: Int) {
+    func addBlankView(size: CGSize, section: Int, at idx: Int) {
         let blankView = UIView()
         blockStackView.insertArrangedSubview(blankView, at: idx)
         blankView.equalToSize(width: 0, height: size.height)
@@ -144,10 +144,11 @@ extension CodeView: BlockStackViewController {
         }
     }
 
-    func removeBlankViewAt(_ idx: Int) {
+    func removeBlankView(section: Int, at idx: Int) {
         blockStackView.arrangedSubviews[idx].removeFromSuperview()
 
         UIView.animate(withDuration: 0.2) {
+
             self.layoutIfNeeded()
         }
     }
