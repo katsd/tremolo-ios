@@ -16,19 +16,19 @@ struct ContentView: View {
                   type: .void,
                   argTypes: [.custom("type")],
                   argValues: [.variable(Variable(type: .custom("type"), name: "var"))],
-                  contents: [.label("Test"), .arg(0), .label("1")]),
+                  contents: [[.label("Test"), .arg(0), .label("1")]]),
 
             Block(name: "nyan",
                   type: .void,
-                  argTypes: [.custom("type")],
-                  argValues: [.variable(Variable(type: .custom("type"), name: "var"))],
-                  contents: [.label("Test"), .arg(0), .label("2")]),
+                  argTypes: [.custom("type"), .custom("type")],
+                  argValues: [.variable(Variable(type: .custom("type"), name: "var")), .value(Value(type: .custom("type"), value: "0"))],
+                  contents: [[.label("Test"), .arg(0)], [.label("2"), .arg(1)]]),
 
             Block(name: "piyo",
                   type: .void,
                   argTypes: [.custom("type")],
                   argValues: [.variable(Variable(type: .custom("type"), name: "var"))],
-                  contents: [.label("Test"), .arg(0), .label("3")])
+                  contents: [[.label("Test"), .arg(0), .label("3")]])
         ])
 
     var body: some View {
