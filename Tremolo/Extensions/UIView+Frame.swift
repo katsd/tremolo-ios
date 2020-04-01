@@ -11,7 +11,7 @@ import UIKit
 extension UIView {
 
     var globalFrame: CGRect {
-        convert(frame, to: nil)
+        superview?.convert(frame, to: nil) ?? frame
     }
 
     func addSubViewKeepingGlobalFrame(_ view: UIView) {
