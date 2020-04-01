@@ -18,17 +18,17 @@ public struct Block {
 
     public var argValues: [Argument]
 
-    public let localizedContents: Dictionary<String, [BlockContent]>
+    public let localizedContents: Dictionary<String, [[BlockContent]]>
 
-    public let contents: [BlockContent]
+    public let contents: [[BlockContent]]
 
     static let defaultLanguage = "en"
 
-    public init(name: String, type: Type, argTypes: [Type], argValues: [Argument], contents: [BlockContent]) {
+    public init(name: String, type: Type, argTypes: [Type], argValues: [Argument], contents: [[BlockContent]]) {
         self.init(name: name, type: type, argTypes: argTypes, argValues: argValues, contents: [Block.defaultLanguage: contents])
     }
 
-    public init(name: String, type: Type, argTypes: [Type], argValues: [Argument], contents: Dictionary<String, [BlockContent]>) {
+    public init(name: String, type: Type, argTypes: [Type], argValues: [Argument], contents: Dictionary<String, [[BlockContent]]>) {
 
         self.name = name
 
@@ -45,7 +45,7 @@ public struct Block {
         if let contents = localizedContents[language] {
             self.contents = contents
         } else {
-            self.contents = localizedContents[Block.defaultLanguage] ?? [BlockContent.label("Failed to display contents")]
+            self.contents = localizedContents[Block.defaultLanguage] ?? [[BlockContent.label("Failed to display contents")]]
         }
     }
 

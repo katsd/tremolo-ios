@@ -12,9 +12,13 @@ class BlockView: UIView {
 
     private let blockController: BlockController
 
+    private var blockContentsStackView: BlockContentStackView
+
     init(block: Block, blockController: BlockController) {
 
         self.blockController = blockController
+
+        self.blockContentsStackView = BlockView.blockContents(block: block)
 
         super.init(frame: .zero)
 
@@ -22,9 +26,8 @@ class BlockView: UIView {
 
         setGesture()
 
-        let contents = blockContents(block: block)
-        self.addSubview(contents)
-        contents.equalTo(self, inset: .init(top: 5, left: 5, bottom: 5, right: 5))
+        self.addSubview(blockContentsStackView)
+        blockContentsStackView.equalTo(self, inset: .init(top: 5, left: 5, bottom: 5, right: 5))
     }
 
     required init?(coder: NSCoder) {
@@ -52,26 +55,53 @@ class BlockView: UIView {
         }
     }
 
-    private func blockContents(block: Block) -> UIView {
-        UIStackView()
-            .axis(.horizontal)
-            .distribution(.fill)
-            .alignment(.center)
-            .spacing(5)
-            .contents(
-                block.contents.map {
-                    switch $0 {
-                    case let .label(text):
-                        return self.label(text: text)
-                    case let .arg(idx):
-                        return ArgView(arg: block.argValues[idx])
-                    }
+    static private func blockContents(block: Block) -> BlockContentStackView {
+        let stackView = BlockContentStackView()
+
+        for (col, sv) in block.contents.enumerated() {
+            for content in sv {
+                let view: UIView
+
+                switch content {
+                case let .label(text):
+                    view = label(text: text)
+                case let .arg(idx):
+                    view = ArgView(arg: block.argValues[idx])
                 }
-            )
+
+                stackView.addContent(view, at: col)
+            }
+        }
+
+        return stackView
     }
 
-    private func label(text: String) -> UIView {
+    static private func label(text: String) -> UIView {
         UILabel()
             .text(text)
     }
+}
+
+extension BlockView: BlockFinder {
+
+    func findBlockPos(blockView: UIView) -> SelectedBlockPos? {
+        return nil
+    }
+
+}
+
+extension BlockView: BlockStackViewController {
+
+    func addBlockView(_ blockView: UIView, path: (Int, Int), at idx: Int) {
+
+    }
+
+    func addBlankView(size: CGSize, path: (Int, Int), at idx: Int) {
+
+    }
+
+    func removeBlankView(path: (Int, Int), at idx: Int) {
+
+    }
+
 }
