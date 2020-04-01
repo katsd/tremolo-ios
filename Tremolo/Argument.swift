@@ -14,4 +14,6 @@ public enum Argument {
 
     case variable(Variable)
 
+    case code([Block])
+
 }
