@@ -8,10 +8,14 @@
 
 import UIKit
 
-struct SelectedBlockPos {
+struct SelectedBlockPos: Equatable {
 
     let blockStackViewController: BlockStackViewController
 
     let idx: Int
+
+    static func ==(lhs: SelectedBlockPos, rhs: SelectedBlockPos) -> Bool {
+        lhs.blockStackViewController === rhs.blockStackViewController && lhs.idx == rhs.idx
+    }
 
 }

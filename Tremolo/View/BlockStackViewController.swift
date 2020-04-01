@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol BlockStackViewController {
+protocol BlockStackViewController : AnyObject {
 
     func addBlankViewAt(_ idx: Int, size: CGSize)
 
