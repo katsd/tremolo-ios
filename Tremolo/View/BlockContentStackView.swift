@@ -16,7 +16,7 @@ class BlockContentStackView: UIStackView {
         axis = .vertical
         distribution = .fill
         alignment = .leading
-        spacing = 5j
+        spacing = 5
     }
 
     required init(coder: NSCoder) {
