@@ -53,7 +53,7 @@ class CodeView: UIView {
 extension CodeView: BlockController {
 
     func floatBlock(blockView: UIView, gesture: UIPanGestureRecognizer) {
-        selectedBlockPos = findBlockPos(blockView: blockView)
+        selectedBlockPos = findBlockPos(blockView: blockView, velocity: gesture.velocity(in: nil))
 
         blockView.translatesAutoresizingMaskIntoConstraints = true
         addSubViewKeepingGlobalFrame(blockView)
@@ -68,7 +68,7 @@ extension CodeView: BlockController {
         blockView.frame.origin.y += gesture.translation(in: nil).y
         gesture.setTranslation(.zero, in: nil)
 
-        let newSelectedBlockPos = findBlockPos(blockView: blockView)
+        let newSelectedBlockPos = findBlockPos(blockView: blockView, velocity: gesture.velocity(in: nil))
 
         if selectedBlockPos != newSelectedBlockPos {
             if let pos = selectedBlockPos {
@@ -85,34 +85,45 @@ extension CodeView: BlockController {
 
     func dropBlock(blockView: UIView, gesture: UIPanGestureRecognizer) {
 
-        selectedBlockPos = findBlockPos(blockView: blockView)
+        selectedBlockPos = findBlockPos(blockView: blockView, velocity: gesture.velocity(in: nil))
 
         if let pos = selectedBlockPos {
             pos.blockStackViewController.addBlockView(blockView, path: (0, 0), at: pos.idx)
         } else {
             blockView.removeFromSuperview()
         }
+
+        selectedBlockPos = nil
     }
 
 }
 
 extension CodeView: BlockFinder {
 
-    func findBlockPos(blockView: UIView) -> SelectedBlockPos? {
-        var l = 0
-        var r = blockStackView.arrangedSubviews.count
+    func findBlockPos(blockView: UIView, velocity: CGPoint) -> SelectedBlockPos? {
 
-        while r - l > 1 {
-            let mid = (r + l) / 2
-
-            if blockView.globalFrame.midY >= blockStackView.arrangedSubviews[mid].globalFrame.minY {
-                l = mid
-            } else {
-                r = mid
-            }
+        if blockStackView.arrangedSubviews.count < 1 {
+            return nil
         }
 
-        return SelectedBlockPos(blockStackViewController: self, path: (0, 0), idx: l)
+        let blockFrame = blockView.globalFrame
+
+        var idx = 0
+        for i in 0..<blockStackView.arrangedSubviews.count {
+            let view = blockStackView.arrangedSubviews[i]
+            if !(view is BlockView) {
+                continue
+            }
+
+            if blockFrame.midY <= view.globalFrame.midY {
+                return SelectedBlockPos(blockStackViewController: self, path: (0, 0), idx: idx)
+            }
+
+            idx += 1
+        }
+
+        return SelectedBlockPos(blockStackViewController: self, path: (0, 0), idx: blockStackView.arrangedSubviews.count - 1)
+
     }
 
 }
@@ -121,7 +132,7 @@ extension CodeView: BlockStackViewController {
 
     func addBlockView(_ blockView: UIView, path: (Int, Int), at idx: Int) {
         if idx < blockStackView.arrangedSubviews.count &&
-           !(blockStackView.arrangedSubviews[idx] is BlockView) {
+               !(blockStackView.arrangedSubviews[idx] is BlockView) {
             blockStackView.arrangedSubviews[idx].removeFromSuperview()
         }
 
