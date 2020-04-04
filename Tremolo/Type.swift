@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum Type {
+public enum Type: Hashable {
 
     case void
 

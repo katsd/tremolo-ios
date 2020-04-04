@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Block {
+public struct Block: Hashable {
 
     public let name: String
 
@@ -55,8 +55,27 @@ public struct Block {
 
         case arg(Int)
 
+        case code([Block])
+
     }
 
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
+        hasher.combine(type)
+        hasher.combine(argTypes)
+        hasher.combine(argValues)
+        hasher.combine(localizedContents)
+        hasher.combine(contents)
+    }
+
+    public static func ==(lhs: Block, rhs: Block) -> Bool {
+        lhs.name == rhs.name &&
+            lhs.type == rhs.type &&
+            lhs.argTypes == rhs.argTypes &&
+            lhs.argValues == rhs.argValues &&
+            lhs.localizedContents == rhs.localizedContents &&
+            lhs.contents == rhs.contents
+    }
 }
 
 extension Block: CodeUnit {

@@ -67,6 +67,8 @@ class BlockView: UIView {
                     view = label(text: text)
                 case let .arg(idx):
                     view = ArgView(arg: block.argValues[idx])
+                case let .code(code):
+                    fatalError()
                 }
 
                 stackView.addContent(view, at: col)

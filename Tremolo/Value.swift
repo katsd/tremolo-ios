@@ -8,12 +8,20 @@
 
 import Foundation
 
-public struct Value {
+public struct Value: Equatable, Hashable {
 
     public let type: Type
 
     public var value: String
 
+    public static func ==(lhs: Value, rhs: Value) -> Bool {
+        lhs.type == rhs.type && lhs.value == rhs.value
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(type)
+        hasher.combine(value)
+    }
 }
 
 extension Value: CodeUnit {

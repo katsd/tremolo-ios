@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum Argument {
+public enum Argument: Equatable, Hashable {
 
     case value(Value)
 
@@ -16,4 +16,27 @@ public enum Argument {
 
     case code([Block])
 
+    public static func ==(lhs: Argument, rhs: Argument) -> Bool {
+        switch (lhs, rhs) {
+        case let (.value(l), .value(r)):
+            return l == r
+        case let (.variable(l), .variable(r)):
+            return l == r
+        case let (.code(l), .code(r)):
+            return l == r
+        default:
+            return false
+        }
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        switch self {
+        case let .value(v):
+            hasher.combine(v)
+        case let .variable(v):
+            hasher.combine(v)
+        case let .code(v):
+            hasher.combine(v)
+        }
+    }
 }
