@@ -108,6 +108,16 @@ extension CodeView: BlockFinder {
 
         let blockFrame = blockView.globalFrame
 
+        let blockY: CGFloat
+
+        if velocity.y > 0 {
+            blockY = blockFrame.maxY
+        } else if velocity.y < 0 {
+            blockY = blockFrame.minY
+        } else {
+            blockY = blockFrame.midY
+        }
+
         var idx = 0
         for i in 0..<blockStackView.arrangedSubviews.count {
             let view = blockStackView.arrangedSubviews[i]
@@ -115,7 +125,7 @@ extension CodeView: BlockFinder {
                 continue
             }
 
-            if blockFrame.midY <= view.globalFrame.midY {
+            if blockY <= view.globalFrame.midY {
                 return SelectedBlockPos(blockStackViewController: self, path: (0, 0), idx: idx)
             }
 
