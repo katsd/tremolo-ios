@@ -37,6 +37,7 @@ class BlockView: UIView {
     private func setStyle() {
         self.backgroundColor(.systemGray)
             .cornerRadius(5)
+            .shadow()
     }
 
     private func setGesture() {
@@ -87,7 +88,6 @@ class BlockView: UIView {
             return BlockStackView(blocks:
                                   blocks.map {
                                       BlockView(block: $0, blockController: blockController)
-                                          .shadow()
                                   },
                                   blockController: blockController)
         default:

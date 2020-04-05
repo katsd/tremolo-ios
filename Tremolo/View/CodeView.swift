@@ -34,7 +34,6 @@ class CodeView: UIView {
             BlockStackView(blocks:
                            blocks.map {
                                BlockView(block: $0, blockController: self)
-                                   .shadow()
                            },
                            blockController: self)
 
