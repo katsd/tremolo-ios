@@ -33,4 +33,9 @@ extension UIView {
         return self
     }
 
+    func clipsToBounds(_ flag: Bool) -> UIView {
+        self.clipsToBounds = flag
+        return  self
+    }
+
 }
