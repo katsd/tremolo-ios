@@ -12,13 +12,13 @@ class BlockView: UIView {
 
     private let blockController: BlockController
 
-    private var blockContentsStackView: BlockContentStackView
+    private let blockContentsStackView: BlockContentStackView
 
     init(block: Block, blockController: BlockController) {
 
         self.blockController = blockController
 
-        self.blockContentsStackView = BlockView.blockContents(block: block)
+        self.blockContentsStackView = BlockView.blockContents(block: block, blockController: blockController)
 
         super.init(frame: .zero)
 
@@ -55,7 +55,7 @@ class BlockView: UIView {
         }
     }
 
-    static private func blockContents(block: Block) -> BlockContentStackView {
+    static private func blockContents(block: Block, blockController: BlockController) -> BlockContentStackView {
         let stackView = BlockContentStackView()
 
         for (col, sv) in block.contents.enumerated() {
@@ -66,9 +66,7 @@ class BlockView: UIView {
                 case let .label(text):
                     view = label(text: text)
                 case let .arg(idx):
-                    view = ArgView(arg: block.argValues[idx])
-                case let .code(code):
-                    fatalError()
+                    view = argView(arg: block.argValues[idx], blockController: blockController)
                 }
 
                 stackView.addContent(view, at: col)
@@ -81,6 +79,24 @@ class BlockView: UIView {
     static private func label(text: String) -> UIView {
         UILabel()
             .text(text)
+    }
+
+    static private func argView(arg: Argument, blockController: BlockController) -> UIView {
+        switch arg {
+        case let .code(blocks):
+            return UIStackView()
+                .axis(.vertical)
+                .distribution(.fill)
+                .alignment(.leading)
+                .contents(
+                    blocks.map {
+                        BlockView(block: $0, blockController: blockController)
+                    }
+                )
+        default:
+            return ArgView(arg: arg)
+        }
+
     }
 }
 
