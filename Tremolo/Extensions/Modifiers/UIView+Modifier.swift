@@ -11,17 +11,25 @@ import UIKit
 extension UIView {
 
     func size(width: CGFloat, height: CGFloat) -> UIView {
-        self.frame.size = CGSize(width: width, height: height)
+        frame.size = CGSize(width: width, height: height)
         return self
     }
 
     func backgroundColor(_ color: UIColor) -> UIView {
-        self.backgroundColor = color
+        backgroundColor = color
         return self
     }
 
     func cornerRadius(_ radius: CGFloat) -> UIView {
-        self.layer.cornerRadius = radius
+        layer.cornerRadius = radius
+        return self
+    }
+
+    func shadow(color: UIColor = .black, opacity: Float = 1, radius: CGFloat = 3.0, offset: CGSize = .zero) -> UIView {
+        layer.shadowColor = color.cgColor
+        layer.shadowOpacity = opacity
+        layer.shadowRadius = radius
+        layer.shadowOffset = offset
         return self
     }
 
