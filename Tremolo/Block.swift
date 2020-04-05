@@ -55,8 +55,6 @@ public struct Block: Hashable {
 
         case arg(Int)
 
-        case code([Block])
-
     }
 
     public func hash(into hasher: inout Hasher) {
