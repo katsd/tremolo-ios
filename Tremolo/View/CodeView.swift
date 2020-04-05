@@ -30,15 +30,12 @@ class CodeView: UIView {
         scrollView.lessThanOrEqualToEach(self, left: 20, priority: 1000)
 
         blockStackView =
-            UIStackView()
-                .axis(.vertical)
-                .distribution(.fill)
-                .alignment(.leading)
-                .contents(
-                    blocks.map {
-                        BlockView(block: $0, blockController: self)
-                    }
-                )
+            BlockStackView(blocks:
+                           blocks.map {
+                               BlockView(block: $0, blockController: self)
+                                   .shadow()
+                           },
+                           blockController: self)
 
         scrollView.addSubview(blockStackView)
         blockStackView.equalTo(scrollView)

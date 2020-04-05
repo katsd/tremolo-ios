@@ -84,15 +84,12 @@ class BlockView: UIView {
     static private func argView(arg: Argument, blockController: BlockController) -> UIView {
         switch arg {
         case let .code(blocks):
-            return UIStackView()
-                .axis(.vertical)
-                .distribution(.fill)
-                .alignment(.leading)
-                .contents(
-                    blocks.map {
-                        BlockView(block: $0, blockController: blockController)
-                    }
-                )
+            return BlockStackView(blocks:
+                                  blocks.map {
+                                      BlockView(block: $0, blockController: blockController)
+                                          .shadow()
+                                  },
+                                  blockController: blockController)
         default:
             return ArgView(arg: arg)
         }
