@@ -50,7 +50,7 @@ class CodeView: UIView {
 extension CodeView: BlockController {
 
     func floatBlock(blockView: UIView, gesture: UIPanGestureRecognizer) {
-        selectedBlockPos = findBlockPos(blockView: blockView, velocity: gesture.velocity(in: nil))
+        selectedBlockPos = findBlockPos(blockView: blockView, velocity: .zero)
 
         blockView.translatesAutoresizingMaskIntoConstraints = true
         addSubViewKeepingGlobalFrame(blockView)
@@ -115,22 +115,34 @@ extension CodeView: BlockFinder {
             blockY = blockFrame.midY
         }
 
-        var idx = 0
-        for i in 0..<blockStackView.arrangedSubviews.count {
-            let view = blockStackView.arrangedSubviews[i]
-            if !(view is BlockView) {
-                continue
+        let hasBlankView = selectedBlockPos?.blockStackViewController === self
+
+        var l = -1
+        var r = blockStackView.arrangedSubviews.count
+
+        var cnt = 0
+
+        while r - l > 1 {
+            let mid = (r + l) / 2
+
+            if blockStackView.arrangedSubviews[mid].globalFrame.midY < blockY {
+                l = mid
+            } else {
+                r = mid
             }
 
-            if blockY <= view.globalFrame.midY {
-                return SelectedBlockPos(blockStackViewController: self, path: (0, 0), idx: idx)
-            }
-
-            idx += 1
+            cnt += 1
         }
 
-        return SelectedBlockPos(blockStackViewController: self, path: (0, 0), idx: blockStackView.arrangedSubviews.count - 1)
+        if hasBlankView {
+            if let pos = selectedBlockPos?.idx {
+                if pos < r {
+                    r -= 1
+                }
+            }
+        }
 
+        return SelectedBlockPos(blockStackViewController: self, path: (0, 0), idx: r)
     }
 
 }
