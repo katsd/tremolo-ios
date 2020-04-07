@@ -18,6 +18,8 @@ class BlockStackView: UIStackView {
             .alignment(.leading)
             .spacing(5)
             .contents(blocks)
+
+        self.greaterThanOrEqualToSize(height: 10)
     }
 
     required init(coder: NSCoder) {
