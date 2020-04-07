@@ -109,10 +109,6 @@ extension UIView {
     }
 
     func equalToSize(width: CGFloat? = nil, height: CGFloat? = nil, priority: Float = 1000) {
-        guard  let _ = self.superview else {
-            return
-        }
-
         self.translatesAutoresizingMaskIntoConstraints = false
 
         if let width = width {
@@ -121,6 +117,30 @@ extension UIView {
 
         if let height = height {
             self.heightAnchor.constraint(equalToConstant: height).priority(priority).isActive = true
+        }
+    }
+
+    func lessThanOrEqualToSize(width: CGFloat? = nil, height: CGFloat? = nil, priority: Float = 1000) {
+        self.translatesAutoresizingMaskIntoConstraints = false
+
+        if let width = width {
+            self.widthAnchor.constraint(lessThanOrEqualToConstant: width).priority(priority).isActive = true
+        }
+
+        if let height = height {
+            self.heightAnchor.constraint(lessThanOrEqualToConstant: height).priority(priority).isActive = true
+        }
+    }
+
+    func greaterThanOrEqualToSize(width: CGFloat? = nil, height: CGFloat? = nil, priority: Float = 1000) {
+        self.translatesAutoresizingMaskIntoConstraints = false
+
+        if let width = width {
+            self.widthAnchor.constraint(greaterThanOrEqualToConstant: width).priority(priority).isActive = true
+        }
+
+        if let height = height {
+            self.heightAnchor.constraint(greaterThanOrEqualToConstant: height).priority(priority).isActive = true
         }
     }
 
