@@ -124,6 +124,17 @@ extension UIView {
         }
     }
 
+    func equalToSizeOf(_ view: UIView, priority: Float = 1000) {
+        guard let _ = self.superview else {
+            return
+        }
+
+        self.translatesAutoresizingMaskIntoConstraints = false
+
+        self.widthAnchor.constraint(equalTo: view.widthAnchor).priority(priority).isActive = true
+        self.heightAnchor.constraint(equalTo: view.heightAnchor).priority(priority).isActive = true
+    }
+
 }
 
 extension NSLayoutConstraint {
