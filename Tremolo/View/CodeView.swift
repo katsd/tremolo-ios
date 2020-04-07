@@ -115,7 +115,7 @@ extension CodeView: BlockFinder {
             blockY = blockFrame.midY
         }
 
-        // Search Block Surrounding blockView
+        // Search block surrounding blockView
         let searchBlock: () -> (result: Bool, pos: BlockPos?) = {
             var l = -1
             var r = self.blockStackView.arrangedSubviews.count
