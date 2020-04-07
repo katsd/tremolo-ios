@@ -190,25 +190,23 @@ extension BlockView: BlockFinder {
 
 extension BlockView: BlockStackViewController {
 
-    func addBlockView(_ blockView: UIView, path: (Int, Int), at idx: Int) {
+    func addBlockView(_ blockView: UIView, path: (Int, Int), at idx: Int, animation: () -> Void) {
         guard let stackView = blockContentsStackView.content(at: path) as? UIStackView else {
             return
         }
 
         if idx < stackView.arrangedSubviews.count &&
-               !(stackView.arrangedSubviews[idx] is BlockView) {
+           !(stackView.arrangedSubviews[idx] is BlockView) {
             stackView.arrangedSubviews[idx].removeFromSuperview()
         }
 
         stackView.addSubViewKeepingGlobalFrame(blockView)
         stackView.insertArrangedSubview(blockView, at: idx)
 
-        UIView.animate(withDuration: 0.2) {
-            self.layoutIfNeeded()
-        }
+        animation()
     }
 
-    func addBlankView(size: CGSize, path: (Int, Int), at idx: Int) {
+    func addBlankView(size: CGSize, path: (Int, Int), at idx: Int, animation: () -> Void) {
         guard let stackView = blockContentsStackView.content(at: path) as? UIStackView else {
             return
         }
@@ -217,21 +215,17 @@ extension BlockView: BlockStackViewController {
         stackView.insertArrangedSubview(blankView, at: idx)
         blankView.equalToSize(width: 0, height: size.height)
 
-        UIView.animate(withDuration: 0.2) {
-            self.layoutIfNeeded()
-        }
+        animation()
     }
 
-    func removeBlankView(path: (Int, Int), at idx: Int) {
+    func removeBlankView(path: (Int, Int), at idx: Int, animation: () -> Void) {
         guard let stackView = blockContentsStackView.content(at: path) as? UIStackView else {
             return
         }
 
         stackView.arrangedSubviews[idx].removeFromSuperview()
 
-        UIView.animate(withDuration: 0.2) {
-            self.layoutIfNeeded()
-        }
+        animation()
     }
 
 }

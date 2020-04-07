@@ -10,10 +10,10 @@ import UIKit
 
 protocol BlockStackViewController: AnyObject {
 
-    func addBlockView(_ blockView: UIView, path: (Int, Int), at idx: Int)
+    func addBlockView(_ blockView: UIView, path: (Int, Int), at idx: Int, animation: () -> Void)
 
-    func addBlankView(size: CGSize, path: (Int, Int), at idx: Int)
+    func addBlankView(size: CGSize, path: (Int, Int), at idx: Int, animation: () -> Void)
 
-    func removeBlankView(path: (Int, Int), at idx: Int)
+    func removeBlankView(path: (Int, Int), at idx: Int, animation: () -> Void)
 
 }
