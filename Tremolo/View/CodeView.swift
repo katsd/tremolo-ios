@@ -61,8 +61,6 @@ extension CodeView: BlockController {
         blockView.translatesAutoresizingMaskIntoConstraints = true
         addSubViewKeepingGlobalFrame(blockView)
 
-        print(selectedBlockPos)
-
         if let pos = selectedBlockPos {
             pos.blockStackViewController.addBlankView(blockView: blockView, path: pos.path, at: pos.idx) {
                 self.blockAnimation()
@@ -147,21 +145,21 @@ extension CodeView: BlockFinder {
             }
 
             if l == -1 {
-                return (result: true, pos: nil)
+                return (result: false, pos: nil)
             }
 
             if l == self.blockStackView.arrangedSubviews.count - 1 {
                 if self.blockStackView.globalFrame.maxY <= blockY {
-                    return (result: true, pos: nil)
+                    return (result: false, pos: nil)
                 }
             }
 
             guard let surroundingBlockView = self.blockStackView.arrangedSubviews[l] as? BlockView else {
-                return (result: true, pos: nil)
+                return (result: false, pos: nil)
             }
 
             if surroundingBlockView == blockView {
-                return (result: true, pos: nil)
+                return (result: false, pos: nil)
             }
 
             return (result: true, pos: surroundingBlockView.findBlockPos(blockView: blockView, velocity: velocity, selectedBlockPos: selectedBlockPos))
