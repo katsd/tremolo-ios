@@ -50,7 +50,7 @@ class CodeView: UIView {
 extension CodeView: BlockController {
 
     func floatBlock(blockView: UIView, gesture: UIPanGestureRecognizer) {
-        selectedBlockPos = findBlockPos(blockView: blockView, velocity: .zero)
+        selectedBlockPos = findBlockPos(blockView: blockView, velocity: .zero, selectedBlockPos: selectedBlockPos)
 
         blockView.translatesAutoresizingMaskIntoConstraints = true
         addSubViewKeepingGlobalFrame(blockView)
@@ -65,7 +65,7 @@ extension CodeView: BlockController {
         blockView.frame.origin.y += gesture.translation(in: nil).y
         gesture.setTranslation(.zero, in: nil)
 
-        let newSelectedBlockPos = findBlockPos(blockView: blockView, velocity: gesture.velocity(in: nil))
+        let newSelectedBlockPos = findBlockPos(blockView: blockView, velocity: gesture.velocity(in: nil), selectedBlockPos: selectedBlockPos)
 
         if selectedBlockPos != newSelectedBlockPos {
             if let pos = selectedBlockPos {
@@ -82,7 +82,7 @@ extension CodeView: BlockController {
 
     func dropBlock(blockView: UIView, gesture: UIPanGestureRecognizer) {
 
-        selectedBlockPos = findBlockPos(blockView: blockView, velocity: gesture.velocity(in: nil))
+        selectedBlockPos = findBlockPos(blockView: blockView, velocity: gesture.velocity(in: nil), selectedBlockPos: selectedBlockPos)
 
         if let pos = selectedBlockPos {
             pos.blockStackViewController.addBlockView(blockView, path: (0, 0), at: pos.idx)
@@ -97,7 +97,7 @@ extension CodeView: BlockController {
 
 extension CodeView: BlockFinder {
 
-    func findBlockPos(blockView: UIView, velocity: CGPoint) -> BlockPos? {
+    func findBlockPos(blockView: UIView, velocity: CGPoint, selectedBlockPos: BlockPos?) -> BlockPos? {
 
         if blockStackView.arrangedSubviews.count < 1 {
             return nil
@@ -144,17 +144,15 @@ extension CodeView: BlockFinder {
                 return (result: true, pos: nil)
             }
 
-            return (result: true, pos: surroundingBlockView.findBlockPos(blockView: blockView, velocity: velocity))
+            return (result: true, pos: surroundingBlockView.findBlockPos(blockView: blockView, velocity: velocity, selectedBlockPos: selectedBlockPos))
         }
 
         // Search index where blockView should be
         let searchIdx: () -> BlockPos = {
-            let hasBlankView = self.selectedBlockPos?.blockStackViewController === self
+            let hasBlankView = selectedBlockPos?.blockStackViewController === self
 
             var l = -1
             var r = self.blockStackView.arrangedSubviews.count
-
-            var cnt = 0
 
             while r - l > 1 {
                 let mid = (r + l) / 2
@@ -164,12 +162,10 @@ extension CodeView: BlockFinder {
                 } else {
                     r = mid
                 }
-
-                cnt += 1
             }
 
             if hasBlankView {
-                if let pos = self.selectedBlockPos?.idx {
+                if let pos = selectedBlockPos?.idx {
                     if pos < r {
                         r -= 1
                     }

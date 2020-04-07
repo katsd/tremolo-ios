@@ -10,6 +10,6 @@ import UIKit
 
 protocol BlockFinder {
 
-    func findBlockPos(blockView: UIView, velocity: CGPoint) -> BlockPos?
+    func findBlockPos(blockView: UIView, velocity: CGPoint, selectedBlockPos: BlockPos?) -> BlockPos?
 
 }
