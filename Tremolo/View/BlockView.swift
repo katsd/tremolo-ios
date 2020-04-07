@@ -139,7 +139,38 @@ extension BlockView: BlockFinder {
 
             // Search block surrounding blockView
             let searchBlock: () -> (result: Bool, pos: BlockPos?) = {
-                (false, nil)
+                var l = -1
+                var r = stackView.arrangedSubviews.count
+
+                while r - l > 1 {
+                    let mid = (r + l) / 2
+
+                    if stackView.arrangedSubviews[mid].globalFrame.minY <= blockY {
+                        l = mid
+                    } else {
+                        r = mid
+                    }
+                }
+
+                if l == -1 {
+                    return (result: false, pos: nil)
+                }
+
+                if l == stackView.arrangedSubviews.count - 1 {
+                    if stackView.globalFrame.maxY <= blockY {
+                        return (result: false, pos: nil)
+                    }
+                }
+
+                guard  let surroundingBlockView = stackView.arrangedSubviews[l] as? BlockView else {
+                    return (result: false, pos: nil)
+                }
+
+                if surroundingBlockView == blockView {
+                    return (result: false, pos: nil)
+                }
+
+                return (result: true, pos: surroundingBlockView.findBlockPos(blockView: blockView, velocity: velocity, selectedBlockPos: selectedBlockPos))
             }
 
             // Search index where blockView should be
