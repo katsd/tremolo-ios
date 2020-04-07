@@ -115,34 +115,76 @@ extension CodeView: BlockFinder {
             blockY = blockFrame.midY
         }
 
-        let hasBlankView = selectedBlockPos?.blockStackViewController === self
+        // Search Block Surrounding blockView
+        let searchBlock: () -> (result: Bool, pos: BlockPos?) = {
+            var l = -1
+            var r = self.blockStackView.arrangedSubviews.count
 
-        var l = -1
-        var r = blockStackView.arrangedSubviews.count
+            while r - l > 1 {
+                let mid = (r + l) / 2
 
-        var cnt = 0
-
-        while r - l > 1 {
-            let mid = (r + l) / 2
-
-            if blockStackView.arrangedSubviews[mid].globalFrame.midY < blockY {
-                l = mid
-            } else {
-                r = mid
-            }
-
-            cnt += 1
-        }
-
-        if hasBlankView {
-            if let pos = selectedBlockPos?.idx {
-                if pos < r {
-                    r -= 1
+                if self.blockStackView.arrangedSubviews[mid].globalFrame.minY <= blockY {
+                    l = mid
+                } else {
+                    r = mid
                 }
             }
+
+            if l == -1 {
+                return (result: true, pos: nil)
+            }
+
+            if l == self.blockStackView.arrangedSubviews.count - 1 {
+                if self.blockStackView.globalFrame.maxY <= blockY {
+                    return (result: true, pos: nil)
+                }
+            }
+
+            guard let surroundingBlockView = self.blockStackView.arrangedSubviews[l] as? BlockView else {
+                return (result: true, pos: nil)
+            }
+
+            return (result: true, pos: surroundingBlockView.findBlockPos(blockView: blockView, velocity: velocity))
         }
 
-        return BlockPos(blockStackViewController: self, path: (0, 0), idx: r)
+        // Search index where blockView should be
+        let searchIdx: () -> BlockPos = {
+            let hasBlankView = self.selectedBlockPos?.blockStackViewController === self
+
+            var l = -1
+            var r = self.blockStackView.arrangedSubviews.count
+
+            var cnt = 0
+
+            while r - l > 1 {
+                let mid = (r + l) / 2
+
+                if self.blockStackView.arrangedSubviews[mid].globalFrame.midY < blockY {
+                    l = mid
+                } else {
+                    r = mid
+                }
+
+                cnt += 1
+            }
+
+            if hasBlankView {
+                if let pos = self.selectedBlockPos?.idx {
+                    if pos < r {
+                        r -= 1
+                    }
+                }
+            }
+
+            return BlockPos(blockStackViewController: self, path: (0, 0), idx: r)
+        }
+
+        let res = searchBlock()
+        if res.pos != nil {
+            return res.pos
+        }
+
+        return searchIdx()
     }
 
 }
