@@ -56,7 +56,7 @@ extension CodeView: BlockController {
         addSubViewKeepingGlobalFrame(blockView)
 
         if let pos = selectedBlockPos {
-            pos.blockStackViewController.addBlankView(size: blockView.frame.size, path: (0, 0), at: pos.idx)
+            pos.blockStackViewController.addBlankView(size: blockView.frame.size, path: pos.path, at: pos.idx)
         }
     }
 
@@ -69,11 +69,11 @@ extension CodeView: BlockController {
 
         if selectedBlockPos != newSelectedBlockPos {
             if let pos = selectedBlockPos {
-                pos.blockStackViewController.removeBlankView(path: (0, 0), at: pos.idx)
+                pos.blockStackViewController.removeBlankView(path: pos.path, at: pos.idx)
             }
 
             if let pos = newSelectedBlockPos {
-                pos.blockStackViewController.addBlankView(size: blockView.frame.size, path: (0, 0), at: pos.idx)
+                pos.blockStackViewController.addBlankView(size: blockView.frame.size, path: pos.path, at: pos.idx)
             }
         }
 
@@ -85,7 +85,7 @@ extension CodeView: BlockController {
         selectedBlockPos = findBlockPos(blockView: blockView, velocity: gesture.velocity(in: nil), selectedBlockPos: selectedBlockPos)
 
         if let pos = selectedBlockPos {
-            pos.blockStackViewController.addBlockView(blockView, path: (0, 0), at: pos.idx)
+            pos.blockStackViewController.addBlockView(blockView, path: pos.path, at: pos.idx)
         } else {
             blockView.removeFromSuperview()
         }

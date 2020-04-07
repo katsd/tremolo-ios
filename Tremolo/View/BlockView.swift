@@ -14,6 +14,8 @@ class BlockView: UIView {
 
     private let blockContentsStackView: BlockContentStackView
 
+    private var blockStackViewPaths = [(Int, Int)]()
+
     init(block: Block, blockController: BlockController) {
 
         self.blockController = blockController
@@ -25,6 +27,8 @@ class BlockView: UIView {
         setStyle()
 
         setGesture()
+
+        setBlockStackViewPaths(block: block)
 
         self.addSubview(blockContentsStackView)
         blockContentsStackView.equalTo(self, inset: .init(top: 5, left: 5, bottom: 5, right: 5))
@@ -52,6 +56,18 @@ class BlockView: UIView {
                 self.blockController.dropBlock(blockView: self, gesture: gesture)
             default:
                 break
+            }
+        }
+    }
+
+    private func setBlockStackViewPaths(block: Block) {
+        for i in 0..<block.contents.count {
+            for j in 0..<block.contents[i].count {
+                if case let .arg(idx) = block.contents[i][j] {
+                    if case .code(_) = block.argValues[idx] {
+                        blockStackViewPaths.append((i, j))
+                    }
+                }
             }
         }
     }
@@ -99,7 +115,74 @@ class BlockView: UIView {
 
 extension BlockView: BlockFinder {
 
-    func findBlockPos(blockView: UIView, velocity: CGPoint) -> BlockPos? {
+    func findBlockPos(blockView: UIView, velocity: CGPoint, selectedBlockPos: BlockPos?) -> BlockPos? {
+
+        let blockFrame = blockView.globalFrame
+        let blockY: CGFloat
+
+        if velocity.y > 0 {
+            blockY = blockFrame.maxY
+        } else if velocity.y < 0 {
+            blockY = blockFrame.minY
+        } else {
+            blockY = blockFrame.midY
+        }
+
+        for path in blockStackViewPaths {
+            guard let stackView = blockContentsStackView.content(at: path) as? UIStackView else {
+                continue
+            }
+
+            if blockY < stackView.globalFrame.minY || stackView.globalFrame.maxY < blockY {
+                continue
+            }
+
+            // Search block surrounding blockView
+            let searchBlock: () -> (result: Bool, pos: BlockPos?) = {
+                (false, nil)
+            }
+
+            // Search index where blockView should be
+            let searchIdx: () -> BlockPos = {
+                let hasBlankView: Bool
+                if let pos = selectedBlockPos {
+                    hasBlankView = pos.blockStackViewController === self && pos.path == path
+                } else {
+                    hasBlankView = false
+                }
+
+                var l = -1
+                var r = stackView.arrangedSubviews.count
+
+                while r - l > 1 {
+                    let mid = (r + l) / 2
+
+                    if stackView.arrangedSubviews[mid].globalFrame.midY < blockY {
+                        l = mid
+                    } else {
+                        r = mid
+                    }
+                }
+
+                if hasBlankView {
+                    if let pos = selectedBlockPos?.idx {
+                        if pos < r {
+                            r -= 1
+                        }
+                    }
+                }
+
+                return BlockPos(blockStackViewController: self, path: path, idx: r)
+            }
+
+            let res = searchBlock()
+            if res.pos != nil {
+                return res.pos
+            }
+
+            return searchIdx()
+        }
+
         return nil
     }
 
@@ -108,15 +191,47 @@ extension BlockView: BlockFinder {
 extension BlockView: BlockStackViewController {
 
     func addBlockView(_ blockView: UIView, path: (Int, Int), at idx: Int) {
+        guard let stackView = blockContentsStackView.content(at: path) as? UIStackView else {
+            return
+        }
 
+        if idx < stackView.arrangedSubviews.count &&
+               !(stackView.arrangedSubviews[idx] is BlockView) {
+            stackView.arrangedSubviews[idx].removeFromSuperview()
+        }
+
+        stackView.addSubViewKeepingGlobalFrame(blockView)
+        stackView.insertArrangedSubview(blockView, at: idx)
+
+        UIView.animate(withDuration: 0.2) {
+            self.layoutIfNeeded()
+        }
     }
 
     func addBlankView(size: CGSize, path: (Int, Int), at idx: Int) {
+        guard let stackView = blockContentsStackView.content(at: path) as? UIStackView else {
+            return
+        }
 
+        let blankView = UIView()
+        stackView.insertArrangedSubview(blankView, at: idx)
+        blankView.equalToSize(width: 0, height: size.height)
+
+        UIView.animate(withDuration: 0.2) {
+            self.layoutIfNeeded()
+        }
     }
 
     func removeBlankView(path: (Int, Int), at idx: Int) {
+        guard let stackView = blockContentsStackView.content(at: path) as? UIStackView else {
+            return
+        }
 
+        stackView.arrangedSubviews[idx].removeFromSuperview()
+
+        UIView.animate(withDuration: 0.2) {
+            self.layoutIfNeeded()
+        }
     }
 
 }
