@@ -1,5 +1,5 @@
 //
-//  SelectedBlockPos.swift
+//  BlockPos.swift
 //  Tremolo
 //  
 //  Created by Katsu Matsuda on 2020/03/31.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct SelectedBlockPos: Equatable {
+struct BlockPos: Equatable {
 
     let blockStackViewController: BlockStackViewController
 
@@ -16,7 +16,7 @@ struct SelectedBlockPos: Equatable {
 
     let idx: Int
 
-    static func ==(lhs: SelectedBlockPos, rhs: SelectedBlockPos) -> Bool {
+    static func ==(lhs: BlockPos, rhs: BlockPos) -> Bool {
         lhs.blockStackViewController === rhs.blockStackViewController &&
             lhs.path == rhs.path &&
             lhs.idx == rhs.idx

@@ -10,7 +10,7 @@ import SwiftUI
 
 class CodeView: UIView {
 
-    private var selectedBlockPos: SelectedBlockPos? = nil
+    private var selectedBlockPos: BlockPos? = nil
 
     private let blocks: [Block]
 
@@ -97,7 +97,7 @@ extension CodeView: BlockController {
 
 extension CodeView: BlockFinder {
 
-    func findBlockPos(blockView: UIView, velocity: CGPoint) -> SelectedBlockPos? {
+    func findBlockPos(blockView: UIView, velocity: CGPoint) -> BlockPos? {
 
         if blockStackView.arrangedSubviews.count < 1 {
             return nil
@@ -142,7 +142,7 @@ extension CodeView: BlockFinder {
             }
         }
 
-        return SelectedBlockPos(blockStackViewController: self, path: (0, 0), idx: r)
+        return BlockPos(blockStackViewController: self, path: (0, 0), idx: r)
     }
 
 }

@@ -99,7 +99,7 @@ class BlockView: UIView {
 
 extension BlockView: BlockFinder {
 
-    func findBlockPos(blockView: UIView, velocity: CGPoint) -> SelectedBlockPos? {
+    func findBlockPos(blockView: UIView, velocity: CGPoint) -> BlockPos? {
         return nil
     }
 
