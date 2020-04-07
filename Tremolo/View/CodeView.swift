@@ -62,7 +62,7 @@ extension CodeView: BlockController {
         addSubViewKeepingGlobalFrame(blockView)
 
         if let pos = selectedBlockPos {
-            pos.blockStackViewController.addBlankView(size: blockView.frame.size, path: pos.path, at: pos.idx) {
+            pos.blockStackViewController.addBlankView(blockView: blockView, path: pos.path, at: pos.idx) {
                 self.blockAnimation()
             }
         }
@@ -83,7 +83,7 @@ extension CodeView: BlockController {
             }
 
             if let pos = newSelectedBlockPos {
-                pos.blockStackViewController.addBlankView(size: blockView.frame.size, path: pos.path, at: pos.idx) {
+                pos.blockStackViewController.addBlankView(blockView: blockView, path: pos.path, at: pos.idx) {
                     self.blockAnimation()
                 }
             }
@@ -203,7 +203,7 @@ extension CodeView: BlockStackViewController {
 
     func addBlockView(_ blockView: UIView, path: (Int, Int), at idx: Int, animation: () -> Void) {
         if idx < blockStackView.arrangedSubviews.count &&
-               !(blockStackView.arrangedSubviews[idx] is BlockView) {
+           !(blockStackView.arrangedSubviews[idx] is BlockView) {
             blockStackView.arrangedSubviews[idx].removeFromSuperview()
         }
 
@@ -212,36 +212,20 @@ extension CodeView: BlockStackViewController {
         blockStackView.insertArrangedSubview(blockView, at: idx)
 
         animation()
-
-        /*
-        UIView.animate(withDuration: 0.2) {
-            self.layoutIfNeeded()
-        }
-        */
     }
 
-    func addBlankView(size: CGSize, path: (Int, Int), at idx: Int, animation: () -> Void) {
+    func addBlankView(blockView: UIView, path: (Int, Int), at idx: Int, animation: () -> Void) {
         let blankView = UIView()
         blockStackView.insertArrangedSubview(blankView, at: idx)
-        blankView.equalToSize(width: 0, height: size.height)
+        blankView.equalToSizeOf(blockView)
 
         animation()
-        /*
-        UIView.animate(withDuration: 0.2) {
-            self.layoutIfNeeded()
-        }
-        */
     }
 
     func removeBlankView(path: (Int, Int), at idx: Int, animation: () -> Void) {
         blockStackView.arrangedSubviews[idx].removeFromSuperview()
 
         animation()
-        /*
-        UIView.animate(withDuration: 0.2) {
-            self.layoutIfNeeded()
-        }
-        */
     }
 
 }

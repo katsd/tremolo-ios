@@ -196,7 +196,7 @@ extension BlockView: BlockStackViewController {
         }
 
         if idx < stackView.arrangedSubviews.count &&
-           !(stackView.arrangedSubviews[idx] is BlockView) {
+               !(stackView.arrangedSubviews[idx] is BlockView) {
             stackView.arrangedSubviews[idx].removeFromSuperview()
         }
 
@@ -206,14 +206,14 @@ extension BlockView: BlockStackViewController {
         animation()
     }
 
-    func addBlankView(size: CGSize, path: (Int, Int), at idx: Int, animation: () -> Void) {
+    func addBlankView(blockView: UIView, path: (Int, Int), at idx: Int, animation: () -> Void) {
         guard let stackView = blockContentsStackView.content(at: path) as? UIStackView else {
             return
         }
 
         let blankView = UIView()
         stackView.insertArrangedSubview(blankView, at: idx)
-        blankView.equalToSize(width: 0, height: size.height)
+        blankView.equalToSizeOf(blockView)
 
         animation()
     }
