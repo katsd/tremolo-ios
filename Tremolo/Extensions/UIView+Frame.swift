@@ -11,7 +11,11 @@ import UIKit
 extension UIView {
 
     var globalFrame: CGRect {
-        superview?.convert(frame, to: nil) ?? frame
+        convertFrame(parent: nil)
+    }
+
+    func convertFrame(parent: UIView?) -> CGRect {
+        superview?.convert(frame, to: parent) ?? frame
     }
 
     func addSubViewKeepingGlobalFrame(_ view: UIView) {
