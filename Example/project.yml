@@ -1,0 +1,24 @@
+name: Example
+
+options:
+  bundlePrefix: app.mallet.tremolo
+  deploymentTarget:
+    iOS: "13.0"
+
+attributes:
+  ORGANIZATIONNAME: Katsu Matsuda
+
+settings:
+  DEVELOPMENT_TEAM: T437NKTG46
+
+targets:
+  Example:
+    type: application
+    platform: iOS
+    sources:
+      - Example
+      - ../Tremolo
+    settings:
+      base:
+        PRODUCT_NAME: Tremolo
+        PRODUCT_BUNDLE_IDENTIFIER: app.mallet.tremolo.example
