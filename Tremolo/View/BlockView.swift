@@ -41,6 +41,7 @@ class BlockView: UIView {
     private func setStyle() {
         self.backgroundColor(.systemGray)
             .cornerRadius(5)
+            //.shadow(color: .init(red: .random(in: 0...1), green: .random(in: 0...1), blue: .random(in: 0...1), alpha: 1))
             .shadow()
     }
 
@@ -231,10 +232,18 @@ extension BlockView: BlockStackViewController {
             stackView.arrangedSubviews[idx].removeFromSuperview()
         }
 
-        stackView.addSubViewKeepingGlobalFrame(blockView)
-        stackView.insertArrangedSubview(blockView, at: idx)
+        let blankView = UIView()
+        stackView.insertArrangedSubview(blankView, at: idx)
+        blankView.equalToSizeOf(blockView)
 
-        animation()
+        self.layoutIfNeeded()
+
+        UIView.animate(withDuration: 0.2, animations: {
+            blockView.center = blankView.convertFrame(parent: blockView.superview).center
+        }, completion: { _ in
+            stackView.arrangedSubviews[idx].removeFromSuperview()
+            stackView.insertArrangedSubview(blockView, at: idx)
+        })
     }
 
     func addBlankView(blockView: UIView, path: (Int, Int), at idx: Int, animation: () -> Void) {
