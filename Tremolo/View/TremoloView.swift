@@ -18,7 +18,14 @@ public struct TremoloView: View {
     }
 
     public var body: some View {
-        CodeViewRepresentable(blocks: $tremolo.blocks)
+        ZStack {
+            CodeViewRepresentable(blocks: $tremolo.blocks)
+
+            VStack {
+                Spacer()
+                MathKeyboardView()
+            }
+        }
     }
 
 }
