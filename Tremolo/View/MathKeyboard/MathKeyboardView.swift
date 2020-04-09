@@ -26,7 +26,7 @@ struct MathKeyboardView: View {
 
     private func keySize(width: Int, height: Int) -> CGSize {
         let w = (defaultKeySize.width + keySpacing) * CGFloat(width) - keySpacing
-        let h = (defaultKeySize.width + keySpacing) * CGFloat(height) - keySpacing
+        let h = (defaultKeySize.height + keySpacing) * CGFloat(height) - keySpacing
         return .init(width: w, height: h)
     }
 
@@ -97,6 +97,10 @@ struct MathKeyboardView: View {
 
     private func rightKeys() -> some View {
         VStack(spacing: keySpacing) {
+            HStack(spacing: keySpacing) {
+                directionKey(direction: .back)
+                directionKey(direction: .forward)
+            }
             deleteKey()
             returnKey()
         }
@@ -108,20 +112,34 @@ struct MathKeyboardView: View {
     }
 
     private func simpleKey(_ value: String) -> some View {
-        keyView(value: .text(texts: [value], cursor: 0), size: defaultKeySize, labelColor: .black, color: .white) {
+        keyView(value: .text(texts: [value], cursor: 0), size: defaultKeySize, labelColor: .primary, color: .gray) {
             Text(value)
         }
     }
 
     private func deleteKey() -> some View {
-        keyView(value: .action({ MathKeyboard.receiver?.delete() }), size: defaultKeySize, labelColor: .white, color: .red) {
+        keyView(value: .action({ MathKeyboard.receiver?.delete() }), size: keySize(width: 2, height: 1), labelColor: .white, color: .red) {
             Image(systemName: "delete.left.fill")
         }
     }
 
     private func returnKey() -> some View {
-        keyView(value: .action({ MathKeyboard.receiver?.endEditing() }), size: keySize(width: 1, height: 2), labelColor: .white, color: .blue) {
+        keyView(value: .action({ MathKeyboard.receiver?.endEditing() }), size: keySize(width: 2, height: 1), labelColor: .white, color: .blue) {
             Image(systemName: "return")
+        }
+    }
+
+    private func directionKey(direction: CursorDirection) -> some View {
+        let label: Image
+        switch direction {
+        case .forward:
+            label = Image(systemName: "arrowtriangle.right.fill")
+        case .back:
+            label = Image(systemName: "arrowtriangle.left.fill")
+        }
+
+        return keyView(value: .action({ MathKeyboard.receiver?.moveCursor(direction) }), size: defaultKeySize, labelColor: .white, color: .gray) {
+            label
         }
     }
 
