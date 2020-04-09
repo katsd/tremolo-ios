@@ -10,4 +10,6 @@ import Foundation
 
 class MathKeyboard: ObservableObject {
 
+    static var receiver: MathKeyboardReceiver? = nil
+
 }

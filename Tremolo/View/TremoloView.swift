@@ -21,11 +21,9 @@ public struct TremoloView: View {
         ZStack {
             CodeViewRepresentable(blocks: $tremolo.blocks)
 
-            VStack {
-                Spacer()
-                MathKeyboardView()
-            }
+            MathKeyboardView()
         }
+            .edgesIgnoringSafeArea(.all)
     }
 
 }
