@@ -41,8 +41,7 @@ class BlockView: UIView {
     private func setStyle() {
         self.backgroundColor(.systemGray)
             .cornerRadius(5)
-            //.shadow(color: .init(red: .random(in: 0...1), green: .random(in: 0...1), blue: .random(in: 0...1), alpha: 1))
-            .shadow()
+            .shadow(opacity: 0.7)
     }
 
     private func setGesture() {
