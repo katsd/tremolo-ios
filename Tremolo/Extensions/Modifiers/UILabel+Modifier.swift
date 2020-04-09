@@ -15,4 +15,9 @@ extension UILabel {
         return self
     }
 
+    func textColor(_ color: UIColor) -> UILabel {
+        self.textColor = color
+        return self
+    }
+
 }
