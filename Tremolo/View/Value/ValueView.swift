@@ -56,10 +56,10 @@ class ValueView: UIView {
         addSubview(cursor)
         cursor.startAnimation()
 
-        cursor.center.y = center.y
-
         if stackView.arrangedSubviews.count == 0 {
-            cursor.center.x = center.x
+            cursorPos = 0
+            moveCursorView(withAnimation: false)
+            return
         }
 
         var l = -1
@@ -74,8 +74,8 @@ class ValueView: UIView {
         }
 
         if r == stackView.arrangedSubviews.count {
-            cursor.center.x = stackView.arrangedSubviews[stackView.arrangedSubviews.count - 1].convertFrame(parent: self).maxX
             cursorPos = stackView.arrangedSubviews.count
+            moveCursorView(withAnimation: false)
             return
         }
 
@@ -83,12 +83,12 @@ class ValueView: UIView {
         let rightDis = abs(stackView.arrangedSubviews[r].globalFrame.maxX - tapLocation.x)
 
         if leftDis < rightDis {
-            cursor.center.x = stackView.arrangedSubviews[r].convertFrame(parent: self).minX
             cursorPos = r
         } else {
-            cursor.center.x = stackView.arrangedSubviews[r].convertFrame(parent: self).maxX
             cursorPos = r + 1
         }
+
+        moveCursorView(withAnimation: false)
     }
 
     private func removeCursor() {
@@ -99,25 +99,27 @@ class ValueView: UIView {
     private func moveCursorView(withAnimation: Bool) {
         cursor.stopAnimation()
 
-        let nextPosX: CGFloat
+        let posX: CGFloat
         if stackView.arrangedSubviews.count == 0 {
-            nextPosX = center.x
+            posX = center.x
         } else {
             if cursorPos == 0 {
-                nextPosX = stackView.arrangedSubviews[0].convertFrame(parent: self).minX
+                posX = stackView.arrangedSubviews[0].convertFrame(parent: self).minX
             } else {
-                nextPosX = stackView.arrangedSubviews[cursorPos - 1].convertFrame(parent: self).maxX
+                posX = stackView.arrangedSubviews[cursorPos - 1].convertFrame(parent: self).maxX
             }
         }
 
         if withAnimation {
             UIView.animate(withDuration: 0.2, animations: {
-                self.cursor.center.x = nextPosX
+                self.cursor.center.x = posX
+                self.cursor.center.y = self.center.y
             }, completion: { _ in
                 self.cursor.startAnimation()
             })
         } else {
-            cursor.center.x = nextPosX
+            cursor.center.x = posX
+            cursor.center.y = center.y
             cursor.startAnimation()
         }
     }
