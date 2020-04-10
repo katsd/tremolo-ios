@@ -6,10 +6,42 @@
 //  Copyright (c) 2020 Katsu Matsuda. All rights reserved.
 //
 
-import Foundation
+import SwiftUI
 
-class MathKeyboard: ObservableObject {
+class MathKeyboard {
 
     static var receiver: MathKeyboardReceiver? = nil
+
+    static let observable = MathKeyboardObservable()
+
+    static func openKeyboard() {
+        animation {
+            observable.showKeyboard = true
+        }
+    }
+
+    static func closeKeyboard() {
+        animation {
+            observable.showKeyboard = false
+        }
+    }
+
+    static func toggleKeyboard() {
+        animation {
+            observable.showKeyboard.toggle()
+        }
+    }
+
+    private static func animation(_ action: () -> Void) {
+        withAnimation(.easeInOut(duration: 0.2)) {
+            action()
+        }
+    }
+
+}
+
+class MathKeyboardObservable: ObservableObject {
+
+    @Published var showKeyboard = false
 
 }
