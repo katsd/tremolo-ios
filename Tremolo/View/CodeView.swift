@@ -73,12 +73,18 @@ extension CodeView: BlockController {
         blockView.frame.origin.y += gesture.translation(in: nil).y
         gesture.setTranslation(.zero, in: nil)
 
+        if abs(gesture.velocity(in: nil).y) > 800 {
+            return;
+        }
+
         let newSelectedBlockPos = findBlockPos(blockView: blockView, velocity: gesture.velocity(in: nil), selectedBlockPos: selectedBlockPos)
 
         if selectedBlockPos != newSelectedBlockPos {
             if let pos = selectedBlockPos {
                 pos.blockStackViewController.removeBlankView(path: pos.path, at: pos.idx) {
-                    self.blockAnimation()
+                    if newSelectedBlockPos == nil {
+                        self.blockAnimation()
+                    }
                 }
             }
 
@@ -207,7 +213,7 @@ extension CodeView: BlockStackViewController {
 
     func addBlockView(_ blockView: UIView, path: (Int, Int), at idx: Int, animation: () -> Void) {
         if idx < blockStackView.arrangedSubviews.count &&
-           !(blockStackView.arrangedSubviews[idx] is BlockView) {
+               !(blockStackView.arrangedSubviews[idx] is BlockView) {
             blockStackView.arrangedSubviews[idx].removeFromSuperview()
         }
 
