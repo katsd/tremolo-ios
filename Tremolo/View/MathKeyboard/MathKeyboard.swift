@@ -14,6 +14,11 @@ class MathKeyboard {
 
     static let observable = MathKeyboardObservable()
 
+    static func setReceiver(_ receiver: MathKeyboardReceiver) {
+        self.receiver?.endEditing()
+        self.receiver = receiver
+    }
+
     static func openKeyboard() {
         animation {
             observable.showKeyboard = true
