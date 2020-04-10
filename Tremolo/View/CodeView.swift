@@ -22,13 +22,14 @@ class CodeView: UIView {
 
         super.init(frame: .zero)
 
-        let scrollView =
-            UIScrollView()
-                .alwaysBounceVertical(true)
-                .clipsToBounds(false)
+        let scrollView = UIScrollView()
+        scrollView
+            .alwaysBounceVertical(true)
+            .clipsToBounds(false)
         self.addSubview(scrollView)
         scrollView.equalToEach(self, top: 0, left: 20, bottom: 0, right: 0, priority: 900)
         scrollView.lessThanOrEqualToEach(self, left: 20, priority: 1000)
+        scrollView.delegate = self
 
         blockStackView =
             BlockStackView(blocks:
