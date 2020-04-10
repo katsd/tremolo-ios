@@ -29,12 +29,12 @@ class CursorView: UIView {
     }
 
     func startAnimation() {
+        timer?.invalidate()
         timer = .scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(animation), userInfo: nil, repeats: true)
     }
 
     func stopAnimation() {
         timer?.invalidate()
-        timer = nil
         UIView.animate(withDuration: 0.1) {
             self.layer.opacity = self.maxOpacity
         }
@@ -42,7 +42,6 @@ class CursorView: UIView {
 
     func remove() {
         timer?.invalidate()
-        timer = nil
     }
 
     @objc private func animation() {
