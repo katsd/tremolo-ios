@@ -14,6 +14,10 @@ class ValueView: UIView {
 
     private let cursor = CursorView()
 
+    // 0   1   2   3  <- cursorPos
+    // | A | B | C |
+    private var cursorPos = 0
+
     init(value: Value) {
         super.init(frame: .zero)
 
@@ -75,6 +79,7 @@ class ValueView: UIView {
 
         if r == stackView.arrangedSubviews.count {
             cursor.center.x = stackView.arrangedSubviews[stackView.arrangedSubviews.count - 1].convertFrame(parent: self).maxX
+            cursorPos = stackView.arrangedSubviews.count
             return
         }
 
@@ -83,8 +88,10 @@ class ValueView: UIView {
 
         if leftDis < rightDis {
             cursor.center.x = stackView.arrangedSubviews[r].convertFrame(parent: self).minX
+            cursorPos = r
         } else {
             cursor.center.x = stackView.arrangedSubviews[r].convertFrame(parent: self).maxX
+            cursorPos = r + 1
         }
     }
 
