@@ -8,10 +8,10 @@
 
 import Foundation
 
-enum CursorDirection {
+enum CursorDirection: Int {
 
-    case back
+    case back = -1
 
-    case forward
+    case forward = 1
 
 }
