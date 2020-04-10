@@ -143,7 +143,16 @@ extension ValueView: MathKeyboardReceiver {
     }
 
     func delete() {
-        print("Delete")
+        if cursorPos == 0 {
+            return
+        }
+
+        stackView.arrangedSubviews[cursorPos - 1].removeFromSuperview()
+
+        layoutIfNeeded()
+
+        cursorPos -= 1
+        moveCursorView(withAnimation: false)
     }
 
     func endEditing() {
