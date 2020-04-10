@@ -46,8 +46,7 @@ class ValueView: UIView {
         isUserInteractionEnabled = true
 
         tap { gesture in
-            MathKeyboard.receiver?.endEditing()
-            MathKeyboard.receiver = self
+            MathKeyboard.setReceiver(self)
             MathKeyboard.openKeyboard()
             self.addCursor(tapLocation: gesture.location(in: nil))
         }
@@ -55,6 +54,8 @@ class ValueView: UIView {
 
     private func addCursor(tapLocation: CGPoint) {
         addSubview(cursor)
+        cursor.show()
+
         cursor.center.y = center.y
 
         if stackView.arrangedSubviews.count == 0 {
@@ -88,6 +89,7 @@ class ValueView: UIView {
     }
 
     private func removeCursor() {
+        cursor.remove()
         cursor.removeFromSuperview()
     }
 }
