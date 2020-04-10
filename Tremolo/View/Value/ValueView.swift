@@ -22,11 +22,7 @@ class ValueView: UIView {
         super.init(frame: .zero)
 
         "1+2*3".forEach {
-            let label = UILabel()
-                .text(String($0))
-                .textColor(.black)
-
-            self.stackView.addArrangedSubview(label)
+            self.stackView.addArrangedSubview(label(String($0)))
         }
 
         addSubview(stackView)
@@ -121,17 +117,19 @@ class ValueView: UIView {
 
         }
     }
+
+    private func label(_ text: String) -> UILabel {
+        UILabel()
+            .text(text)
+            .textColor(.black)
+    }
 }
 
 extension ValueView: MathKeyboardReceiver {
 
     func addTexts(_ texts: [String], cursor: Int) {
         for (idx, text) in texts.enumerated() {
-            let label = UILabel()
-                .text(text)
-                .textColor(.black)
-
-            stackView.insertArrangedSubview(label, at: cursorPos + idx)
+            stackView.insertArrangedSubview(label(text), at: cursorPos + idx)
         }
 
         layoutIfNeeded()
