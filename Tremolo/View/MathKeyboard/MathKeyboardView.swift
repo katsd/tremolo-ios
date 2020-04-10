@@ -18,9 +18,9 @@ struct MathKeyboardView: View {
 
     }
 
-    @ObservedObject var mathKeyboard = MathKeyboard()
+    @ObservedObject var mathKeyboard = MathKeyboard.observable
 
-    private let keySpacing: CGFloat = 3
+    private let keySpacing: CGFloat = 5
 
     private let defaultKeySize = CGSize(width: 35, height: 40)
 
@@ -34,23 +34,26 @@ struct MathKeyboardView: View {
         GeometryReader { geo in
             VStack {
                 Spacer()
-                VStack {
-                    HStack {
-                        self.leftKeys()
-                        Spacer()
-                        self.middleKeys()
-                        Spacer()
-                        self.rightKeys()
-                    }
-                        .padding(.horizontal, 20)
+                if self.mathKeyboard.showKeyboard {
+                    VStack {
+                        HStack {
+                            self.leftKeys()
+                            Spacer()
+                            self.middleKeys()
+                            Spacer()
+                            self.rightKeys()
+                        }
+                            .padding(.horizontal, 20)
 
-                    Spacer()
-                        .frame(height: geo.safeAreaInsets.bottom)
+                        Spacer()
+                            .frame(height: geo.safeAreaInsets.bottom)
+                    }
+                        .edgesIgnoringSafeArea(.bottom)
+                        .padding(.top, 10)
+                        .frame(maxWidth: .infinity)
+                        .background(Blur(style: .systemMaterial))
+                        .transition(.move(edge: .bottom))
                 }
-                    .edgesIgnoringSafeArea(.bottom)
-                    .padding(.top, 10)
-                    .frame(maxWidth: .infinity)
-                    .background(Blur(style: .systemMaterial))
             }
         }
     }
@@ -124,7 +127,7 @@ struct MathKeyboardView: View {
     }
 
     private func returnKey() -> some View {
-        keyView(value: .action({ MathKeyboard.receiver?.endEditing() }), size: keySize(width: 2, height: 1), labelColor: .white, color: .blue) {
+        keyView(value: .action({ MathKeyboard.closeKeyboard() }), size: keySize(width: 2, height: 1), labelColor: .white, color: .blue) {
             Image(systemName: "return")
         }
     }

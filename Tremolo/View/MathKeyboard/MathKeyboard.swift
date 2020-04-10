@@ -21,6 +21,10 @@ class MathKeyboard {
     }
 
     static func closeKeyboard() {
+        if !observable.showKeyboard {
+            return
+        }
+        receiver?.endEditing()
         animation {
             observable.showKeyboard = false
         }
