@@ -25,14 +25,17 @@ class MathKeyboard {
             return
         }
         receiver?.endEditing()
+        receiver = nil
         animation {
             observable.showKeyboard = false
         }
     }
 
     static func toggleKeyboard() {
-        animation {
-            observable.showKeyboard.toggle()
+        if observable.showKeyboard {
+            closeKeyboard()
+        } else {
+            openKeyboard()
         }
     }
 
