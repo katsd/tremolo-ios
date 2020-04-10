@@ -159,8 +159,6 @@ extension ValueView: MathKeyboardReceiver {
 
         cursorPos = nextPos
         moveCursorView(withAnimation: true)
-
-        print(cursorPos)
     }
 
 }
