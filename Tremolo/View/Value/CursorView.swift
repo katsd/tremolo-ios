@@ -28,8 +28,16 @@ class CursorView: UIView {
         fatalError()
     }
 
-    func show() {
+    func startAnimation() {
         timer = .scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(animation), userInfo: nil, repeats: true)
+    }
+
+    func stopAnimation() {
+        timer?.invalidate()
+        timer = nil
+        UIView.animate(withDuration: 0.1) {
+            self.layer.opacity = self.maxOpacity
+        }
     }
 
     func remove() {

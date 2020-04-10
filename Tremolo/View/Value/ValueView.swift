@@ -54,7 +54,7 @@ class ValueView: UIView {
 
     private func addCursor(tapLocation: CGPoint) {
         addSubview(cursor)
-        cursor.show()
+        cursor.startAnimation()
 
         cursor.center.y = center.y
 
@@ -97,6 +97,8 @@ class ValueView: UIView {
     }
 
     private func moveCursorView(withAnimation: Bool) {
+        cursor.stopAnimation()
+
         let nextPosX: CGFloat
         if stackView.arrangedSubviews.count == 0 {
             nextPosX = center.x
@@ -104,17 +106,19 @@ class ValueView: UIView {
             if cursorPos == 0 {
                 nextPosX = stackView.arrangedSubviews[0].convertFrame(parent: self).minX
             } else {
-                nextPosX = stackView.arrangedSubviews[cursorPos].convertFrame(parent: self).maxX
+                nextPosX = stackView.arrangedSubviews[cursorPos - 1].convertFrame(parent: self).maxX
             }
         }
 
         if withAnimation {
-            UIView.animate(withDuration: 0.2) {
+            UIView.animate(withDuration: 0.2, animations: {
                 self.cursor.center.x = nextPosX
-            }
+            }, completion: { _ in
+                self.cursor.startAnimation()
+            })
         } else {
             cursor.center.x = nextPosX
-
+            cursor.startAnimation()
         }
     }
 
@@ -149,12 +153,14 @@ extension ValueView: MathKeyboardReceiver {
     func moveCursor(_ direction: CursorDirection) {
         let nextPos = cursorPos + direction.rawValue
 
-        if nextPos < 0 || stackView.arrangedSubviews.count <= nextPos {
+        if nextPos < 0 || stackView.arrangedSubviews.count < nextPos {
             return
         }
 
         cursorPos = nextPos
         moveCursorView(withAnimation: true)
+
+        print(cursorPos)
     }
 
 }
