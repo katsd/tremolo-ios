@@ -10,7 +10,9 @@ import UIKit
 
 class ValueView: UIView {
 
-    let stackView = UIStackView(frame: .zero)
+    private let stackView = UIStackView(frame: .zero)
+
+    private let cursor = CursorView()
 
     init(value: Value) {
         super.init(frame: .zero)
@@ -36,17 +38,57 @@ class ValueView: UIView {
     }
 
     private func setStyle() {
-        self.backgroundColor(.white)
-            .cornerRadius(5)
+        backgroundColor(.white)
+        cornerRadius(5)
     }
 
     private func setGesture() {
-        self.isUserInteractionEnabled = true
+        isUserInteractionEnabled = true
 
-        self.tap { _ in
+        tap { gesture in
+            MathKeyboard.receiver?.endEditing()
             MathKeyboard.receiver = self
             MathKeyboard.openKeyboard()
+            self.addCursor(tapLocation: gesture.location(in: nil))
         }
+    }
+
+    private func addCursor(tapLocation: CGPoint) {
+        addSubview(cursor)
+        cursor.center.y = center.y
+
+        if stackView.arrangedSubviews.count == 0 {
+            cursor.center.x = center.x
+        }
+
+        var l = -1
+        var r = stackView.arrangedSubviews.count
+        while r - l > 1 {
+            let mid = (r + l) / 2
+            if tapLocation.x <= stackView.arrangedSubviews[mid].globalFrame.maxX {
+                r = mid
+            } else {
+                l = mid
+            }
+        }
+
+        if r == stackView.arrangedSubviews.count {
+            cursor.center.x = stackView.arrangedSubviews[stackView.arrangedSubviews.count - 1].convertFrame(parent: self).maxX
+            return
+        }
+
+        let leftDis = abs(stackView.arrangedSubviews[r].globalFrame.minX - tapLocation.x)
+        let rightDis = abs(stackView.arrangedSubviews[r].globalFrame.maxX - tapLocation.x)
+
+        if leftDis < rightDis {
+            cursor.center.x = stackView.arrangedSubviews[r].convertFrame(parent: self).minX
+        } else {
+            cursor.center.x = stackView.arrangedSubviews[r].convertFrame(parent: self).maxX
+        }
+    }
+
+    private func removeCursor() {
+        cursor.removeFromSuperview()
     }
 }
 
@@ -61,7 +103,7 @@ extension ValueView: MathKeyboardReceiver {
     }
 
     func endEditing() {
-        print("Return")
+        removeCursor()
     }
 
     func moveCursor(_ direction: CursorDirection) {
