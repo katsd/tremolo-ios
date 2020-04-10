@@ -99,12 +99,45 @@ class ValueView: UIView {
         cursor.remove()
         cursor.removeFromSuperview()
     }
+
+    private func moveCursorView(withAnimation: Bool) {
+        let nextPosX: CGFloat
+        if stackView.arrangedSubviews.count == 0 {
+            nextPosX = center.x
+        } else {
+            if cursorPos == 0 {
+                nextPosX = stackView.arrangedSubviews[0].convertFrame(parent: self).minX
+            } else {
+                nextPosX = stackView.arrangedSubviews[cursorPos].convertFrame(parent: self).maxX
+            }
+        }
+
+        if withAnimation {
+            UIView.animate(withDuration: 0.2) {
+                self.cursor.center.x = nextPosX
+            }
+        } else {
+            cursor.center.x = nextPosX
+
+        }
+    }
 }
 
 extension ValueView: MathKeyboardReceiver {
 
     func addTexts(_ texts: [String], cursor: Int) {
-        print(texts)
+        for (idx, text) in texts.enumerated() {
+            let label = UILabel()
+                .text(text)
+                .textColor(.black)
+
+            stackView.insertArrangedSubview(label, at: cursorPos + idx)
+        }
+
+        layoutIfNeeded()
+
+        cursorPos += cursor + 1
+        moveCursorView(withAnimation: false)
     }
 
     func delete() {
@@ -116,7 +149,14 @@ extension ValueView: MathKeyboardReceiver {
     }
 
     func moveCursor(_ direction: CursorDirection) {
-        print("Move")
+        let nextPos = cursorPos + direction.rawValue
+
+        if nextPos < 0 || stackView.arrangedSubviews.count <= nextPos {
+            return
+        }
+
+        cursorPos = nextPos
+        moveCursorView(withAnimation: true)
     }
 
 }
