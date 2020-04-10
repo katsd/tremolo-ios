@@ -29,8 +29,6 @@ class ValueView: UIView {
         setStyle()
 
         setGesture()
-
-        MathKeyboard.receiver = self
     }
 
     required init(coder: NSCoder) {
@@ -46,6 +44,7 @@ class ValueView: UIView {
         self.isUserInteractionEnabled = true
 
         self.tap { _ in
+            MathKeyboard.receiver = self
             MathKeyboard.openKeyboard()
         }
     }
