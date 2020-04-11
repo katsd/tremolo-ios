@@ -20,9 +20,15 @@ struct MathKeyboardView: View {
 
     @ObservedObject var mathKeyboard = MathKeyboard.observable
 
+    let safeAreaInsets: EdgeInsets
+
     private let keySpacing: CGFloat = 5
 
     private let defaultKeySize = CGSize(width: 35, height: 40)
+
+    init(safeAreaInsets: EdgeInsets) {
+        self.safeAreaInsets = safeAreaInsets
+    }
 
     private func keySize(width: Int, height: Int) -> CGSize {
         let w = (defaultKeySize.width + keySpacing) * CGFloat(width) - keySpacing
@@ -31,29 +37,26 @@ struct MathKeyboardView: View {
     }
 
     var body: some View {
-        GeometryReader { geo in
-            VStack {
-                Spacer()
-                if self.mathKeyboard.showKeyboard {
-                    VStack {
-                        HStack {
-                            self.leftKeys()
-                            Spacer()
-                            self.middleKeys()
-                            Spacer()
-                            self.rightKeys()
-                        }
-                            .padding(.horizontal, 20)
-
+        Group {
+            if self.mathKeyboard.showKeyboard {
+                VStack {
+                    HStack {
+                        self.leftKeys()
                         Spacer()
-                            .frame(height: geo.safeAreaInsets.bottom)
+                        self.middleKeys()
+                        Spacer()
+                        self.rightKeys()
                     }
-                        .edgesIgnoringSafeArea(.bottom)
-                        .padding(.top, 10)
-                        .frame(maxWidth: .infinity)
-                        .background(Blur(style: .systemMaterial))
-                        .transition(.move(edge: .bottom))
+                        .padding(.horizontal, 20)
+
+                    Spacer()
+                        .frame(height: safeAreaInsets.bottom)
                 }
+                    .edgesIgnoringSafeArea(.bottom)
+                    .padding(.top, 10)
+                    .frame(maxWidth: .infinity)
+                    .background(Blur(style: .systemMaterial))
+                    .transition(.move(edge: .bottom))
             }
         }
     }

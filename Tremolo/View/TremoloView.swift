@@ -21,7 +21,12 @@ public struct TremoloView: View {
         ZStack {
             CodeViewRepresentable(blocks: $tremolo.blocks)
 
-            MathKeyboardView()
+            GeometryReader { geo in
+                VStack(spacing: 0) {
+                    Spacer()
+                    MathKeyboardView(safeAreaInsets: geo.safeAreaInsets)
+                }
+            }
         }
             .edgesIgnoringSafeArea(.all)
     }
