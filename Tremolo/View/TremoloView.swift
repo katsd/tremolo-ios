@@ -23,7 +23,8 @@ public struct TremoloView: View {
 
             GeometryReader { geo in
                 VStack(spacing: 0) {
-                    Spacer()
+                    Color.clear
+                        .overlay(BlockDrawerView())
                     MathKeyboardView(safeAreaInsets: geo.safeAreaInsets)
                 }
             }
