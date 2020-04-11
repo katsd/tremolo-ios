@@ -21,6 +21,8 @@ class ValueView: UIView {
     init(value: Value) {
         super.init(frame: .zero)
 
+        greaterThanOrEqualToSize(width: 10, height: 25)
+
         "1+2*3".forEach {
             self.stackView.addArrangedSubview(label(String($0)))
         }
