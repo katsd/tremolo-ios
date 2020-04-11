@@ -40,6 +40,8 @@ class CodeView: UIView {
 
         scrollView.addSubview(blockStackView)
         blockStackView.equalTo(scrollView)
+
+        setGesture()
     }
 
     required init?(coder: NSCoder) {
@@ -49,6 +51,12 @@ class CodeView: UIView {
     private func blockAnimation() {
         UIView.animate(withDuration: 0.2) {
             self.layoutIfNeeded()
+        }
+    }
+
+    private func setGesture() {
+        tap { _ in
+            MathKeyboard.closeKeyboard()
         }
     }
 
