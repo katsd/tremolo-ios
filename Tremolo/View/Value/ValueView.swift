@@ -50,9 +50,33 @@ class ValueView: UIView {
             MathKeyboard.openKeyboard()
             self.addCursor(tapLocation: gesture.location(in: nil))
         }
+
+        cursor.drag { gesture in
+            switch gesture.state {
+            case .began:
+                self.cursor.stopAnimation()
+            case .ended:
+                self.addCursor(tapLocation: self.cursor.globalFrame.center, withAnimation: true)
+                return
+            default:
+                break
+            }
+
+            let nextFrame = CGRect(origin: .init(x: self.cursor.frame.origin.x + gesture.translation(in: nil).x,
+                                                 y: self.cursor.frame.origin.y + gesture.translation(in: nil).y),
+                                   size: self.cursor.frame.size)
+
+            gesture.setTranslation(.zero, in: nil)
+
+            if !self.frame.contains(nextFrame) {
+                return
+            }
+
+            self.cursor.frame = nextFrame
+        }
     }
 
-    private func addCursor(tapLocation: CGPoint) {
+    private func addCursor(tapLocation: CGPoint, withAnimation: Bool = false) {
         addSubview(cursor)
         cursor.startAnimation()
 
@@ -88,7 +112,7 @@ class ValueView: UIView {
             cursorPos = r + 1
         }
 
-        moveCursorView(withAnimation: false)
+        moveCursorView(withAnimation: withAnimation)
     }
 
     private func removeCursor() {

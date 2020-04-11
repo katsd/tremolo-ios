@@ -14,14 +14,21 @@ class CursorView: UIView {
 
     private let maxOpacity: Float = 1
 
-    private let minOpacity: Float = 0.01
+    private let minOpacity: Float = 0.02
 
     init() {
         super.init(frame: .zero)
 
-        size(width: 3, height: 20)
-        backgroundColor(.systemBlue)
-        cornerRadius(2)
+        size(width: 10, height: 20)
+        layer.opacity = 0.02
+
+        let view = UIView()
+            .size(width: 3, height: 20)
+            .backgroundColor(.systemBlue)
+            .cornerRadius(2)
+
+        view.center = center
+        addSubview(view)
     }
 
     required init?(coder: NSCoder) {
