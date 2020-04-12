@@ -12,7 +12,7 @@ protocol BlockController {
 
     func floatBlock(blockView: BlockView, gesture: UIPanGestureRecognizer)
 
-    func dragBlock(blockView: BlockView, gesture: UIPanGestureRecognizer)
+    func dragBlock(blockView: BlockView, gesture: UIPanGestureRecognizer, drop: Bool)
 
     func dropBlock(blockView: BlockView, gesture: UIPanGestureRecognizer)
 

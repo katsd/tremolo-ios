@@ -55,9 +55,9 @@ class BlockView: UIView {
             case .began:
                 self.blockController?.floatBlock(blockView: self, gesture: gesture)
             case .changed:
-                self.blockController?.dragBlock(blockView: self, gesture: gesture)
+                self.blockController?.dragBlock(blockView: self, gesture: gesture, drop: false)
             case .ended:
-                self.blockController?.dropBlock(blockView: self, gesture: gesture)
+                self.blockController?.dragBlock(blockView: self, gesture: gesture, drop: true)
             default:
                 break
             }

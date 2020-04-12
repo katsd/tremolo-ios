@@ -82,12 +82,12 @@ extension CodeView: BlockController {
         }
     }
 
-    func dragBlock(blockView: BlockView, gesture: UIPanGestureRecognizer) {
+    func dragBlock(blockView: BlockView, gesture: UIPanGestureRecognizer, drop: Bool = false) {
         blockView.frame.origin.x += gesture.translation(in: nil).x
         blockView.frame.origin.y += gesture.translation(in: nil).y
         gesture.setTranslation(.zero, in: nil)
 
-        if abs(gesture.velocity(in: nil).y) > 800 {
+        if !drop && abs(gesture.velocity(in: nil).y) > 800 {
             return;
         }
 
@@ -96,6 +96,7 @@ extension CodeView: BlockController {
         if selectedBlockPos != newSelectedBlockPos {
             if let pos = selectedBlockPos {
                 pos.blockStackViewController.removeBlankView(path: pos.path, at: pos.idx) {
+                    // if newSelectedBlockPos isn't nil, self.blockAnimation()(= self.layoutIfNeeded()) will be called below.
                     if newSelectedBlockPos == nil {
                         self.blockAnimation()
                     }
@@ -110,12 +111,16 @@ extension CodeView: BlockController {
         }
 
         selectedBlockPos = newSelectedBlockPos
+
+        if drop {
+            dropBlock(blockView: blockView, gesture: gesture)
+        }
     }
 
     func dropBlock(blockView: BlockView, gesture: UIPanGestureRecognizer) {
 
         selectedBlockPos = findBlockPos(blockView: blockView, velocity: gesture.velocity(in: nil), selectedBlockPos: selectedBlockPos)
-
+        
         if let pos = selectedBlockPos {
             pos.blockStackViewController.addBlockView(blockView, path: pos.path, at: pos.idx) {
                 self.blockAnimation()
