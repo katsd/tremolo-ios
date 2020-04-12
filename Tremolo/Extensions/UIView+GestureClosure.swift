@@ -49,15 +49,17 @@ class DragGestureRecognizer: UIPanGestureRecognizer {
 
 extension UIView {
 
-    func tap(_ action: @escaping (_ gesture: UITapGestureRecognizer) -> ()) {
+    func tap(delegate: UIGestureRecognizerDelegate? = nil, _ action: @escaping (_ gesture: UITapGestureRecognizer) -> ()) {
         let recognizer = TapGestureRecognizer(action: action)
+        recognizer.delegate = delegate
         self.addGestureRecognizer(recognizer)
 
         checkIsUserInteractionEnabled()
     }
 
-    func drag(_ action: @escaping (_ gesture: UIPanGestureRecognizer) -> ()) {
+    func drag(delegate: UIGestureRecognizerDelegate? = nil, _ action: @escaping (_ gesture: UIPanGestureRecognizer) -> ()) {
         let recognizer = DragGestureRecognizer(action: action)
+        recognizer.delegate = delegate
         self.addGestureRecognizer(recognizer)
 
         checkIsUserInteractionEnabled()
