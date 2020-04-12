@@ -10,7 +10,7 @@ import UIKit
 
 class BlockStackView: UIStackView {
 
-    init(blocks: [UIView], blockController: BlockController) {
+    init(blocks: [UIView], blockController: BlockController?) {
         super.init(frame: .zero)
 
         self.axis(.vertical)

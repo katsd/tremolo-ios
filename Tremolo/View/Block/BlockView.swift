@@ -10,13 +10,13 @@ import SwiftUI
 
 class BlockView: UIView {
 
-    private let blockController: BlockController
+    private let blockController: BlockController?
 
     private let blockContentsStackView: BlockContentStackView
 
     private var blockStackViewPaths = [(Int, Int)]()
 
-    init(block: Block, blockController: BlockController) {
+    init(block: Block, blockController: BlockController? = nil) {
 
         self.blockController = blockController
 
@@ -49,11 +49,11 @@ class BlockView: UIView {
         self.drag { gesture in
             switch gesture.state {
             case .began:
-                self.blockController.floatBlock(blockView: self, gesture: gesture)
+                self.blockController?.floatBlock(blockView: self, gesture: gesture)
             case .changed:
-                self.blockController.dragBlock(blockView: self, gesture: gesture)
+                self.blockController?.dragBlock(blockView: self, gesture: gesture)
             case .ended:
-                self.blockController.dropBlock(blockView: self, gesture: gesture)
+                self.blockController?.dropBlock(blockView: self, gesture: gesture)
             default:
                 break
             }
@@ -72,7 +72,7 @@ class BlockView: UIView {
         }
     }
 
-    static private func blockContents(block: Block, blockController: BlockController) -> BlockContentStackView {
+    static private func blockContents(block: Block, blockController: BlockController?) -> BlockContentStackView {
         let stackView = BlockContentStackView()
 
         for (col, sv) in block.contents.enumerated() {
@@ -98,7 +98,7 @@ class BlockView: UIView {
             .text(text)
     }
 
-    static private func argView(arg: Argument, blockController: BlockController) -> UIView {
+    static private func argView(arg: Argument, blockController: BlockController?) -> UIView {
         switch arg {
         case let .code(blocks):
             return BlockStackView(blocks:
