@@ -1,4 +1,4 @@
- //
+//
 //  CodeView.swift
 //  Tremolo
 //  
@@ -64,11 +64,16 @@ class CodeView: UIView {
 
 extension CodeView: BlockController {
 
-    func floatBlock(blockView: UIView, gesture: UIPanGestureRecognizer) {
+    func floatBlock(blockView: BlockView, gesture: UIPanGestureRecognizer) {
         selectedBlockPos = findBlockPos(blockView: blockView, velocity: .zero, selectedBlockPos: selectedBlockPos)
 
         blockView.translatesAutoresizingMaskIntoConstraints = true
-        addSubViewKeepingGlobalFrame(blockView)
+
+        if let topView = blockView.topView {
+            topView.addSubViewKeepingGlobalFrame(blockView)
+        } else {
+            addSubViewKeepingGlobalFrame(blockView)
+        }
 
         if let pos = selectedBlockPos {
             pos.blockStackViewController.addBlankView(blockView: blockView, path: pos.path, at: pos.idx) {
@@ -77,7 +82,7 @@ extension CodeView: BlockController {
         }
     }
 
-    func dragBlock(blockView: UIView, gesture: UIPanGestureRecognizer) {
+    func dragBlock(blockView: BlockView, gesture: UIPanGestureRecognizer) {
         blockView.frame.origin.x += gesture.translation(in: nil).x
         blockView.frame.origin.y += gesture.translation(in: nil).y
         gesture.setTranslation(.zero, in: nil)
@@ -107,7 +112,7 @@ extension CodeView: BlockController {
         selectedBlockPos = newSelectedBlockPos
     }
 
-    func dropBlock(blockView: UIView, gesture: UIPanGestureRecognizer) {
+    func dropBlock(blockView: BlockView, gesture: UIPanGestureRecognizer) {
 
         selectedBlockPos = findBlockPos(blockView: blockView, velocity: gesture.velocity(in: nil), selectedBlockPos: selectedBlockPos)
 

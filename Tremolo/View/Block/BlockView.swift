@@ -16,11 +16,15 @@ class BlockView: UIView {
 
     private var blockStackViewPaths = [(Int, Int)]()
 
-    init(block: Block, blockController: BlockController? = nil) {
+    let topView: UIView?
+
+    init(block: Block, blockController: BlockController? = nil, topView: UIView? = nil) {
 
         self.blockController = blockController
 
         self.blockContentsStackView = BlockView.blockContents(block: block, blockController: blockController)
+
+        self.topView = topView
 
         super.init(frame: .zero)
 

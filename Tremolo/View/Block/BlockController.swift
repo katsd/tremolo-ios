@@ -10,10 +10,10 @@ import UIKit
 
 protocol BlockController {
 
-    func floatBlock(blockView: UIView, gesture: UIPanGestureRecognizer)
+    func floatBlock(blockView: BlockView, gesture: UIPanGestureRecognizer)
 
-    func dragBlock(blockView: UIView, gesture: UIPanGestureRecognizer)
+    func dragBlock(blockView: BlockView, gesture: UIPanGestureRecognizer)
 
-    func dropBlock(blockView: UIView, gesture: UIPanGestureRecognizer)
+    func dropBlock(blockView: BlockView, gesture: UIPanGestureRecognizer)
 
 }
