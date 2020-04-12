@@ -14,14 +14,14 @@ struct BlockDrawerView: View {
 
     @State var drawerWidth: CGFloat = 0
 
+    let blockController: BlockController
+
     var body: some View {
         ZStack {
             HStack(spacing: 0) {
                 Color.clear
                 VStack {
-                    ScrollView {
-                        Text("BlockDrawerView")
-                    }
+                    BlockSelectViewRepresentable(blockController: blockController)
                 }
                     .frame(width: drawerWidth)
                     .background(Blur(style: .systemMaterial))
@@ -49,7 +49,7 @@ struct BlockDrawerView: View {
                                     .foregroundColor(.white)
                                     .transition(.opacity)
                             } else {
-                                Image(systemName: "rectangle.grid.1x2.fill")
+                                Image(systemName: "plus")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .foregroundColor(.white)
@@ -60,7 +60,7 @@ struct BlockDrawerView: View {
                             .padding(15)
                     }
                         .background(Color.blue)
-                        .cornerRadius(10)
+                        .cornerRadius(15)
                         .padding(20)
                     Spacer()
                 }
