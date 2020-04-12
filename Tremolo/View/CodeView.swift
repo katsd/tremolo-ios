@@ -231,11 +231,18 @@ extension CodeView: BlockStackViewController {
             blockStackView.arrangedSubviews[idx].removeFromSuperview()
         }
 
-        blockStackView.addSubViewKeepingGlobalFrame(blockView)
+        let blankView = UIView()
+        blockStackView.insertArrangedSubview(blankView, at: idx)
+        blankView.equalToSizeOf(blockView)
 
-        blockStackView.insertArrangedSubview(blockView, at: idx)
+        self.layoutIfNeeded()
 
-        animation()
+        UIView.animate(withDuration: 0.2, animations: {
+            blockView.center = blankView.convertFrame(parent: blockView.superview).center
+        }, completion: { _ in
+            self.blockStackView.arrangedSubviews[idx].removeFromSuperview()
+            self.blockStackView.insertArrangedSubview(blockView, at: idx)
+        })
     }
 
     func addBlankView(blockView: UIView, path: (Int, Int), at idx: Int, animation: () -> Void) {
