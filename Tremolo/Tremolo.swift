@@ -13,8 +13,11 @@ public class Tremolo: ObservableObject {
 
     @Published var blocks: [Block]
 
+    let mainCodeView: CodeView
+
     public init(blocks: [Block]) {
         self.blocks = blocks
+        self.mainCodeView = CodeView(blocks: blocks)
     }
 
 }

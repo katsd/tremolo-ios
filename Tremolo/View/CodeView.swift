@@ -1,4 +1,4 @@
-//
+ //
 //  CodeView.swift
 //  Tremolo
 //  
@@ -251,14 +251,14 @@ extension CodeView: BlockStackViewController {
 
 struct CodeViewRepresentable: UIViewRepresentable {
 
-    @Binding private var blocks: [Block]
+    private let codeView: CodeView
 
-    init(blocks: Binding<[Block]>) {
-        self._blocks = blocks
+    init(_ codeView: CodeView) {
+        self.codeView = codeView
     }
 
     func makeUIView(context: Context) -> CodeView {
-        CodeView(blocks: blocks)
+        codeView
     }
 
     func updateUIView(_ uiView: CodeView, context: Context) {

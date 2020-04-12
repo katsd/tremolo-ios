@@ -19,12 +19,12 @@ public struct TremoloView: View {
 
     public var body: some View {
         ZStack {
-            CodeViewRepresentable(blocks: $tremolo.blocks)
+            CodeViewRepresentable(tremolo.mainCodeView)
 
             GeometryReader { geo in
                 VStack(spacing: 0) {
                     Color.clear
-                        .overlay(BlockDrawerView())
+                        .overlay(BlockDrawerView(blockController: self.tremolo.mainCodeView))
                     MathKeyboardView(safeAreaInsets: geo.safeAreaInsets)
                 }
             }
