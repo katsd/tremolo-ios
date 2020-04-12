@@ -37,20 +37,24 @@ class BlockSelectView: UIView {
 
         super.init(frame: .zero)
 
+        clipsToBounds(false)
+
         let scrollView = UIScrollView()
             .alwaysBounceVertical(true)
             .alwaysBounceHorizontal(true)
+            .clipsToBounds(true)
 
         let stackView = UIStackView()
             .axis(.vertical)
             .distribution(.fill)
             .alignment(.leading)
             .spacing(10)
-            .contents(
-                defaultBlocks.map { block in
-                    BlockView(block: block, blockController: self.blockController)
-                }
-            )
+
+        stackView.contents(
+            defaultBlocks.enumerated().map { (idx, block: Block) in
+                self.blockViewInStackView(block: block, stackView: stackView, idx: idx)
+            }
+        )
 
         scrollView.addSubview(stackView)
         addSubview(scrollView)
@@ -62,6 +66,25 @@ class BlockSelectView: UIView {
         fatalError()
     }
 
+    func blockViewInStackView(block: Block, stackView: UIStackView, idx: Int) -> BlockView {
+        let blockView = BlockView(block: block, blockController: self.blockController, topView: self)
+
+        blockView.drag(delegate: self) { gesture in
+            if gesture.state == .began {
+                stackView.insertArrangedSubview(
+                    self.blockViewInStackView(block: block, stackView: stackView, idx: idx),
+                    at: idx)
+            }
+        }
+
+        return blockView
+    }
+}
+
+extension BlockSelectView: UIGestureRecognizerDelegate {
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        true
+    }
 }
 
 struct BlockSelectViewRepresentable: UIViewRepresentable {
