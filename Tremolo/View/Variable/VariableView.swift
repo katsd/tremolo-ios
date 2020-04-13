@@ -10,10 +10,15 @@ import SwiftUI
 
 class VariableView: UIView {
 
-    init(variable: Variable, types: [Type]) {
+    @Binding private var isEditable: Bool
+
+    init(variable: Variable, types: [Type], isEditable: Binding<Bool>) {
+
+        self._isEditable = isEditable
+
         super.init(frame: .zero)
 
-        let hosting = UIHostingController(rootView: VariableView_SwiftUI(variable: .constant(variable)))
+        let hosting = UIHostingController(rootView: VariableView_SwiftUI(variable: .constant(variable), isEditable: isEditable))
         hosting.view.backgroundColor = .clear
 
         addSubview(hosting.view)
@@ -30,12 +35,19 @@ private struct VariableView_SwiftUI: View {
 
     @Binding private var variable: Variable
 
-    init(variable: Binding<Variable>) {
+    @Binding private var isEditable: Bool
+
+    init(variable: Binding<Variable>, isEditable: Binding<Bool>) {
         self._variable = variable
+
+        self._isEditable = isEditable
     }
 
     var body: some View {
         Button(action: {
+            if !self.isEditable {
+                return
+            }
             print("Select Variable")
         }) {
             Text(variable.name)

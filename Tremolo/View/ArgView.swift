@@ -20,7 +20,7 @@ class ArgView: UIView {
             valueView.equalTo(self)
 
         case let .variable(v):
-            let variableView = VariableView(variable: v, types: [v.type])
+            let variableView = VariableView(variable: v, types: [v.type], isEditable: isEditable)
             addSubview(variableView)
             variableView.equalTo(self)
 
