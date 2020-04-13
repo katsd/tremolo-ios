@@ -12,17 +12,22 @@ class BlockView: UIView {
 
     var isOnSelectView = false
 
+    var isEditable: Binding<Bool> {
+        Binding(
+            get: { !self.isOnSelectView },
+            set: { _ in }
+        )
+    }
+
     private let blockController: BlockController?
 
-    private let blockContentsStackView: BlockContentStackView
+    private var blockContentsStackView = BlockContentStackView()
 
     private var blockStackViewPaths = [(Int, Int)]()
 
     init(block: Block, blockController: BlockController? = nil) {
 
         self.blockController = blockController
-
-        self.blockContentsStackView = BlockView.blockContents(block: block, blockController: blockController)
 
         super.init(frame: .zero)
 
@@ -32,7 +37,8 @@ class BlockView: UIView {
 
         setBlockStackViewPaths(block: block)
 
-        self.addSubview(blockContentsStackView)
+        blockContentsStackView = blockContents(block: block)
+        addSubview(blockContentsStackView)
         blockContentsStackView.equalTo(self, inset: .init(top: 5, left: 5, bottom: 5, right: 5))
     }
 
@@ -74,7 +80,7 @@ class BlockView: UIView {
         }
     }
 
-    static private func blockContents(block: Block, blockController: BlockController?) -> BlockContentStackView {
+    private func blockContents(block: Block) -> BlockContentStackView {
         let stackView = BlockContentStackView()
 
         for (col, sv) in block.contents.enumerated() {
@@ -85,7 +91,7 @@ class BlockView: UIView {
                 case let .label(text):
                     view = label(text: text)
                 case let .arg(idx):
-                    view = argView(arg: block.argValues[idx], blockController: blockController)
+                    view = argView(arg: block.argValues[idx])
                 }
 
                 stackView.addContent(view, at: col)
@@ -95,24 +101,25 @@ class BlockView: UIView {
         return stackView
     }
 
-    static private func label(text: String) -> UIView {
+    private func label(text: String) -> UIView {
         UILabel()
             .text(text)
     }
 
-    static private func argView(arg: Argument, blockController: BlockController?) -> UIView {
+    private func argView(arg: Argument) -> UIView {
         switch arg {
         case let .code(blocks):
             return BlockStackView(blocks:
                                   blocks.map {
-                                      BlockView(block: $0, blockController: blockController)
+                                      BlockView(block: $0, blockController: self.blockController)
                                   },
                                   blockController: blockController)
         default:
-            return ArgView(arg: arg)
+            return ArgView(arg: arg, isEditable: isEditable)
         }
 
     }
+
 }
 
 extension BlockView: BlockFinder {

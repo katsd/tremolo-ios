@@ -6,16 +6,16 @@
 //  Copyright (c) 2020 Katsu Matsuda. All rights reserved.
 //
 
-import UIKit
+import SwiftUI
 
 class ArgView: UIView {
 
-    init(arg: Argument) {
+    init(arg: Argument, isEditable: Binding<Bool>) {
         super.init(frame: .zero)
 
         switch arg {
         case let .value(v):
-            let valueView = ValueView(value: v)
+            let valueView = ValueView(value: v, isEditable: isEditable)
             addSubview(valueView)
             valueView.equalTo(self)
 

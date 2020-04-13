@@ -6,7 +6,7 @@
 //  Copyright (c) 2020 Katsu Matsuda. All rights reserved.
 //
 
-import UIKit
+import SwiftUI
 
 class ValueView: UIView {
 
@@ -14,11 +14,16 @@ class ValueView: UIView {
 
     private let cursor = CursorView()
 
+    @Binding var isEditable: Bool
+
     // 0   1   2   3  <- cursorPos
     // | A | B | C |
     private var cursorPos = 0
 
-    init(value: Value) {
+    init(value: Value, isEditable: Binding<Bool>) {
+
+        self._isEditable = isEditable
+
         super.init(frame: .zero)
 
         greaterThanOrEqualToSize(width: 10, height: 25)
@@ -48,6 +53,9 @@ class ValueView: UIView {
         isUserInteractionEnabled = true
 
         tap { gesture in
+            if !self.isEditable {
+                return
+            }
             MathKeyboard.setReceiver(self)
             MathKeyboard.openKeyboard()
             self.addCursor(tapLocation: gesture.location(in: nil))
