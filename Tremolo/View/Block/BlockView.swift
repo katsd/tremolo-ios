@@ -10,6 +10,8 @@ import SwiftUI
 
 class BlockView: UIView {
 
+    var isOnSelectView = false
+
     private let blockController: BlockController?
 
     private let blockContentsStackView: BlockContentStackView

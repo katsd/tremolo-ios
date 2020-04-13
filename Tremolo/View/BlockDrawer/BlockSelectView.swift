@@ -68,9 +68,14 @@ class BlockSelectView: UIView {
 
     func blockViewInStackView(block: Block, stackView: UIStackView, idx: Int) -> BlockView {
         let blockView = BlockView(block: block, blockController: self.blockController)
+        blockView.isOnSelectView = true
 
         blockView.drag(delegate: self) { gesture in
             if gesture.state == .began {
+                if !blockView.isOnSelectView {
+                    return
+                }
+                blockView.isOnSelectView = false
 
                 stackView.insertArrangedSubview(
                     self.blockViewInStackView(block: block, stackView: stackView, idx: idx),
