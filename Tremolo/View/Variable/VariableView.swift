@@ -57,5 +57,6 @@ private struct VariableView_SwiftUI: View {
                 .background(Color.white.opacity(0.5))
                 .cornerRadius(5)
         }
+            .disabled(!self.isEditable)
     }
 }
