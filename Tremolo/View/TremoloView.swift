@@ -28,6 +28,9 @@ public struct TremoloView: View {
                     MathKeyboardView(safeAreaInsets: geo.safeAreaInsets)
                 }
             }
+
+            TopView(tremolo.topView)
+                .frame(width: 0, height: 0)
         }
             .edgesIgnoringSafeArea(.all)
     }

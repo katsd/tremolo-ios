@@ -15,9 +15,11 @@ public class Tremolo: ObservableObject {
 
     let mainCodeView: CodeView
 
+    let topView = UIView()
+
     public init(blocks: [Block]) {
         self.blocks = blocks
-        self.mainCodeView = CodeView(blocks: blocks)
+        self.mainCodeView = CodeView(blocks: blocks, topView: topView)
     }
 
 }

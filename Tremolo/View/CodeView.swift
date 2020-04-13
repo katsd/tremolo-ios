@@ -16,9 +16,13 @@ class CodeView: UIView {
 
     private var blockStackView = UIStackView()
 
-    init(blocks: [Block]) {
+    private let topView: UIView
+
+    init(blocks: [Block], topView: UIView) {
 
         self.blocks = blocks
+
+        self.topView = topView
 
         super.init(frame: .zero)
 
@@ -69,11 +73,7 @@ extension CodeView: BlockController {
 
         blockView.translatesAutoresizingMaskIntoConstraints = true
 
-        if let topView = blockView.topView {
-            topView.addSubViewKeepingGlobalFrame(blockView)
-        } else {
-            addSubViewKeepingGlobalFrame(blockView)
-        }
+        self.topView.addSubViewKeepingGlobalFrame(blockView)
 
         if let pos = selectedBlockPos {
             pos.blockStackViewController.addBlankView(blockView: blockView, path: pos.path, at: pos.idx) {
@@ -120,7 +120,7 @@ extension CodeView: BlockController {
     func dropBlock(blockView: BlockView, gesture: UIPanGestureRecognizer) {
 
         selectedBlockPos = findBlockPos(blockView: blockView, velocity: gesture.velocity(in: nil), selectedBlockPos: selectedBlockPos)
-        
+
         if let pos = selectedBlockPos {
             pos.blockStackViewController.addBlockView(blockView, path: pos.path, at: pos.idx) {
                 self.blockAnimation()
