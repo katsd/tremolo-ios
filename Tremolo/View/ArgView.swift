@@ -20,9 +20,9 @@ class ArgView: UIView {
             valueView.equalTo(self)
 
         case let .variable(v):
-            let variableSelectView = VariableView(variable: v, types: [v.type])
-            addSubview(variableSelectView)
-            variableSelectView.equalTo(self)
+            let variableView = VariableView(variable: v, types: [v.type])
+            addSubview(variableView)
+            variableView.equalTo(self)
 
         default:
             break
