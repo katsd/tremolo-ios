@@ -1,5 +1,5 @@
 //
-//  VariableSelectView.swift
+//  VariableView.swift
 //  Tremolo
 //  
 //  Created by Katsu Matsuda on 2020/04/13.
