@@ -60,7 +60,7 @@ class CodeView: UIView {
 
     private func setGesture() {
         tap { _ in
-            MathKeyboard.closeKeyboard()
+            Keyboard.closeKeyboard()
         }
     }
 

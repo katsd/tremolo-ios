@@ -13,10 +13,4 @@ protocol MathKeyboardReceiver {
     // move cursor to the back of texts[cursor]
     func addTexts(_ texts: [String], cursor: Int)
 
-    func delete()
-
-    func endEditing()
-
-    func moveCursor(_ direction: CursorDirection)
-
 }

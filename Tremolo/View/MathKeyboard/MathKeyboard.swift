@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+/*
 class MathKeyboard {
 
     static var receiver: MathKeyboardReceiver? = nil
@@ -20,9 +21,7 @@ class MathKeyboard {
     }
 
     static func openKeyboard() {
-        animation {
-            observable.showKeyboard = true
-        }
+        observable.showKeyboard = true
     }
 
     static func closeKeyboard() {
@@ -57,3 +56,4 @@ class MathKeyboardObservable: ObservableObject {
     @Published var showKeyboard = false
 
 }
+*/

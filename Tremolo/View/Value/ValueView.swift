@@ -56,8 +56,7 @@ class ValueView: UIView {
             if !self.isEditable {
                 return
             }
-            MathKeyboard.setReceiver(self)
-            MathKeyboard.openKeyboard()
+            Keyboard.open(keyboardReceiver: self, mathKeyboardReceiver: self, type: .math)
             self.addCursor(tapLocation: gesture.location(in: nil))
         }
 
@@ -165,18 +164,7 @@ class ValueView: UIView {
     }
 }
 
-extension ValueView: MathKeyboardReceiver {
-
-    func addTexts(_ texts: [String], cursor: Int) {
-        for (idx, text) in texts.enumerated() {
-            stackView.insertArrangedSubview(label(text), at: cursorPos + idx)
-        }
-
-        layoutIfNeeded()
-
-        cursorPos += cursor + 1
-        moveCursorView(withAnimation: false)
-    }
+extension ValueView: KeyboardReceiver {
 
     func delete() {
         if cursorPos == 0 {
@@ -204,6 +192,21 @@ extension ValueView: MathKeyboardReceiver {
 
         cursorPos = nextPos
         moveCursorView(withAnimation: true)
+    }
+
+}
+
+extension ValueView: MathKeyboardReceiver {
+
+    func addTexts(_ texts: [String], cursor: Int) {
+        for (idx, text) in texts.enumerated() {
+            stackView.insertArrangedSubview(label(text), at: cursorPos + idx)
+        }
+
+        layoutIfNeeded()
+
+        cursorPos += cursor + 1
+        moveCursorView(withAnimation: false)
     }
 
 }

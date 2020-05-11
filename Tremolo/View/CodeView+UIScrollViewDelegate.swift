@@ -11,7 +11,7 @@ import UIKit
 extension CodeView: UIScrollViewDelegate {
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        MathKeyboard.closeKeyboard()
+        Keyboard.closeKeyboard()
     }
 
 }

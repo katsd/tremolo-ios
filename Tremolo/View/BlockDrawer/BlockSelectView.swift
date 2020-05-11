@@ -23,6 +23,12 @@ class BlockSelectView: UIView {
               argValues: [.value(Value(type: .custom(""), value: ""))],
               contents: [[.label("Nyan"), .arg(0)]]),
 
+        Block(name: "default+arg2",
+              type: .void,
+              argTypes: [.custom("type")],
+              argValues: [.variable(Variable(type: .custom("type"), name: "Variable"))],
+              contents: [[.label("Nyan"), .arg(0)]]),
+
         Block(name: "default+code",
               type: .void,
               argTypes: [.code],

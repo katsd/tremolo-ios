@@ -18,17 +18,9 @@ struct MathKeyboardView: View {
 
     }
 
-    @ObservedObject var mathKeyboard = MathKeyboard.observable
-
-    let safeAreaInsets: EdgeInsets
-
     private let keySpacing: CGFloat = 5
 
     private let defaultKeySize = CGSize(width: 35, height: 40)
-
-    init(safeAreaInsets: EdgeInsets) {
-        self.safeAreaInsets = safeAreaInsets
-    }
 
     private func keySize(width: Int, height: Int) -> CGSize {
         let w = (defaultKeySize.width + keySpacing) * CGFloat(width) - keySpacing
@@ -37,28 +29,21 @@ struct MathKeyboardView: View {
     }
 
     var body: some View {
-        Group {
-            if self.mathKeyboard.showKeyboard {
-                VStack {
-                    HStack {
-                        self.leftKeys()
-                        Spacer()
-                        self.middleKeys()
-                        Spacer()
-                        self.rightKeys()
-                    }
-                        .padding(.horizontal, 20)
-
-                    Spacer()
-                        .frame(height: safeAreaInsets.bottom)
-                }
-                    .edgesIgnoringSafeArea(.bottom)
-                    .padding(.top, 10)
-                    .frame(maxWidth: .infinity)
-                    .background(Blur(style: .systemMaterial))
-                    .transition(.move(edge: .bottom))
+        VStack {
+            HStack {
+                leftKeys()
+                Spacer()
+                middleKeys()
+                Spacer()
+                rightKeys()
             }
+                .padding(.horizontal, 20)
         }
+            .edgesIgnoringSafeArea(.bottom)
+            .padding(.top, 10)
+            .frame(maxWidth: .infinity)
+            .background(Blur(style: .systemMaterial))
+            .transition(.move(edge: .bottom))
     }
 
     private func leftKeys() -> some View {
@@ -124,13 +109,13 @@ struct MathKeyboardView: View {
     }
 
     private func deleteKey() -> some View {
-        keyView(value: .action({ MathKeyboard.receiver?.delete() }), size: keySize(width: 2, height: 1), labelColor: .white, color: .red) {
+        keyView(value: .action({ Keyboard.receiver?.delete() }), size: keySize(width: 2, height: 1), labelColor: .white, color: .red) {
             Image(systemName: "delete.left.fill")
         }
     }
 
     private func returnKey() -> some View {
-        keyView(value: .action({ MathKeyboard.closeKeyboard() }), size: keySize(width: 2, height: 1), labelColor: .white, color: .blue) {
+        keyView(value: .action({ Keyboard.closeKeyboard() }), size: keySize(width: 2, height: 1), labelColor: .white, color: .blue) {
             Image(systemName: "return")
         }
     }
@@ -144,7 +129,7 @@ struct MathKeyboardView: View {
             label = Image(systemName: "arrowtriangle.left.fill")
         }
 
-        return keyView(value: .action({ MathKeyboard.receiver?.moveCursor(direction) }), size: defaultKeySize, labelColor: .white, color: .gray) {
+        return keyView(value: .action({ Keyboard.receiver?.moveCursor(direction) }), size: defaultKeySize, labelColor: .white, color: .gray) {
             label
         }
     }
@@ -153,7 +138,7 @@ struct MathKeyboardView: View {
         Button(action: {
             switch value {
             case let .text(texts:texts, cursor: cursor):
-                MathKeyboard.receiver?.addTexts(texts, cursor: cursor)
+                Keyboard.mathKeyboardReceiver?.addTexts(texts, cursor: cursor)
             case let .action(action):
                 action()
             }

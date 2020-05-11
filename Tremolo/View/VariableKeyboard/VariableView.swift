@@ -48,7 +48,8 @@ private struct VariableView_SwiftUI: View {
             if !self.isEditable {
                 return
             }
-            print("Select Variable")
+
+            VariableKeyboard.show(frame: .zero)
         }) {
             Text(variable.name)
                 .foregroundColor(.black)

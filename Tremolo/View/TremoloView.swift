@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import CoreText
 
 @available(iOS 13.0, macOS 10.15, *)
 public struct TremoloView: View {
@@ -26,10 +27,13 @@ public struct TremoloView: View {
                     ZStack {
                         Color.clear
                             .overlay(BlockDrawerView(blockController: self.tremolo.mainCodeView))
+
+                        VariableKeyboardView()
+
                         TopView(self.tremolo.topView)
                             .frame(width: 0, height: 0)
                     }
-                    MathKeyboardView(safeAreaInsets: geo.safeAreaInsets)
+                    KeyboardView(safeAreaInsets: geo.safeAreaInsets)
                 }
             }
 
