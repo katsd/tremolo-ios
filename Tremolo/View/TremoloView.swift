@@ -28,8 +28,6 @@ public struct TremoloView: View {
                         Color.clear
                             .overlay(BlockDrawerView(blockController: self.tremolo.mainCodeView))
 
-                        VariableKeyboardView()
-
                         TopView(self.tremolo.topView)
                             .frame(width: 0, height: 0)
                     }

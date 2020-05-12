@@ -49,7 +49,7 @@ private struct VariableView_SwiftUI: View {
                 return
             }
 
-            VariableKeyboard.show(frame: .zero)
+            //TODO: show keyboard
         }) {
             Text(variable.name)
                 .foregroundColor(.black)
