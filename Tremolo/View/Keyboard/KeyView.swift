@@ -14,11 +14,14 @@ struct KeyView<Content: View>: View {
 
     let size: CGSize
 
+    let color: Color
+
     let label: () -> Content
 
-    init(value: KeyValue, size: CGSize, @ViewBuilder label: @escaping () -> Content) {
+    init(value: KeyValue, size: CGSize = KeySize.one.cgSize, color: Color = .gray, @ViewBuilder label: @escaping () -> Content) {
         self.value = value
         self.size = size
+        self.color = color
         self.label = label
     }
 
@@ -34,6 +37,7 @@ struct KeyView<Content: View>: View {
             label()
         }
             .frame(width: size.width, height: size.height)
+            .background(color)
             .cornerRadius(7)
     }
 
