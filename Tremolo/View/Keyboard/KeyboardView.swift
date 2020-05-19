@@ -14,6 +14,8 @@ struct KeyboardView: View {
 
     private let safeAreaInsets: EdgeInsets
 
+    @State var keyboardType: KeyboardType = .math
+
     init(safeAreaInsets: EdgeInsets) {
         self.safeAreaInsets = safeAreaInsets
     }
@@ -22,15 +24,45 @@ struct KeyboardView: View {
         Group {
             if observer.show {
                 VStack(spacing: 0) {
+                    topButtons()
                     keysView()
                     Spacer()
                         .frame(height: safeAreaInsets.bottom)
                 }
+                    .padding(.horizontal, 10)
                     .edgesIgnoringSafeArea(.bottom)
                     .background(Blur(style: .systemMaterial))
                     .transition(.move(edge: .bottom))
             }
         }
+    }
+
+    private func topButtons() -> some View {
+        HStack {
+            Group {
+                keyboardTypePicker()
+
+                Spacer()
+
+                Button(action: { Keyboard.closeKeyboard() }) {
+                    Image(systemName: "keyboard.chevron.compact.down")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .padding(.vertical, 12)
+                }
+            }
+        }
+            .foregroundColor(.primary)
+            .frame(height: 50)
+    }
+
+    private func keyboardTypePicker() -> some View {
+        Picker(selection: $keyboardType, label: EmptyView()) {
+            Image(systemName: "textformat.123").tag(KeyboardType.math)
+            Image(systemName: "xmark").tag(KeyboardType.variable)
+        }
+            .pickerStyle(SegmentedPickerStyle())
+            .frame(maxWidth: 120)
     }
 
     private func keysView() -> some View {

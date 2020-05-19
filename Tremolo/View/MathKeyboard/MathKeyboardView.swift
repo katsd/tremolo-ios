@@ -29,18 +29,11 @@ struct MathKeyboardView: View {
     }
 
     var body: some View {
-        VStack {
-            HStack {
-                leftKeys()
-                Spacer()
-                middleKeys()
-            }
-                .padding(.horizontal, 20)
+        HStack {
+            leftKeys()
+            Spacer()
+            middleKeys()
         }
-            .edgesIgnoringSafeArea(.bottom)
-            .padding(.top, 10)
-            .frame(maxWidth: .infinity)
-            .transition(.move(edge: .bottom))
     }
 
     private func leftKeys() -> some View {
