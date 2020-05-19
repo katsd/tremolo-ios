@@ -40,7 +40,6 @@ struct MathKeyboardView: View {
             .edgesIgnoringSafeArea(.bottom)
             .padding(.top, 10)
             .frame(maxWidth: .infinity)
-            .background(Blur(style: .systemMaterial))
             .transition(.move(edge: .bottom))
     }
 
