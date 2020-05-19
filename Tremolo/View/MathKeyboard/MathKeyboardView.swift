@@ -34,8 +34,6 @@ struct MathKeyboardView: View {
                 leftKeys()
                 Spacer()
                 middleKeys()
-                Spacer()
-                rightKeys()
             }
                 .padding(.horizontal, 20)
         }
@@ -49,22 +47,22 @@ struct MathKeyboardView: View {
     private func leftKeys() -> some View {
         VStack(spacing: keySpacing) {
             HStack(spacing: keySpacing) {
-                simpleKey("6")
-                simpleKey("7")
-                simpleKey("8")
-                simpleKey("9")
+                keyView("6")
+                keyView("7")
+                keyView("8")
+                keyView("9")
             }
             HStack(spacing: keySpacing) {
-                simpleKey("2")
-                simpleKey("3")
-                simpleKey("4")
-                simpleKey("5")
+                keyView("2")
+                keyView("3")
+                keyView("4")
+                keyView("5")
             }
             HStack(spacing: keySpacing) {
-                simpleKey("0")
-                simpleKey("1")
-                simpleKey(".")
-                simpleKey("=")
+                keyView("0")
+                keyView("1")
+                keyView(".")
+                keyView("=")
             }
         }
     }
@@ -72,83 +70,24 @@ struct MathKeyboardView: View {
     private func middleKeys() -> some View {
         VStack(spacing: keySpacing) {
             HStack(spacing: keySpacing) {
-                simpleKey("*")
-                simpleKey("/")
+                keyView("*")
+                keyView("/")
             }
             HStack(spacing: keySpacing) {
-                simpleKey("+")
-                simpleKey("-")
+                keyView("+")
+                keyView("-")
             }
             HStack(spacing: keySpacing) {
-                simpleKey("(")
-                simpleKey(")")
+                keyView("(")
+                keyView(")")
             }
         }
     }
 
-    private func rightKeys() -> some View {
-        VStack(spacing: keySpacing) {
-            HStack(spacing: keySpacing) {
-                directionKey(direction: .back)
-                directionKey(direction: .forward)
-            }
-            deleteKey()
-            returnKey()
-        }
-    }
-
-    private func keySpacer() -> some View {
-        Spacer()
-            .frame(width: defaultKeySize.width, height: defaultKeySize.height)
-    }
-
-    private func simpleKey(_ value: String) -> some View {
-        keyView(value: .text(texts: [value], cursor: 0), size: defaultKeySize, labelColor: .primary, color: .gray) {
+    private func keyView(_ value: String) -> some View {
+        KeyView(value: .text(texts: [value], cursor: 0)) {
             Text(value)
+                .foregroundColor(.primary)
         }
     }
-
-    private func deleteKey() -> some View {
-        keyView(value: .action({ Keyboard.receiver?.delete() }), size: keySize(width: 2, height: 1), labelColor: .white, color: .red) {
-            Image(systemName: "delete.left.fill")
-        }
-    }
-
-    private func returnKey() -> some View {
-        keyView(value: .action({ Keyboard.closeKeyboard() }), size: keySize(width: 2, height: 1), labelColor: .white, color: .blue) {
-            Image(systemName: "return")
-        }
-    }
-
-    private func directionKey(direction: CursorDirection) -> some View {
-        let label: Image
-        switch direction {
-        case .forward:
-            label = Image(systemName: "arrowtriangle.right.fill")
-        case .back:
-            label = Image(systemName: "arrowtriangle.left.fill")
-        }
-
-        return keyView(value: .action({ Keyboard.receiver?.moveCursor(direction) }), size: defaultKeySize, labelColor: .white, color: .gray) {
-            label
-        }
-    }
-
-    private func keyView<T: View>(value: keyValue, size: CGSize, labelColor: Color, color: Color, @ViewBuilder label: @escaping () -> T) -> some View {
-        Button(action: {
-            switch value {
-            case let .text(texts:texts, cursor: cursor):
-                Keyboard.mathKeyboardReceiver?.addTexts(texts, cursor: cursor)
-            case let .action(action):
-                action()
-            }
-        }) {
-            label()
-                .foregroundColor(labelColor)
-                .frame(width: size.width, height: size.height)
-        }
-            .background(color)
-            .cornerRadius(7)
-    }
-
 }
