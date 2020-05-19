@@ -31,6 +31,8 @@ class Keyboard {
                      variableKeyboardReceiver: VariableKeyboardReceiver? = nil,
                      type: KeyboardType) {
 
+        releaseReceiver()
+
         receiver = keyboardReceiver
 
         self.mathKeyboardReceiver = mathKeyboardReceiver
@@ -53,13 +55,17 @@ class Keyboard {
     }
 
     static func closeKeyboard() {
+        releaseReceiver()
+        animation {
+            observer.show = false
+        }
+    }
+
+    static private func releaseReceiver() {
         receiver?.endEditing()
         receiver = nil
         mathKeyboardReceiver = nil
         variableKeyboardReceiver = nil
-        animation {
-            observer.show = false
-        }
     }
 
     private static func animation(_ action: () -> Void) {
