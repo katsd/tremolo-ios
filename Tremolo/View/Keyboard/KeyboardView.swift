@@ -67,11 +67,14 @@ struct KeyboardView: View {
 
     private func keysView() -> some View {
         HStack {
-            if observer.type == .math {
-                MathKeyboardView()
-            } else {
-                VariableKeyboardView()
+            Group {
+                if observer.type == .math {
+                    MathKeyboardView()
+                } else {
+                    VariableKeyboardView()
+                }
             }
+                .frame(maxWidth: .infinity)
 
             VStack(spacing: KeySize.spacing) {
                 HStack(spacing: KeySize.spacing) {
