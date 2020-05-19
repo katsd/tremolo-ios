@@ -57,7 +57,7 @@ struct KeyboardView: View {
     }
 
     private func keyboardTypePicker() -> some View {
-        Picker(selection: $keyboardType, label: EmptyView()) {
+        Picker(selection: $observer.type, label: EmptyView()) {
             Image(systemName: "textformat.123").tag(KeyboardType.math)
             Image(systemName: "xmark").tag(KeyboardType.variable)
         }
