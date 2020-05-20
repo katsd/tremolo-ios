@@ -12,10 +12,4 @@ protocol VariableKeyboardReceiver {
 
     func addVariable(_ variable: Variable)
 
-    func delete()
-
-    func endEditing()
-
-    func moveCursor()
-
 }
