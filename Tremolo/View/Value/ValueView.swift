@@ -56,7 +56,7 @@ class ValueView: UIView {
             if !self.isEditable {
                 return
             }
-            Keyboard.open(keyboardReceiver: self, mathKeyboardReceiver: self, type: .math)
+            Keyboard.open(keyboardReceiver: self, mathKeyboardReceiver: self, variableKeyboardReceiver: self, type: .math)
             self.addCursor(tapLocation: gesture.location(in: nil))
         }
 
@@ -162,6 +162,13 @@ class ValueView: UIView {
             .text(text)
             .textColor(.black)
     }
+
+    private func variableLabel(_ variable: Variable) -> UILabel {
+        UILabel()
+            .text(variable.name)
+            .textColor(.blue)
+    }
+
 }
 
 extension ValueView: KeyboardReceiver {
@@ -206,6 +213,17 @@ extension ValueView: MathKeyboardReceiver {
         layoutIfNeeded()
 
         cursorPos += cursor + 1
+        moveCursorView(withAnimation: false)
+    }
+
+}
+
+extension ValueView: VariableKeyboardReceiver {
+
+    func addVariable(_ variable: Variable) {
+        stackView.insertArrangedSubview(variableLabel(variable), at: cursorPos)
+        layoutIfNeeded()
+        cursorPos += 1
         moveCursorView(withAnimation: false)
     }
 
