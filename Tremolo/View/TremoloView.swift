@@ -32,6 +32,7 @@ public struct TremoloView: View {
                             .frame(width: 0, height: 0)
                     }
                     KeyboardView(safeAreaInsets: geo.safeAreaInsets)
+                        .environmentObject(self.tremolo)
                 }
             }
 

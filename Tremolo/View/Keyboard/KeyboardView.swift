@@ -10,6 +10,8 @@ import SwiftUI
 
 struct KeyboardView: View {
 
+    @EnvironmentObject var tremolo: Tremolo
+
     @ObservedObject var observer = Keyboard.observer
 
     private let safeAreaInsets: EdgeInsets
@@ -71,7 +73,8 @@ struct KeyboardView: View {
                 if observer.type == .math {
                     MathKeyboardView()
                 } else {
-                    VariableKeyboardView()
+                    VariableKeyboardView(variableTypes: $observer.variableTypes)
+                        .environmentObject(tremolo)
                 }
             }
                 .frame(maxWidth: .infinity)

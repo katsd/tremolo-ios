@@ -82,4 +82,6 @@ class KeyboardObserver: ObservableObject {
 
     @Published var type: KeyboardType = .math
 
+    @Published var variableTypes: [Type] = [.custom("value")]
+
 }

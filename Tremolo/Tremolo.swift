@@ -13,12 +13,15 @@ public class Tremolo: ObservableObject {
 
     @Published var blocks: [Block]
 
+    @Published var variables: [Variable]
+
     let mainCodeView: CodeView
 
     let topView = UIView()
 
-    public init(blocks: [Block]) {
+    public init(blocks: [Block], variables: [Variable]) {
         self.blocks = blocks
+        self.variables = variables
         self.mainCodeView = CodeView(blocks: blocks, topView: topView)
     }
 
