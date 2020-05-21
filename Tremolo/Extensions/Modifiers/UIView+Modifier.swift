@@ -35,7 +35,13 @@ extension UIView {
 
     func clipsToBounds(_ flag: Bool) -> UIView {
         self.clipsToBounds = flag
-        return  self
+        return self
+    }
+
+    func overlay(view: UIView, padding: UIEdgeInsets = .zero) -> UIView {
+        addSubview(view)
+        view.equalTo(self, inset: padding)
+        return self
     }
 
 }
