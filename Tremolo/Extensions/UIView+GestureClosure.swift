@@ -72,9 +72,11 @@ extension UIView {
     func tap(delegate: UIGestureRecognizerDelegate? = nil, _ action: @escaping (_ gesture: UITapGestureRecognizer) -> ()) {
         let recognizer = TapGestureRecognizer(action: action)
         recognizer.delegate = delegate
-        self.addGestureRecognizer(recognizer)
+        addGestureRecognizer(recognizer)
 
+        #if DEBUG
         checkIsUserInteractionEnabled()
+        #endif
     }
 
     func longPress(minimumPressDuration: Double, delegate: UIGestureRecognizerDelegate? = nil, _ action: @escaping (_ gesture: UILongPressGestureRecognizer) -> ()) {
@@ -82,15 +84,19 @@ extension UIView {
         recognizer.delegate = delegate
         addGestureRecognizer(recognizer)
 
+        #if DEBUG
         checkIsUserInteractionEnabled()
+        #endif
     }
 
     func drag(delegate: UIGestureRecognizerDelegate? = nil, _ action: @escaping (_ gesture: UIPanGestureRecognizer) -> ()) {
         let recognizer = DragGestureRecognizer(action: action)
         recognizer.delegate = delegate
-        self.addGestureRecognizer(recognizer)
+        addGestureRecognizer(recognizer)
 
+        #if DEBUG
         checkIsUserInteractionEnabled()
+        #endif
     }
 
     private func checkIsUserInteractionEnabled() {
