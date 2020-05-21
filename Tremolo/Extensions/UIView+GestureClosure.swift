@@ -27,6 +27,26 @@ class TapGestureRecognizer: UITapGestureRecognizer {
 
 }
 
+class LongPressGestureRecognizer: UILongPressGestureRecognizer {
+
+    private let action: (_ gesture: UILongPressGestureRecognizer) -> ()
+
+    init(minimumPressDuration: Double, action: @escaping (_ gesture: UILongPressGestureRecognizer) -> ()) {
+        self.action = action
+        super.init(target: nil, action: nil)
+        self.minimumPressDuration = minimumPressDuration
+        self.addTarget(self, action: #selector(invoke(_:)))
+    }
+
+    @objc private func invoke(_ gesture: Any) {
+        guard let gesture = gesture as? UILongPressGestureRecognizer else {
+            return
+        }
+        action(gesture)
+    }
+
+}
+
 class DragGestureRecognizer: UIPanGestureRecognizer {
 
     private let action: (_ gesture: UIPanGestureRecognizer) -> ()
@@ -53,6 +73,14 @@ extension UIView {
         let recognizer = TapGestureRecognizer(action: action)
         recognizer.delegate = delegate
         self.addGestureRecognizer(recognizer)
+
+        checkIsUserInteractionEnabled()
+    }
+
+    func longPress(minimumPressDuration: Double, delegate: UIGestureRecognizerDelegate? = nil, _ action: @escaping (_ gesture: UILongPressGestureRecognizer) -> ()) {
+        let recognizer = LongPressGestureRecognizer(minimumPressDuration: minimumPressDuration, action: action)
+        recognizer.delegate = delegate
+        addGestureRecognizer(recognizer)
 
         checkIsUserInteractionEnabled()
     }
