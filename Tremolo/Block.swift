@@ -22,13 +22,27 @@ public struct Block: Hashable {
 
     public let contents: [[BlockContent]]
 
-    static let defaultLanguage = "en"
+    static private let defaultLanguage = "en"
 
-    public init(name: String, type: Type, argTypes: [Type], argValues: [Argument], contents: [[BlockContent]]) {
+    private let declarableVariableIndex: Int?
+
+    var declaredVariable: Variable? {
+        guard  let idx = declarableVariableIndex else {
+            return nil
+        }
+
+        if case .variable(let v) = argValues[idx] {
+            return v
+        }
+
+        return nil
+    }
+
+    public init(name: String, type: Type, argTypes: [Type], argValues: [Argument], contents: [[BlockContent]], declarableVariableIndex: Int? = nil) {
         self.init(name: name, type: type, argTypes: argTypes, argValues: argValues, contents: [Block.defaultLanguage: contents])
     }
 
-    public init(name: String, type: Type, argTypes: [Type], argValues: [Argument], contents: Dictionary<String, [[BlockContent]]>) {
+    public init(name: String, type: Type, argTypes: [Type], argValues: [Argument], contents: Dictionary<String, [[BlockContent]]>, declarableVariableIndex: Int? = nil) {
 
         self.name = name
 
@@ -39,6 +53,8 @@ public struct Block: Hashable {
         self.argValues = argValues
 
         self.localizedContents = contents
+
+        self.declarableVariableIndex = declarableVariableIndex
 
         let language = String(NSLocale.preferredLanguages[0].prefix(2))
 
