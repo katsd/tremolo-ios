@@ -8,56 +8,83 @@
 
 import SwiftUI
 
-class VariableView: UIView {
+class VariableView: UIButton {
 
     @Binding private var isEditable: Bool
+
+    private var variable: Variable
 
     init(variable: Variable, types: [Type], isEditable: Binding<Bool>) {
 
         self._isEditable = isEditable
 
+        self.variable = variable
+
         super.init(frame: .zero)
 
-        let hosting = UIHostingController(rootView: VariableView_SwiftUI(variable: .constant(variable), isEditable: isEditable))
-        hosting.view.backgroundColor = .clear
+        self.contentEdgeInsets(.init(top: 3, left: 3, bottom: 3, right: 3))
+            .cornerRadius(5)
+            .backgroundColor(.init(white: 1, alpha: 0.5))
 
-        addSubview(hosting.view)
-        hosting.view.equalTo(self)
+        setTitle(variable.name, for: .normal)
+        setTitleColor(.black, for: .normal)
+        sizeToFit()
     }
 
     required init?(coder: NSCoder) {
         fatalError()
     }
 
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+
+        UIView.animate(withDuration: 0.1) {
+            self.alpha = 0.5
+        }
+    }
+
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesCancelled(touches, with: event)
+        touchEnd()
+    }
+
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+        touchEnd()
+    }
+
+    private func touchEnd() {
+        if self.isEditable {
+            Keyboard.open(keyboardReceiver: self, variableKeyboardReceiver: self, type: .variable, selectOneVariable: true)
+        }
+
+        UIView.animate(withDuration: 0.3) {
+            self.alpha = 1
+        }
+
+    }
+
+
 }
 
-private struct VariableView_SwiftUI: View {
+extension VariableView: VariableKeyboardReceiver {
 
-    @Binding private var variable: Variable
-
-    @Binding private var isEditable: Bool
-
-    init(variable: Binding<Variable>, isEditable: Binding<Bool>) {
-        self._variable = variable
-
-        self._isEditable = isEditable
+    func addVariable(_ variable: Variable) {
+        self.variable = variable
+        setTitle(variable.name, for: .normal)
     }
 
-    var body: some View {
-        Button(action: {
-            if !self.isEditable {
-                return
-            }
+}
 
-            //TODO: show keyboard
-        }) {
-            Text(variable.name)
-                .foregroundColor(.black)
-                .padding(.horizontal, 5)
-                .padding(.vertical, 3)
-                .background(Color.white.opacity(0.5))
-                .cornerRadius(5)
-        }
-            .disabled(!self.isEditable)
+extension VariableView: KeyboardReceiver {
+
+    func delete() {
     }
+
+    func endEditing() {
+    }
+
+    func moveCursor(_ direction: CursorDirection) {
+    }
+
 }

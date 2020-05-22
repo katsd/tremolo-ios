@@ -87,6 +87,7 @@ struct KeyboardView: View {
                 deleteKey()
                 returnKey()
             }
+                .disabled(!observer.enableControlKeys)
         }
     }
 
