@@ -10,7 +10,7 @@ import SwiftUI
 
 class ArgView: UIView {
 
-    init(arg: Argument, isEditable: Binding<Bool>) {
+    init(tremolo: Tremolo, arg: Argument, isEditable: Binding<Bool>) {
         super.init(frame: .zero)
 
         switch arg {
@@ -20,7 +20,7 @@ class ArgView: UIView {
             valueView.equalTo(self)
 
         case let .variable(v):
-            let variableView = VariableView(variable: v, types: [v.type], isEditable: isEditable)
+            let variableView = VariableView(tremolo: tremolo, variable: v, types: [v.type], isEditable: isEditable)
             addSubview(variableView)
             variableView.equalTo(self)
 

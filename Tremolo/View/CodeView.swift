@@ -10,6 +10,8 @@ import SwiftUI
 
 class CodeView: UIView {
 
+    private let tremolo: Tremolo
+
     private var selectedBlockPos: BlockPos? = nil
 
     private let blocks: [Block]
@@ -18,7 +20,8 @@ class CodeView: UIView {
 
     private let topView: UIView
 
-    init(blocks: [Block], topView: UIView) {
+    init(tremolo: Tremolo, blocks: [Block], topView: UIView) {
+        self.tremolo = tremolo
 
         self.blocks = blocks
 
@@ -38,8 +41,10 @@ class CodeView: UIView {
         blockStackView =
             BlockStackView(blocks:
                            blocks.map {
-                               BlockView(block: $0, blockController: self)
-                           },
+                               BlockView(tremolo: tremolo, block: $0, blockController: self)
+                           }
+
+                ,
                            blockController: self)
 
         scrollView.addSubview(blockStackView)

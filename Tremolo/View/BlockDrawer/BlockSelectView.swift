@@ -36,9 +36,13 @@ class BlockSelectView: UIView {
               contents: [[.label("Piyo")], [.arg(0)]]),
     ]
 
+    private let tremolo: Tremolo
+
     private let blockController: BlockController
 
-    init(blockController: BlockController) {
+    init(tremolo: Tremolo, blockController: BlockController) {
+        self.tremolo = tremolo
+
         self.blockController = blockController
 
         super.init(frame: .zero)
@@ -73,7 +77,7 @@ class BlockSelectView: UIView {
     }
 
     func blockViewInStackView(block: Block, stackView: UIStackView, idx: Int) -> BlockView {
-        let blockView = BlockView(block: block, blockController: self.blockController)
+        let blockView = BlockView(tremolo: tremolo, block: block, blockController: self.blockController)
         blockView.isOnSelectView = true
 
         blockView.drag(delegate: self) { gesture in
@@ -101,14 +105,17 @@ extension BlockSelectView: UIGestureRecognizerDelegate {
 
 struct BlockSelectViewRepresentable: UIViewRepresentable {
 
+    private let tremolo: Tremolo
+
     private let blockController: BlockController
 
-    init(blockController: BlockController) {
+    init(tremolo: Tremolo, blockController: BlockController) {
+        self.tremolo = tremolo
         self.blockController = blockController
     }
 
     func makeUIView(context: Context) -> BlockSelectView {
-        BlockSelectView(blockController: blockController)
+        BlockSelectView(tremolo: tremolo, blockController: blockController)
     }
 
     func updateUIView(_ uiView: UIViewType, context: Context) {

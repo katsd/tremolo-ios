@@ -10,6 +10,8 @@ import SwiftUI
 
 struct BlockDrawerView: View {
 
+    @EnvironmentObject var tremolo: Tremolo
+
     @State var showDrawer = false
 
     @State var drawerWidth: CGFloat = 0
@@ -21,7 +23,7 @@ struct BlockDrawerView: View {
             HStack(spacing: 0) {
                 Color.clear
                 VStack {
-                    BlockSelectViewRepresentable(blockController: blockController)
+                    BlockSelectViewRepresentable(tremolo: tremolo, blockController: blockController)
                 }
                     .frame(width: drawerWidth)
                     .background(Blur(style: .systemMaterial))

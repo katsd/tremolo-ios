@@ -10,11 +10,14 @@ import SwiftUI
 
 class VariableView: UIButton {
 
+    private let tremolo: Tremolo
+
     @Binding private var isEditable: Bool
 
     private var variable: Variable
 
-    init(variable: Variable, types: [Type], isEditable: Binding<Bool>) {
+    init(tremolo: Tremolo, variable: Variable, types: [Type], isEditable: Binding<Bool>) {
+        self.tremolo = tremolo
 
         self._isEditable = isEditable
 

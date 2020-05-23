@@ -10,6 +10,8 @@ import SwiftUI
 
 class BlockView: UIView {
 
+    private let tremolo: Tremolo
+
     var isOnSelectView = false
 
     var isEditable: Binding<Bool> {
@@ -25,7 +27,8 @@ class BlockView: UIView {
 
     private var blockStackViewPaths = [(Int, Int)]()
 
-    init(block: Block, blockController: BlockController? = nil) {
+    init(tremolo: Tremolo, block: Block, blockController: BlockController? = nil) {
+        self.tremolo = tremolo
 
         self.blockController = blockController
 
@@ -111,11 +114,11 @@ class BlockView: UIView {
         case let .code(blocks):
             return BlockStackView(blocks:
                                   blocks.map {
-                                      BlockView(block: $0, blockController: self.blockController)
+                                      BlockView(tremolo: tremolo, block: $0, blockController: self.blockController)
                                   },
                                   blockController: blockController)
         default:
-            return ArgView(arg: arg, isEditable: isEditable)
+            return ArgView(tremolo: tremolo, arg: arg, isEditable: isEditable)
         }
 
     }

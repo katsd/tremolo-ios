@@ -25,7 +25,10 @@ public struct TremoloView: View {
                 VStack(spacing: 0) {
                     ZStack {
                         Color.clear
-                            .overlay(BlockDrawerView(blockController: self.tremolo.mainCodeView))
+                            .overlay(
+                            BlockDrawerView(blockController: self.tremolo.mainCodeView)
+                                .environmentObject(self.tremolo)
+                        )
 
                         TopView(self.tremolo.topView)
                             .frame(width: 0, height: 0)

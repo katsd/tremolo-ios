@@ -15,14 +15,16 @@ public class Tremolo: ObservableObject {
 
     @Published var variables: [Variable]
 
-    let mainCodeView: CodeView
+    var declaredLocalVariableNum: [LocalVariable: Int]
+
+    lazy var mainCodeView: CodeView = CodeView(tremolo: self, blocks: blocks, topView: topView)
 
     let topView = UIView()
 
     public init(blocks: [Block], variables: [Variable]) {
         self.blocks = blocks
         self.variables = variables
-        self.mainCodeView = CodeView(blocks: blocks, topView: topView)
+        self.declaredLocalVariableNum = .init()
     }
 
 }
