@@ -15,10 +15,14 @@ struct VariableKeyboardView: View {
     @Binding var variableTypes: [Type]
 
     var body: some View {
-        ScrollView(.vertical) {
-            VStack(spacing: 10) {
-                variableButtons()
+        VStack {
+            ScrollView(.vertical) {
+                VStack(spacing: 10) {
+                    variableButtons()
+                }
             }
+            addVariableButton()
+                .padding(.trailing, 30)
         }
     }
 
@@ -38,6 +42,23 @@ struct VariableKeyboardView: View {
                 }
             }
         }
+    }
+
+    private func addVariableButton() -> some View {
+        Button(action: {
+            print("Add variable")
+        }) {
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(Color.blue, lineWidth: 3)
+                .overlay(
+                    HStack {
+                        Image(systemName: "plus")
+                        Text("Add Variable")
+                    }
+                )
+        }
+            .frame(height: 30)
+
     }
 
 }
