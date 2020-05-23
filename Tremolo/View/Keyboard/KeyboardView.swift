@@ -32,7 +32,6 @@ struct KeyboardView: View {
                         .frame(height: safeAreaInsets.bottom)
                 }
                     .padding(.horizontal, 10)
-                    .edgesIgnoringSafeArea(.bottom)
                     .background(Blur(style: .systemMaterial))
                     .transition(.move(edge: .bottom))
             }
