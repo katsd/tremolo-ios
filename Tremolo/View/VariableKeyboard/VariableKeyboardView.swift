@@ -23,6 +23,7 @@ struct VariableKeyboardView: View {
             }
             addVariableButton()
                 .padding(.trailing, 30)
+                .padding(.bottom, 5)
         }
     }
 
@@ -46,7 +47,7 @@ struct VariableKeyboardView: View {
 
     private func addVariableButton() -> some View {
         Button(action: {
-            print("Add variable")
+            self.inputNewVariable()
         }) {
             RoundedRectangle(cornerRadius: 10)
                 .stroke(Color.blue, lineWidth: 3)
@@ -55,10 +56,29 @@ struct VariableKeyboardView: View {
                         Image(systemName: "plus")
                         Text("Add Variable")
                     }
+                        .font(Font.body.weight(.medium))
                 )
         }
             .frame(height: 30)
 
+    }
+
+    private func inputNewVariable() {
+        let ac = UIAlertController(title: "New Variable", message: "Enter a name for this variable.", preferredStyle: .alert)
+
+        let add = UIAlertAction(title: "Add", style: .default) { _ in
+            print("Add")
+        }
+
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+
+        ac.addTextField()
+        ac.addAction(cancel)
+        ac.addAction(add)
+
+        ac.textFields?.first?.placeholder = "Variable Name"
+
+        UIApplication.shared.windows.first?.rootViewController?.present(ac, animated: true)
     }
 
 }
