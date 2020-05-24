@@ -67,7 +67,7 @@ struct KeyboardView: View {
     }
 
     private func keysView() -> some View {
-        HStack {
+        HStack(alignment: .bottom) {
             Group {
                 if observer.type == .math {
                     MathKeyboardView()
@@ -87,6 +87,7 @@ struct KeyboardView: View {
                 returnKey()
             }
                 .disabled(!observer.enableControlKeys)
+                .opacity(controlKeysOpacity)
         }
     }
 
@@ -117,6 +118,10 @@ struct KeyboardView: View {
             label
                 .foregroundColor(.white)
         }
+    }
+
+    private var controlKeysOpacity: Double {
+        observer.enableControlKeys ? 1 : 0.5
     }
 
 
