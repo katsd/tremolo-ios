@@ -64,6 +64,8 @@ struct KeyboardView: View {
         }
             .pickerStyle(SegmentedPickerStyle())
             .frame(maxWidth: 120)
+            .disabled(observer.selectOneVariable)
+
     }
 
     private func keysView() -> some View {
@@ -124,6 +126,5 @@ struct KeyboardView: View {
     private var controlKeysOpacity: Double {
         observer.enableControlKeys ? 1 : 0.5
     }
-
 
 }
