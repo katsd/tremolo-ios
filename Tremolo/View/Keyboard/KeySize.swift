@@ -18,7 +18,7 @@ struct KeySize {
 
     static let spacing: CGFloat = 5
 
-    static private let defaultSize = CGSize(width: 35, height: 40)
+    static private let defaultSize = CGSize(width: 33, height: 40)
 
     var cgSize: CGSize {
         let w = (KeySize.defaultSize.width + KeySize.spacing) * CGFloat(width) - KeySize.spacing

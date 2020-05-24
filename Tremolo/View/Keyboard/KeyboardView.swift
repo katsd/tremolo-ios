@@ -32,7 +32,7 @@ struct KeyboardView: View {
                         .frame(height: safeAreaInsets.bottom)
                 }
                     .padding(.horizontal, 10)
-                    .background(Blur(style: .systemMaterial))
+                    .background(Blur(style: .systemThinMaterial).background(Color.black.opacity(0.2)))
                     .transition(.move(edge: .bottom))
             }
         }
@@ -117,7 +117,7 @@ struct KeyboardView: View {
 
         return KeyView(value: .action({ Keyboard.receiver?.moveCursor(direction) })) {
             label
-                .foregroundColor(.white)
+                .foregroundColor(.primary)
         }
     }
 

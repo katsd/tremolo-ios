@@ -18,7 +18,15 @@ struct KeyView<Content: View>: View {
 
     let label: () -> Content
 
-    init(value: KeyValue, size: CGSize = KeySize.one.cgSize, color: Color = .gray, @ViewBuilder label: @escaping () -> Content) {
+    static private var defaultColor: Color {
+        Color(.dynamicColor(light: .white, dark: .gray))
+    }
+
+    static private var keyShadowColor: Color {
+        Color(.dynamicColor(light: .systemGray, dark: .systemGray4))
+    }
+
+    init(value: KeyValue, size: CGSize = KeySize.one.cgSize, color: Color = defaultColor, @ViewBuilder label: @escaping () -> Content) {
         self.value = value
         self.size = size
         self.color = color
@@ -39,6 +47,12 @@ struct KeyView<Content: View>: View {
             .frame(width: size.width, height: size.height)
             .background(color)
             .cornerRadius(7)
+            .background(
+                KeyView.keyShadowColor
+                    .frame(width: size.width, height: size.height)
+                    .cornerRadius(7)
+                    .offset(y: 1)
+            )
     }
 
 }
