@@ -89,6 +89,7 @@ struct KeyboardView: View {
                 .disabled(!observer.enableControlKeys)
                 .opacity(controlKeysOpacity)
         }
+            .padding(.bottom, 5)
     }
 
     private func deleteKey() -> some View {

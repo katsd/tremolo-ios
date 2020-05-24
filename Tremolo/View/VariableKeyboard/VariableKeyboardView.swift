@@ -23,7 +23,6 @@ struct VariableKeyboardView: View {
             }
             addVariableButton()
                 .padding(.trailing, 30)
-                .padding(.bottom, 5)
         }
     }
 
