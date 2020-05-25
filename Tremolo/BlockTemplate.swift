@@ -15,8 +15,6 @@ public struct BlockTemplate {
 
     public let type: Type
 
-    public let argTypes: [Type]
-
     public var argValues: [Argument]
 
     public let localizedContents: Dictionary<String, [[BlockContent]]>
@@ -25,7 +23,7 @@ public struct BlockTemplate {
 
     static private let defaultLanguage = "en"
 
-    private let declarableVariableIndex: Int?
+    public let declarableVariableIndex: Int?
 
     var declaredVariable: Variable? {
         guard  let idx = declarableVariableIndex else {
@@ -39,17 +37,14 @@ public struct BlockTemplate {
         return nil
     }
 
-    public init(name: String, type: Type, argTypes: [Type], argValues: [Argument], contents: [[BlockContent]], declarableVariableIndex: Int? = nil) {
-        self.init(name: name, type: type, argTypes: argTypes, argValues: argValues, contents: [BlockTemplate.defaultLanguage: contents])
+    public init(name: String, type: Type, argValues: [Argument], contents: [[BlockContent]], declarableVariableIndex: Int? = nil) {
+        self.init(name: name, type: type, argValues: argValues, contents: [BlockTemplate.defaultLanguage: contents])
     }
 
-    public init(name: String, type: Type, argTypes: [Type], argValues: [Argument], contents: Dictionary<String, [[BlockContent]]>, declarableVariableIndex: Int? = nil) {
-
+    public init(name: String, type: Type, argValues: [Argument], contents: Dictionary<String, [[BlockContent]]>, declarableVariableIndex: Int? = nil) {
         self.name = name
 
         self.type = type
-
-        self.argTypes = argTypes
 
         self.argValues = argValues
 

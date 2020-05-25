@@ -8,21 +8,15 @@
 
 import Foundation
 
-public struct Block: Hashable {
+public class Block {
 
     public let name: String
 
     public let type: Type
 
-    public let argTypes: [Type]
-
     public var argValues: [Argument]
 
-    public let localizedContents: Dictionary<String, [[BlockContent]]>
-
     public let contents: [[BlockContent]]
-
-    static private let defaultLanguage = "en"
 
     private let declarableVariableIndex: Int?
 
@@ -38,58 +32,40 @@ public struct Block: Hashable {
         return nil
     }
 
-    public init(name: String, type: Type, argTypes: [Type], argValues: [Argument], contents: [[BlockContent]], declarableVariableIndex: Int? = nil) {
-        self.init(name: name, type: type, argTypes: argTypes, argValues: argValues, contents: [Block.defaultLanguage: contents])
+    public convenience init(_ template: BlockTemplate) {
+        self.init(name: template.name, type: template.type, argValues: template.argValues, contents: template.contents, declarableVariableIndex: template.declarableVariableIndex)
     }
 
-    public init(name: String, type: Type, argTypes: [Type], argValues: [Argument], contents: Dictionary<String, [[BlockContent]]>, declarableVariableIndex: Int? = nil) {
+    public init(name: String, type: Type, argValues: [Argument], contents: [[BlockContent]], declarableVariableIndex: Int? = nil) {
 
         self.name = name
 
         self.type = type
 
-        self.argTypes = argTypes
-
         self.argValues = argValues
 
-        self.localizedContents = contents
+        self.contents = contents
 
         self.declarableVariableIndex = declarableVariableIndex
-
-        let language = String(NSLocale.preferredLanguages[0].prefix(2))
-
-        if let contents = localizedContents[language] {
-            self.contents = contents
-        } else {
-            self.contents = localizedContents[Block.defaultLanguage] ?? [[BlockContent.label("Failed to display contents")]]
-        }
     }
+}
 
-    public enum BlockContent: Hashable {
-
-        case label(String)
-
-        case arg(Int)
-
-    }
+extension Block: Hashable {
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(name)
         hasher.combine(type)
-        hasher.combine(argTypes)
         hasher.combine(argValues)
-        hasher.combine(localizedContents)
         hasher.combine(contents)
     }
 
     public static func ==(lhs: Block, rhs: Block) -> Bool {
         lhs.name == rhs.name &&
             lhs.type == rhs.type &&
-            lhs.argTypes == rhs.argTypes &&
             lhs.argValues == rhs.argValues &&
-            lhs.localizedContents == rhs.localizedContents &&
             lhs.contents == rhs.contents
     }
+
 }
 
 extension Block: CodeUnit {
