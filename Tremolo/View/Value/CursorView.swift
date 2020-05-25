@@ -12,23 +12,28 @@ class CursorView: UIView {
 
     private var timer: Timer? = nil
 
-    private let maxOpacity: Float = 1
+    private let visibleView: UIView
 
-    private let minOpacity: Float = 0.02
+    private let maxAlpha: CGFloat = 1
+
+    private let minAlpha: CGFloat = 0.02
+
+    let cursorSize = CGSize(width: 3, height: 20)
 
     init() {
-        super.init(frame: .zero)
-
-        size(width: 10, height: 20)
-        layer.opacity = 0.02
-
-        let view = UIView()
-            .size(width: 3, height: 20)
+        visibleView = UIView()
+            .size(cursorSize)
             .backgroundColor(.systemBlue)
             .cornerRadius(2)
 
-        view.center = center
-        addSubview(view)
+        super.init(frame: .zero)
+
+        size(width: cursorSize.width * 7, height: cursorSize.height)
+        backgroundColor(.init(white: 0, alpha: 0.02))
+
+        visibleView.center = center
+        addSubview(visibleView)
+        visibleView.alpha = 1
     }
 
     required init?(coder: NSCoder) {
@@ -43,7 +48,7 @@ class CursorView: UIView {
     func stopAnimation() {
         timer?.invalidate()
         UIView.animate(withDuration: 0.1) {
-            self.layer.opacity = self.maxOpacity
+            self.visibleView.alpha = self.maxAlpha
         }
     }
 
@@ -53,14 +58,12 @@ class CursorView: UIView {
 
     @objc private func animation() {
         UIView.animate(withDuration: 0.2) {
-            if self.layer.opacity == self.maxOpacity {
-                self.layer.opacity = self.minOpacity
+            if self.visibleView.alpha == self.maxAlpha {
+                self.visibleView.alpha = self.minAlpha
             } else {
-                self.layer.opacity = self.maxOpacity
+                self.visibleView.alpha = self.maxAlpha
             }
         }
-
     }
-
 
 }

@@ -77,11 +77,14 @@ class ValueView: UIView {
 
             gesture.setTranslation(.zero, in: nil)
 
-            if !self.frame.contains(nextFrame) {
-                return
+            if self.frame.minX <= nextFrame.center.x - self.cursor.cursorSize.width / 2 &&
+                   nextFrame.center.x + self.cursor.cursorSize.width / 2 <= self.frame.maxX {
+                self.cursor.frame.origin.x = nextFrame.origin.x
             }
 
-            self.cursor.frame = nextFrame
+            if self.frame.minY <= nextFrame.minY && nextFrame.maxY <= self.frame.maxY {
+                self.cursor.frame.origin.y = nextFrame.origin.y
+            }
         }
     }
 
