@@ -15,6 +15,11 @@ extension UIView {
         return self
     }
 
+    func size(_ size: CGSize) -> UIView {
+        frame.size = size
+        return self
+    }
+
     func backgroundColor(_ color: UIColor) -> UIView {
         backgroundColor = color
         return self
