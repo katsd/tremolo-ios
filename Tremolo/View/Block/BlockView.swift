@@ -21,6 +21,8 @@ class BlockView: UIView {
         )
     }
 
+    private var block: Block
+
     private let blockController: BlockController?
 
     private var blockContentsStackView = BlockContentStackView()
@@ -29,6 +31,8 @@ class BlockView: UIView {
 
     init(tremolo: Tremolo, block: Block, blockController: BlockController? = nil) {
         self.tremolo = tremolo
+
+        self.block = block
 
         self.blockController = blockController
 
@@ -114,7 +118,7 @@ class BlockView: UIView {
         case let .code(blocks):
             return BlockStackView(blocks:
                                   blocks.map {
-                                      BlockView(tremolo: tremolo, block: $0, blockController: self.blockController)
+                                      BlockView(tremolo: tremolo, block: $0.parent(self), blockController: self.blockController)
                                   },
                                   blockController: blockController)
         default:

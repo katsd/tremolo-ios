@@ -14,7 +14,7 @@ class CodeView: UIView {
 
     private var selectedBlockPos: BlockPos? = nil
 
-    private let blocks: [Block]
+    private var blocks: [Block]
 
     private var blockStackView = UIStackView()
 
@@ -41,10 +41,8 @@ class CodeView: UIView {
         blockStackView =
             BlockStackView(blocks:
                            blocks.map {
-                               BlockView(tremolo: tremolo, block: $0, blockController: self)
-                           }
-
-                ,
+                               BlockView(tremolo: tremolo, block: $0.parent(self), blockController: self)
+                           },
                            blockController: self)
 
         scrollView.addSubview(blockStackView)

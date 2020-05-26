@@ -10,6 +10,8 @@ import Foundation
 
 public class Block {
 
+    var parent: BlockStackViewController? = nil
+
     public let name: String
 
     public let type: Type
@@ -36,8 +38,7 @@ public class Block {
         self.init(name: template.name, type: template.type, argValues: template.argValues, contents: template.contents, declarableVariableIndex: template.declarableVariableIndex)
     }
 
-    public init(name: String, type: Type, argValues: [Argument], contents: [[BlockContent]], declarableVariableIndex: Int? = nil) {
-
+    init(name: String, type: Type, argValues: [Argument], contents: [[BlockContent]], declarableVariableIndex: Int? = nil) {
         self.name = name
 
         self.type = type
@@ -72,6 +73,15 @@ extension Block: CodeUnit {
 
     func toCode() -> String {
         fatalError("toCode() has not been implemented")
+    }
+
+}
+
+extension Block {
+
+    func parent(_ parent: BlockStackViewController?) -> Block {
+        self.parent = parent
+        return self
     }
 
 }
