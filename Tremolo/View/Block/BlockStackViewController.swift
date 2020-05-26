@@ -16,4 +16,6 @@ protocol BlockStackViewController: AnyObject {
 
     func removeBlankView(path: (Int, Int), at idx: Int, animation: () -> Void)
 
+    func findBlockPos(blockView: UIView, velocity: CGPoint, selectedBlockPos: BlockPos?) -> BlockPos?
+
 }

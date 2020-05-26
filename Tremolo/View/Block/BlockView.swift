@@ -12,6 +12,10 @@ class BlockView: UIView {
 
     private let tremolo: Tremolo
 
+    let block: Block
+
+    let b: Block? = nil
+
     var isOnSelectView = false
 
     var isEditable: Binding<Bool> {
@@ -20,8 +24,6 @@ class BlockView: UIView {
             set: { _ in }
         )
     }
-
-    private var block: Block
 
     private let blockController: BlockController?
 
@@ -129,7 +131,53 @@ class BlockView: UIView {
 
 }
 
-extension BlockView: BlockFinder {
+extension BlockView: BlockStackViewController {
+
+    func addBlockView(_ blockView: UIView, path: (Int, Int), at idx: Int, animation: () -> Void) {
+        guard let stackView = blockContentsStackView.content(at: path) as? UIStackView else {
+            return
+        }
+
+        if idx < stackView.arrangedSubviews.count &&
+               !(stackView.arrangedSubviews[idx] is BlockView) {
+            stackView.arrangedSubviews[idx].removeFromSuperview()
+        }
+
+        let blankView = UIView()
+        stackView.insertArrangedSubview(blankView, at: idx)
+        blankView.equalToSizeOf(blockView)
+
+        self.layoutIfNeeded()
+
+        UIView.animate(withDuration: 0.2, animations: {
+            blockView.center = blankView.convertFrame(parent: blockView.superview).center
+        }, completion: { _ in
+            stackView.arrangedSubviews[idx].removeFromSuperview()
+            stackView.insertArrangedSubview(blockView, at: idx)
+        })
+    }
+
+    func addBlankView(blockView: UIView, path: (Int, Int), at idx: Int, animation: () -> Void) {
+        guard let stackView = blockContentsStackView.content(at: path) as? UIStackView else {
+            return
+        }
+
+        let blankView = UIView()
+        stackView.insertArrangedSubview(blankView, at: idx)
+        blankView.equalToSizeOf(blockView)
+
+        animation()
+    }
+
+    func removeBlankView(path: (Int, Int), at idx: Int, animation: () -> Void) {
+        guard let stackView = blockContentsStackView.content(at: path) as? UIStackView else {
+            return
+        }
+
+        stackView.arrangedSubviews[idx].removeFromSuperview()
+
+        animation()
+    }
 
     func findBlockPos(blockView: UIView, velocity: CGPoint, selectedBlockPos: BlockPos?) -> BlockPos? {
 
@@ -231,56 +279,6 @@ extension BlockView: BlockFinder {
         }
 
         return nil
-    }
-
-}
-
-extension BlockView: BlockStackViewController {
-
-    func addBlockView(_ blockView: UIView, path: (Int, Int), at idx: Int, animation: () -> Void) {
-        guard let stackView = blockContentsStackView.content(at: path) as? UIStackView else {
-            return
-        }
-
-        if idx < stackView.arrangedSubviews.count &&
-               !(stackView.arrangedSubviews[idx] is BlockView) {
-            stackView.arrangedSubviews[idx].removeFromSuperview()
-        }
-
-        let blankView = UIView()
-        stackView.insertArrangedSubview(blankView, at: idx)
-        blankView.equalToSizeOf(blockView)
-
-        self.layoutIfNeeded()
-
-        UIView.animate(withDuration: 0.2, animations: {
-            blockView.center = blankView.convertFrame(parent: blockView.superview).center
-        }, completion: { _ in
-            stackView.arrangedSubviews[idx].removeFromSuperview()
-            stackView.insertArrangedSubview(blockView, at: idx)
-        })
-    }
-
-    func addBlankView(blockView: UIView, path: (Int, Int), at idx: Int, animation: () -> Void) {
-        guard let stackView = blockContentsStackView.content(at: path) as? UIStackView else {
-            return
-        }
-
-        let blankView = UIView()
-        stackView.insertArrangedSubview(blankView, at: idx)
-        blankView.equalToSizeOf(blockView)
-
-        animation()
-    }
-
-    func removeBlankView(path: (Int, Int), at idx: Int, animation: () -> Void) {
-        guard let stackView = blockContentsStackView.content(at: path) as? UIStackView else {
-            return
-        }
-
-        stackView.arrangedSubviews[idx].removeFromSuperview()
-
-        animation()
     }
 
 }

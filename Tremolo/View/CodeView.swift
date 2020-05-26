@@ -137,7 +137,41 @@ extension CodeView: BlockController {
 
 }
 
-extension CodeView: BlockFinder {
+extension CodeView: BlockStackViewController {
+
+    func addBlockView(_ blockView: UIView, path: (Int, Int), at idx: Int, animation: () -> Void) {
+        if idx < blockStackView.arrangedSubviews.count &&
+               !(blockStackView.arrangedSubviews[idx] is BlockView) {
+            blockStackView.arrangedSubviews[idx].removeFromSuperview()
+        }
+
+        let blankView = UIView()
+        blockStackView.insertArrangedSubview(blankView, at: idx)
+        blankView.equalToSizeOf(blockView)
+
+        self.layoutIfNeeded()
+
+        UIView.animate(withDuration: 0.2, animations: {
+            blockView.center = blankView.convertFrame(parent: blockView.superview).center
+        }, completion: { _ in
+            self.blockStackView.arrangedSubviews[idx].removeFromSuperview()
+            self.blockStackView.insertArrangedSubview(blockView, at: idx)
+        })
+    }
+
+    func addBlankView(blockView: UIView, path: (Int, Int), at idx: Int, animation: () -> Void) {
+        let blankView = UIView()
+        blockStackView.insertArrangedSubview(blankView, at: idx)
+        blankView.equalToSizeOf(blockView)
+
+        animation()
+    }
+
+    func removeBlankView(path: (Int, Int), at idx: Int, animation: () -> Void) {
+        blockStackView.arrangedSubviews[idx].removeFromSuperview()
+
+        animation()
+    }
 
     func findBlockPos(blockView: UIView, velocity: CGPoint, selectedBlockPos: BlockPos?) -> BlockPos? {
 
@@ -227,44 +261,6 @@ extension CodeView: BlockFinder {
         }
 
         return searchIdx()
-    }
-
-}
-
-extension CodeView: BlockStackViewController {
-
-    func addBlockView(_ blockView: UIView, path: (Int, Int), at idx: Int, animation: () -> Void) {
-        if idx < blockStackView.arrangedSubviews.count &&
-               !(blockStackView.arrangedSubviews[idx] is BlockView) {
-            blockStackView.arrangedSubviews[idx].removeFromSuperview()
-        }
-
-        let blankView = UIView()
-        blockStackView.insertArrangedSubview(blankView, at: idx)
-        blankView.equalToSizeOf(blockView)
-
-        self.layoutIfNeeded()
-
-        UIView.animate(withDuration: 0.2, animations: {
-            blockView.center = blankView.convertFrame(parent: blockView.superview).center
-        }, completion: { _ in
-            self.blockStackView.arrangedSubviews[idx].removeFromSuperview()
-            self.blockStackView.insertArrangedSubview(blockView, at: idx)
-        })
-    }
-
-    func addBlankView(blockView: UIView, path: (Int, Int), at idx: Int, animation: () -> Void) {
-        let blankView = UIView()
-        blockStackView.insertArrangedSubview(blankView, at: idx)
-        blankView.equalToSizeOf(blockView)
-
-        animation()
-    }
-
-    func removeBlankView(path: (Int, Int), at idx: Int, animation: () -> Void) {
-        blockStackView.arrangedSubviews[idx].removeFromSuperview()
-
-        animation()
     }
 
 }
