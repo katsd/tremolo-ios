@@ -40,3 +40,25 @@ public enum Argument: Equatable, Hashable {
         }
     }
 }
+
+extension Argument: CodeUnit {
+
+    func toCode() -> String {
+        switch self {
+        case let .value(value):
+            return value.toCode()
+        case let .variable(variable):
+            return variable.toCode()
+        case let .code(blocks):
+            return
+                """
+                {
+                \(blocks.reduce("") { (code, block) in
+                    code + block.toCode()
+                })
+                }
+                """
+        }
+    }
+
+}

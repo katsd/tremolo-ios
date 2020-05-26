@@ -22,6 +22,8 @@ public class Block {
 
     private let declarableVariableIndex: Int?
 
+    private let specialFormatter: (([String]) -> String)?
+
     var declaredVariable: Variable? {
         guard  let idx = declarableVariableIndex else {
             return nil
@@ -38,7 +40,7 @@ public class Block {
         self.init(name: template.name, type: template.type, argValues: template.argValues, contents: template.contents, declarableVariableIndex: template.declarableVariableIndex)
     }
 
-    init(name: String, type: Type, argValues: [Argument], contents: [[BlockContent]], declarableVariableIndex: Int? = nil) {
+    init(name: String, type: Type, argValues: [Argument], contents: [[BlockContent]], declarableVariableIndex: Int? = nil, specialFormatter: (([String]) -> String)? = nil) {
         self.name = name
 
         self.type = type
@@ -48,7 +50,10 @@ public class Block {
         self.contents = contents
 
         self.declarableVariableIndex = declarableVariableIndex
+
+        self.specialFormatter = specialFormatter
     }
+
 }
 
 extension Block: Hashable {
@@ -72,7 +77,31 @@ extension Block: Hashable {
 extension Block: CodeUnit {
 
     func toCode() -> String {
-        fatalError("toCode() has not been implemented")
+        if let formatter = specialFormatter {
+            let contentStr = argValues.map {
+                $0.toCode()
+            }
+            return "\(name) \(formatter(contentStr))"
+        }
+
+        var code = "\(name) ("
+
+        for (idx, arg) in argValues.enumerated() {
+            if idx == self.argValues.count - 1 {
+                if case .code(_) = arg {
+                    code += ") \(arg.toCode())"
+                    break
+                }
+                code += "\(arg.toCode()))"
+                break
+            }
+
+            code += "\(arg.toCode()), "
+        }
+
+        code += "\n"
+
+        return code
     }
 
 }
