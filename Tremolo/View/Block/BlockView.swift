@@ -14,8 +14,6 @@ class BlockView: UIView {
 
     let block: Block
 
-    let b: Block? = nil
-
     var isOnSelectView = false
 
     var isEditable: Binding<Bool> {
