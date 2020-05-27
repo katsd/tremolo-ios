@@ -28,7 +28,7 @@ class ValueView: UIView {
 
         greaterThanOrEqualToSize(width: 10, height: 25)
 
-        "1+2*3".forEach {
+        value.value.forEach {
             self.stackView.addArrangedSubview(label(String($0)))
         }
 
@@ -77,12 +77,12 @@ class ValueView: UIView {
 
             gesture.setTranslation(.zero, in: nil)
 
-            if self.frame.minX <= nextFrame.center.x - self.cursor.cursorSize.width / 2 &&
-                   nextFrame.center.x + self.cursor.cursorSize.width / 2 <= self.frame.maxX {
+            if 0 <= nextFrame.center.x - self.cursor.cursorSize.width / 2 &&
+                   nextFrame.center.x + self.cursor.cursorSize.width / 2 <= self.frame.width {
                 self.cursor.frame.origin.x = nextFrame.origin.x
             }
 
-            if self.frame.minY <= nextFrame.minY && nextFrame.maxY <= self.frame.maxY {
+            if 0 <= nextFrame.minY && nextFrame.maxY <= self.frame.height {
                 self.cursor.frame.origin.y = nextFrame.origin.y
             }
         }
