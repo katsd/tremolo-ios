@@ -14,6 +14,8 @@ class ValueView: UIView {
 
     private let cursor = CursorView()
 
+    private let value: Value
+
     @Binding var isEditable: Bool
 
     // 0   1   2   3  <- cursorPos
@@ -21,6 +23,8 @@ class ValueView: UIView {
     private var cursorPos = 0
 
     init(value: Value, isEditable: Binding<Bool>) {
+
+        self.value = value
 
         self._isEditable = isEditable
 
