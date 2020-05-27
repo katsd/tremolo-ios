@@ -137,7 +137,7 @@ class ValueView: UIView {
 
         let posX: CGFloat
         if stackView.arrangedSubviews.count == 0 {
-            posX = center.x
+            posX = frame.width / 2
         } else {
             if cursorPos == 0 {
                 posX = stackView.arrangedSubviews[0].convertFrame(parent: self).minX
@@ -149,13 +149,13 @@ class ValueView: UIView {
         if withAnimation {
             UIView.animate(withDuration: 0.2, animations: {
                 self.cursor.center.x = posX
-                self.cursor.center.y = self.center.y
+                self.cursor.center.y = self.frame.height / 2
             }, completion: { _ in
                 self.cursor.startAnimation()
             })
         } else {
             cursor.center.x = posX
-            cursor.center.y = center.y
+            cursor.center.y = frame.height / 2
             cursor.startAnimation()
         }
     }
