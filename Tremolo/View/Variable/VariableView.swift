@@ -14,7 +14,7 @@ class VariableView: UIButton {
 
     @Binding private var isEditable: Bool
 
-    private var variable: Variable
+    private let variable: Variable
 
     init(tremolo: Tremolo, variable: Variable, types: [Type], isEditable: Binding<Bool>) {
         self.tremolo = tremolo
@@ -73,7 +73,7 @@ class VariableView: UIButton {
 extension VariableView: VariableKeyboardReceiver {
 
     func addVariable(_ variable: Variable) {
-        self.variable = variable
+        self.variable.copy(variable)
         setTitle(variable.name, for: .normal)
     }
 
