@@ -10,13 +10,18 @@ import Foundation
 
 public class Variable {
 
-    public let type: Type
+    public var type: Type
 
     public var name: String
 
     init(type: Type, name: String) {
         self.type = type
         self.name = name
+    }
+
+    func copy(_ variable: Variable) {
+        type = variable.type
+        name = variable.name
     }
 
 }
