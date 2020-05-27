@@ -115,14 +115,18 @@ class BlockView: UIView {
 
     private func argView(arg: Argument) -> UIView {
         switch arg {
+        case let .value(v):
+            return ValueView(value: v, isEditable: isEditable)
+
+        case let .variable(v):
+            return VariableView(tremolo: tremolo, variable: v, types: [v.type], isEditable: isEditable)
+
         case let .code(blocks):
             return BlockStackView(blocks:
                                   blocks.map {
                                       BlockView(tremolo: tremolo, block: $0.parent(self), blockController: self.blockController)
                                   },
                                   blockController: blockController)
-        default:
-            return ArgView(tremolo: tremolo, arg: arg, isEditable: isEditable)
         }
 
     }
