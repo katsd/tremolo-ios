@@ -29,7 +29,7 @@ public class Tremolo: ObservableObject {
 
     public func getCode() -> String {
         blocks.reduce("") { (code, block) -> String in
-            code + block.toCode()
+            code + block.toCode() + "\n"
         }
     }
 

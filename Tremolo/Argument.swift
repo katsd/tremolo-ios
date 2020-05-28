@@ -54,9 +54,8 @@ extension Argument: CodeUnit {
                 """
                 {
                 \(blocks.reduce("") { (code, block) in
-                    code + block.toCode()
-                })
-                }
+                    code + block.toCode() + "\n"
+                })}
                 """
         }
     }

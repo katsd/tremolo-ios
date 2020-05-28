@@ -81,10 +81,10 @@ extension Block: CodeUnit {
             let contentStr = argValues.map {
                 $0.toCode()
             }
-            return "\(name) \(formatter(contentStr))"
+            return "\(name)\(formatter(contentStr))"
         }
 
-        var code = "\(name) ("
+        var code = "\(name)("
 
         for (idx, arg) in argValues.enumerated() {
             if idx == self.argValues.count - 1 {
@@ -98,8 +98,6 @@ extension Block: CodeUnit {
 
             code += "\(arg.toCode()), "
         }
-
-        code += "\n"
 
         return code
     }
