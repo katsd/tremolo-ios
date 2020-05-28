@@ -12,9 +12,9 @@ public class Value {
 
     public let type: Type
 
-    public var value: String
+    public var value: [ValueContent]
 
-    init(type: Type, value: String) {
+    init(type: Type, value: [ValueContent]) {
         self.type = type
         self.value = value
     }
@@ -37,7 +37,9 @@ extension Value: Hashable {
 extension Value: CodeUnit {
 
     func toCode() -> String {
-        value
+        value.reduce("") { (code, v) in
+            code + v.toCode()
+        }
     }
 
 }

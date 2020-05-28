@@ -10,30 +10,30 @@ import SwiftUI
 
 class BlockSelectView: UIView {
 
-    let defaultBlocks: [Block] = [
-        Block(name: "default",
-              type: .void,
-              argTypes: [],
-              argValues: [],
-              contents: [[.label("Yay")]]),
+    let defaultBlocks: [BlockTemplate] = [
+        BlockTemplate(
+            name: "default",
+            type: .void,
+            argValues: [],
+            contents: [[.label("Yay")]]),
 
-        Block(name: "default+arg",
-              type: .void,
-              argTypes: [.custom("type")],
-              argValues: [.value(Value(type: .custom(""), value: ""))],
-              contents: [[.label("Nyan"), .arg(0)]]),
+        BlockTemplate(
+            name: "default+arg",
+            type: .void,
+            argValues: [.value(Value(type: .custom(""), value: [.raw("Yay")]))],
+            contents: [[.label("Nyan"), .arg(0)]]),
 
-        Block(name: "default+arg2",
-              type: .void,
-              argTypes: [.custom("type")],
-              argValues: [.variable(Variable(type: .custom("type"), name: "Variable"))],
-              contents: [[.label("Nyan"), .arg(0)]]),
+        BlockTemplate(
+            name: "default+arg2",
+            type: .void,
+            argValues: [.variable(Variable(type: .custom("type"), name: "Variable"))],
+            contents: [[.label("Nyan"), .arg(0)]]),
 
-        Block(name: "default+code",
-              type: .void,
-              argTypes: [.code],
-              argValues: [.code([])],
-              contents: [[.label("Piyo")], [.arg(0)]]),
+        BlockTemplate(
+            name: "default+code",
+            type: .void,
+            argValues: [.code([])],
+            contents: [[.label("Piyo")], [.arg(0)]]),
     ]
 
     private let tremolo: Tremolo
@@ -51,7 +51,7 @@ class BlockSelectView: UIView {
 
         let scrollView = UIScrollView()
             .alwaysBounceVertical(true)
-            .alwaysBounceHorizontal(true)
+            .alwaysBounceHorizontal(false)
             .clipsToBounds(true)
 
         let stackView = UIStackView()
@@ -61,15 +61,15 @@ class BlockSelectView: UIView {
             .spacing(10)
 
         stackView.contents(
-            defaultBlocks.enumerated().map { (idx, block: Block) in
-                self.blockViewInStackView(block: block, stackView: stackView, idx: idx)
+            defaultBlocks.enumerated().map { (idx, block: BlockTemplate) in
+                self.blockViewInStackView(block: .init(block), stackView: stackView, idx: idx)
             }
         )
 
         scrollView.addSubview(stackView)
         addSubview(scrollView)
         scrollView.equalTo(self)
-        stackView.equalTo(scrollView)
+        stackView.equalTo(scrollView, inset: .init(top: 0, left: 10, bottom: 0, right: 0))
     }
 
     required init?(coder: NSCoder) {

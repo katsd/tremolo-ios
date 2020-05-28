@@ -32,8 +32,17 @@ class ValueView: UIView {
 
         greaterThanOrEqualToSize(width: 10, height: 25)
 
-        value.value.forEach {
-            self.stackView.addArrangedSubview(label(String($0)))
+        value.value.forEach { content in
+            switch content {
+            case let .raw(str):
+                str.forEach { char in
+                    self.stackView.addArrangedSubview(label(String(char)))
+                }
+            case let .variable(variable):
+                self.stackView.addArrangedSubview(variableLabel(variable))
+            case let .block(block):
+                fatalError("Can't add blocks")
+            }
         }
 
         addSubview(stackView)
