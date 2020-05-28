@@ -20,7 +20,7 @@ class BlockSelectView: UIView {
         BlockTemplate(
             name: "default+arg",
             type: .void,
-            argValues: [.value(Value(type: .custom(""), value: [.raw("Yay")]))],
+            argValues: [.mathValue(MathValue(value: [.raw("Yay")]))],
             contents: [[.label("Nyan"), .arg(0)]]),
 
         BlockTemplate(

@@ -12,6 +12,8 @@ public enum Argument: Equatable, Hashable {
 
     case value(Value)
 
+    case mathValue(MathValue)
+
     case variable(Variable)
 
     case code([Block])
@@ -19,6 +21,8 @@ public enum Argument: Equatable, Hashable {
     public static func ==(lhs: Argument, rhs: Argument) -> Bool {
         switch (lhs, rhs) {
         case let (.value(l), .value(r)):
+            return l == r
+        case let (.mathValue(l), .mathValue(r)):
             return l == r
         case let (.variable(l), .variable(r)):
             return l == r
@@ -33,6 +37,8 @@ public enum Argument: Equatable, Hashable {
         switch self {
         case let .value(v):
             hasher.combine(v)
+        case let .mathValue(v):
+            hasher.combine(v)
         case let .variable(v):
             hasher.combine(v)
         case let .code(v):
@@ -46,6 +52,8 @@ extension Argument: CodeUnit {
     func toCode() -> String {
         switch self {
         case let .value(value):
+            return value.toCode()
+        case let .mathValue(value):
             return value.toCode()
         case let .variable(variable):
             return variable.toCode()

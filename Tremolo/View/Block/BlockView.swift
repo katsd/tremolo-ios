@@ -116,7 +116,11 @@ class BlockView: UIView {
     private func argView(arg: Argument) -> UIView {
         switch arg {
         case let .value(v):
-            return ValueView(tremolo: tremolo, value: v, isEditable: isEditable)
+            //return MathView(tremolo: tremolo, value: v, isEditable: isEditable)
+            fatalError("value is not implemented")
+
+        case let .mathValue(v):
+            return MathValueView(tremolo: tremolo, value: v, isEditable: isEditable)
 
         case let .variable(v):
             return VariableView(tremolo: tremolo, variable: v, types: [v.type], isEditable: isEditable)

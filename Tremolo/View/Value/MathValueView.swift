@@ -1,5 +1,5 @@
 //
-//  ValueView.swift
+//  MathValueView.swift
 //  Tremolo
 //  
 //  Created by Katsu Matsuda on 2020/04/09.
@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-class ValueView: UIView {
+class MathValueView: UIView {
 
     private let tremolo: Tremolo
 
@@ -16,7 +16,7 @@ class ValueView: UIView {
 
     private let cursor = CursorView()
 
-    private let value: Value
+    private let value: MathValue
 
     @Binding var isEditable: Bool
 
@@ -24,7 +24,7 @@ class ValueView: UIView {
     // | A | B | C |
     private var cursorPos = 0
 
-    init(tremolo: Tremolo, value: Value, isEditable: Binding<Bool>) {
+    init(tremolo: Tremolo, value: MathValue, isEditable: Binding<Bool>) {
         self.tremolo = tremolo
 
         self.value = value
@@ -194,7 +194,7 @@ class ValueView: UIView {
 
 }
 
-extension ValueView: KeyboardReceiver {
+extension MathValueView: KeyboardReceiver {
 
     func delete() {
         if cursorPos == 0 {
@@ -226,7 +226,7 @@ extension ValueView: KeyboardReceiver {
 
 }
 
-extension ValueView: MathKeyboardReceiver {
+extension MathValueView: MathKeyboardReceiver {
 
     func addTexts(_ texts: [String], cursor: Int) {
         for (idx, text) in texts.enumerated() {
@@ -241,7 +241,7 @@ extension ValueView: MathKeyboardReceiver {
 
 }
 
-extension ValueView: VariableKeyboardReceiver {
+extension MathValueView: VariableKeyboardReceiver {
 
     func addVariable(_ variable: Variable) {
         stackView.insertArrangedSubview(variableLabel(variable), at: cursorPos)
