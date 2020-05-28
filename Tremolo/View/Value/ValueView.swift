@@ -10,6 +10,8 @@ import SwiftUI
 
 class ValueView: UIView {
 
+    private let tremolo: Tremolo
+
     private let stackView = UIStackView(frame: .zero)
 
     private let cursor = CursorView()
@@ -22,7 +24,8 @@ class ValueView: UIView {
     // | A | B | C |
     private var cursorPos = 0
 
-    init(value: Value, isEditable: Binding<Bool>) {
+    init(tremolo: Tremolo, value: Value, isEditable: Binding<Bool>) {
+        self.tremolo = tremolo
 
         self.value = value
 
@@ -41,7 +44,7 @@ class ValueView: UIView {
             case let .variable(variable):
                 self.stackView.addArrangedSubview(variableLabel(variable))
             case let .block(block):
-                fatalError("Can't add blocks")
+                self.stackView.addArrangedSubview(blockView(block))
             }
         }
 
@@ -183,6 +186,10 @@ class ValueView: UIView {
         UILabel()
             .text(variable.name)
             .textColor(.blue)
+    }
+
+    private func blockView(_ block: Block) -> BlockView {
+        BlockView(tremolo: tremolo, block: block)
     }
 
 }
