@@ -49,7 +49,7 @@ struct KeyboardView: View {
                     Image(systemName: "keyboard.chevron.compact.down")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .padding(.vertical, 12)
+                        .padding(.vertical, 14)
                 }
             }
         }
