@@ -27,7 +27,9 @@ class BlockView: UIView {
 
     private var blockContentsStackView = BlockContentStackView()
 
-    private var blockStackViewPaths = [(Int, Int)]()
+    private var blockVStackViewPaths = [(Int, Int)]()
+
+    private var blockHStackViewPaths = [(Int, Int)]()
 
     init(tremolo: Tremolo, block: Block, blockController: BlockController? = nil) {
         self.tremolo = tremolo
@@ -80,7 +82,7 @@ class BlockView: UIView {
             for j in 0..<block.contents[i].count {
                 if case let .arg(idx) = block.contents[i][j] {
                     if case .code(_) = block.argValues[idx] {
-                        blockStackViewPaths.append((i, j))
+                        blockVStackViewPaths.append((i, j))
                     }
                 }
             }
@@ -116,8 +118,7 @@ class BlockView: UIView {
     private func argView(arg: Argument) -> UIView {
         switch arg {
         case let .value(v):
-            //return MathView(tremolo: tremolo, value: v, isEditable: isEditable)
-            fatalError("value is not implemented")
+            return ValueView(tremolo: tremolo, value: v, blockController: blockController)
 
         case let .mathValue(v):
             return MathValueView(tremolo: tremolo, value: v, isEditable: isEditable)
@@ -198,7 +199,7 @@ extension BlockView: BlockStackViewController {
             blockY = blockFrame.midY
         }
 
-        for path in blockStackViewPaths {
+        for path in blockVStackViewPaths {
             guard let stackView = blockContentsStackView.content(at: path) as? UIStackView else {
                 continue
             }
