@@ -72,16 +72,99 @@ class ValueView: UIView {
 extension ValueView: BlockStackViewController {
 
     func addBlockView(_ blockView: UIView, path: (Int, Int), at idx: Int, animation: () -> Void) {
+        CodeView.addBlockView(stackView: stackView, blockView: blockView, at: idx, animation: animation)
     }
 
     func addBlankView(blockView: UIView, path: (Int, Int), at idx: Int, animation: () -> Void) {
+        CodeView.addBlankView(stackView: stackView, blockView: blockView, at: idx, animation: animation)
     }
 
     func removeBlankView(path: (Int, Int), at idx: Int, animation: () -> Void) {
+        CodeView.removeBlankView(stackView: stackView, at: idx, animation: animation)
     }
 
     func findBlockPos(blockView: UIView, velocity: CGPoint, selectedBlockPos: BlockPos?) -> BlockPos? {
-        return nil
+        let blockFrame = blockView.globalFrame
+        let blockX = blockFrame.minX
+
+        if (blockX < globalFrame.minX || globalFrame.maxX < blockX) ||
+               (blockFrame.maxY < globalFrame.minY || globalFrame.maxY < blockFrame.minY) {
+            return nil
+        }
+
+        let searchBlock: () -> (result: Bool, pos: BlockPos?) = {
+            var l = -1
+            var r = self.stackView.arrangedSubviews.count
+
+            while r - l > 1 {
+                let mid = (r + l) / 2
+
+                if self.stackView.arrangedSubviews[mid].globalFrame.minX <= blockX {
+                    l = mid
+                } else {
+                    r = mid
+                }
+            }
+
+            if l == -1 {
+                return (result: false, pos: nil)
+            }
+
+            if l == self.stackView.arrangedSubviews.count - 1 {
+                if self.stackView.globalFrame.maxX <= blockX {
+                    return (result: false, pos: nil)
+                }
+            }
+
+            guard  let surroundingBlockView = self.stackView.arrangedSubviews[l] as? BlockView else {
+                return (result: false, pos: nil)
+            }
+
+            if surroundingBlockView == blockView {
+                return (result: false, pos: nil)
+            }
+
+            return (result: true, pos: surroundingBlockView.findBlockPos(blockView: blockView, velocity: velocity, selectedBlockPos: selectedBlockPos))
+        }
+
+        let searchIdx: () -> BlockPos = {
+            let hasBlankView: Bool
+            if let pos = selectedBlockPos {
+                hasBlankView = pos.blockStackViewController === self
+            } else {
+                hasBlankView = false
+            }
+
+            var l = -1
+            var r = self.stackView.arrangedSubviews.count
+
+            while r - l > 1 {
+                let mid = (r + l) / 2
+
+                if self.stackView.arrangedSubviews[mid].globalFrame.midX < blockX {
+                    l = mid
+                } else {
+                    r = mid
+                }
+            }
+
+            if hasBlankView {
+                if let pos = selectedBlockPos?.idx {
+                    if pos < r {
+                        r -= 1
+                    }
+                }
+            }
+
+            return BlockPos(blockStackViewController: self, path: (0, 0), idx: r)
+        }
+
+        let res = searchBlock()
+        if res.pos != nil {
+            return res.pos
+        }
+
+        return searchIdx()
     }
 
 }
