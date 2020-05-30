@@ -16,7 +16,7 @@ public enum Argument: Equatable, Hashable {
 
     case variable(Variable)
 
-    case code([Block])
+    case code(BlockStack)
 
     public static func ==(lhs: Argument, rhs: Argument) -> Bool {
         switch (lhs, rhs) {
@@ -47,16 +47,14 @@ public enum Argument: Equatable, Hashable {
     }
 
     mutating func insertBlock(_ block: Block, at idx: Int) {
-        if case var .code(blocks) = self {
-            blocks.insert(block, at: idx)
-            self = .code(blocks)
+        if case var .code(blockStack) = self {
+            blockStack.insertBlock(block, at: idx)
         }
     }
 
     mutating func removeBlock(at idx: Int) {
-        if case var .code(blocks) = self {
-            blocks.remove(at: idx)
-            self = .code(blocks)
+        if case var .code(blockStack) = self {
+            blockStack.removeBlock(at: idx)
         }
     }
 }
@@ -71,14 +69,8 @@ extension Argument: CodeUnit {
             return value.toCode()
         case let .variable(variable):
             return variable.toCode()
-        case let .code(blocks):
-            return
-                """
-                {
-                \(blocks.reduce("") { (code, block) in
-                    code + block.toCode() + "\n"
-                })}
-                """
+        case let .code(blockStack):
+            return blockStack.toCode()
         }
     }
 

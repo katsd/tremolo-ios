@@ -11,7 +11,7 @@ import SwiftUI
 @available(iOS 13.0, macOS 10.15, *)
 public class Tremolo: ObservableObject {
 
-    var blocks: [Block]
+    var blockStack: BlockStack
 
     @Published var variables: [Variable]
 
@@ -22,7 +22,7 @@ public class Tremolo: ObservableObject {
     let topView = UIView()
 
     public init(blocks: [Block], variables: [Variable]) {
-        self.blocks = blocks
+        self.blockStack = .init(blocks)
         self.variables = variables
         self.declaredLocalVariableNum = .init()
     }
@@ -31,6 +31,10 @@ public class Tremolo: ObservableObject {
         blocks.reduce("") { (code, block) -> String in
             code + block.toCode() + "\n"
         }
+    }
+
+    var blocks: [Block] {
+        blockStack.blocks
     }
 
 }

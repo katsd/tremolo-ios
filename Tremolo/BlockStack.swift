@@ -25,3 +25,32 @@ public class BlockStack {
     }
 
 }
+
+extension BlockStack: Equatable {
+
+    public static func ==(lhs: BlockStack, rhs: BlockStack) -> Bool {
+        lhs.blocks == rhs.blocks
+    }
+
+}
+
+extension BlockStack: Hashable {
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(blocks)
+    }
+
+}
+
+extension BlockStack: CodeUnit {
+
+    func toCode() -> String {
+        """
+        {
+        \(blocks.reduce("") { (code, block) in
+            code + block.toCode() + "\n"
+        })}
+        """
+    }
+
+}

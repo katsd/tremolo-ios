@@ -32,7 +32,7 @@ class BlockSelectView: UIView {
         BlockTemplate(
             name: "default+code",
             type: .void,
-            argValues: [.code([])],
+            argValues: [.code(.init([]))],
             contents: [[.label("Piyo")], [.arg(0)]]),
     ]
 

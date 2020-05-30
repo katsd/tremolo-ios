@@ -31,8 +31,6 @@ class BlockView: UIView {
 
     private var blockHStackViewPaths = [BlockStackPath]()
 
-    private var path2Blocks = [BlockStackPath: [Block]]()
-
     init(tremolo: Tremolo, block: Block, blockController: BlockController? = nil) {
         self.tremolo = tremolo
 
@@ -88,7 +86,6 @@ class BlockView: UIView {
                         blockHStackViewPaths.append(.init(row: i, col: j))
                     case .code(let blocks):
                         blockVStackViewPaths.append(.init(row: i, col: j))
-                        path2Blocks[.init(row: i, col: j)] = blocks
                     default:
                         break
                     }
@@ -134,9 +131,9 @@ class BlockView: UIView {
         case let .variable(v):
             return VariableView(tremolo: tremolo, variable: v, types: [v.type], isEditable: isEditable)
 
-        case let .code(blocks):
+        case let .code(blockStack):
             return BlockStackView(blocks:
-                                  blocks.map {
+                                  blockStack.blocks.map {
                                       BlockView(tremolo: tremolo, block: $0.parent(self), blockController: self.blockController)
                                   },
                                   blockController: blockController)

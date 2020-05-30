@@ -144,12 +144,12 @@ extension CodeView: BlockController {
 extension CodeView: BlockStackViewController {
 
     func addBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, animation: () -> Void) {
-        tremolo.blocks.insert(blockView.block, at: idx)
+        tremolo.blockStack.insertBlock(blockView.block, at: idx)
         CodeView.addBlockView(stackView: blockStackView, blockView: blockView, at: idx, animation: animation)
     }
 
     func floatBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int) {
-        tremolo.blocks.remove(at: idx)
+        tremolo.blockStack.removeBlock(at: idx)
     }
 
     func addBlankView(blockView: BlockView, path: BlockStackPath, at idx: Int, animation: () -> Void) {
