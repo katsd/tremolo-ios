@@ -27,25 +27,25 @@ class BlockContentStackView: UIStackView {
         getStackView(at: idx).addArrangedSubview(view)
     }
 
-    func setContent(_ view: UIView, at path: (Int, Int)) {
-        let stackView = getStackView(at: path.0)
+    func setContent(_ view: UIView, at path: BlockStackPath) {
+        let stackView = getStackView(at: path.row)
 
-        if path.1 == stackView.arrangedSubviews.count {
+        if path.col == stackView.arrangedSubviews.count {
             stackView.addArrangedSubview(view)
             return
         }
 
-        while path.1 >= stackView.arrangedSubviews.count {
+        while path.col >= stackView.arrangedSubviews.count {
             stackView.addArrangedSubview(UIView())
         }
 
-        stackView.arrangedSubviews[path.1].removeFromSuperview()
-        stackView.insertArrangedSubview(view, at: path.1)
+        stackView.arrangedSubviews[path.col].removeFromSuperview()
+        stackView.insertArrangedSubview(view, at: path.col)
     }
 
-    func content(at path: (Int, Int)) -> UIView {
-        let stackView = getStackView(at: path.0)
-        return stackView.arrangedSubviews[path.1]
+    func content(at path: BlockStackPath) -> UIView {
+        let stackView = getStackView(at: path.row)
+        return stackView.arrangedSubviews[path.col]
     }
 
     private func getStackView(at idx: Int) -> UIStackView {

@@ -17,7 +17,7 @@ public class Tremolo: ObservableObject {
 
     var declaredLocalVariableNum: [LocalVariable: Int]
 
-    lazy var mainCodeView: CodeView = CodeView(tremolo: self, blocks: blocks, topView: topView)
+    lazy var mainCodeView: CodeView = CodeView(tremolo: self, topView: topView)
 
     let topView = UIView()
 

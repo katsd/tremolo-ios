@@ -27,9 +27,9 @@ class BlockView: UIView {
 
     private var blockContentsStackView = BlockContentStackView()
 
-    private var blockVStackViewPaths = [(Int, Int)]()
+    private var blockVStackViewPaths = [BlockStackPath]()
 
-    private var blockHStackViewPaths = [(Int, Int)]()
+    private var blockHStackViewPaths = [BlockStackPath]()
 
     init(tremolo: Tremolo, block: Block, blockController: BlockController? = nil) {
         self.tremolo = tremolo
@@ -83,9 +83,9 @@ class BlockView: UIView {
                 if case let .arg(idx) = block.contents[i][j] {
                     switch block.argValues[idx] {
                     case .value(_):
-                        blockHStackViewPaths.append((i, j))
+                        blockHStackViewPaths.append(.init(row: i, col: j))
                     case .code(_):
-                        blockVStackViewPaths.append((i, j))
+                        blockVStackViewPaths.append(.init(row: i, col: j))
                     default:
                         break
                     }
@@ -145,7 +145,7 @@ class BlockView: UIView {
 
 extension BlockView: BlockStackViewController {
 
-    func addBlockView(_ blockView: BlockView, path: (Int, Int), at idx: Int, animation: () -> Void) {
+    func addBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, animation: () -> Void) {
         guard let stackView = blockContentsStackView.content(at: path) as? UIStackView else {
             return
         }
@@ -153,7 +153,11 @@ extension BlockView: BlockStackViewController {
         CodeView.addBlockView(stackView: stackView, blockView: blockView, at: idx, animation: animation)
     }
 
-    func addBlankView(blockView: BlockView, path: (Int, Int), at idx: Int, animation: () -> Void) {
+    func floatBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int) {
+
+    }
+
+    func addBlankView(blockView: BlockView, path: BlockStackPath, at idx: Int, animation: () -> Void) {
         guard let stackView = blockContentsStackView.content(at: path) as? UIStackView else {
             return
         }
@@ -161,7 +165,7 @@ extension BlockView: BlockStackViewController {
         CodeView.addBlankView(stackView: stackView, blockView: blockView, at: idx, animation: animation)
     }
 
-    func removeBlankView(path: (Int, Int), at idx: Int, animation: () -> Void) {
+    func removeBlankView(path: BlockStackPath, at idx: Int, animation: () -> Void) {
         guard let stackView = blockContentsStackView.content(at: path) as? UIStackView else {
             return
         }

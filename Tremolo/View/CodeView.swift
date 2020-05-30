@@ -14,16 +14,12 @@ class CodeView: UIView {
 
     private var selectedBlockPos: BlockPos? = nil
 
-    private var blocks: [Block]
-
     private var blockStackView = UIStackView()
 
     private let topView: UIView
 
-    init(tremolo: Tremolo, blocks: [Block], topView: UIView) {
+    init(tremolo: Tremolo, topView: UIView) {
         self.tremolo = tremolo
-
-        self.blocks = blocks
 
         self.topView = topView
 
@@ -40,7 +36,7 @@ class CodeView: UIView {
 
         blockStackView =
             BlockStackView(blocks:
-                           blocks.map {
+                           tremolo.blocks.map {
                                BlockView(tremolo: tremolo, block: $0.parent(self), blockController: self)
                            },
                            blockController: self)
@@ -86,6 +82,8 @@ extension CodeView: BlockController {
             pos.blockStackViewController.addBlankView(blockView: blockView, path: pos.path, at: pos.idx) {
                 self.blockAnimation()
             }
+
+            pos.blockStackViewController.floatBlockView(blockView, path: pos.path, at: pos.idx)
         }
     }
 
@@ -145,15 +143,20 @@ extension CodeView: BlockController {
 
 extension CodeView: BlockStackViewController {
 
-    func addBlockView(_ blockView: BlockView, path: (Int, Int), at idx: Int, animation: () -> Void) {
+    func addBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, animation: () -> Void) {
+        tremolo.blocks.insert(blockView.block, at: idx)
         CodeView.addBlockView(stackView: blockStackView, blockView: blockView, at: idx, animation: animation)
     }
 
-    func addBlankView(blockView: BlockView, path: (Int, Int), at idx: Int, animation: () -> Void) {
+    func floatBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int) {
+        tremolo.blocks.remove(at: idx)
+    }
+
+    func addBlankView(blockView: BlockView, path: BlockStackPath, at idx: Int, animation: () -> Void) {
         CodeView.addBlankView(stackView: blockStackView, blockView: blockView, at: idx, animation: animation)
     }
 
-    func removeBlankView(path: (Int, Int), at idx: Int, animation: () -> Void) {
+    func removeBlankView(path: BlockStackPath, at idx: Int, animation: () -> Void) {
         CodeView.removeBlankView(stackView: blockStackView, at: idx, animation: animation)
     }
 
@@ -236,7 +239,7 @@ extension CodeView: BlockStackViewController {
                 }
             }
 
-            return BlockPos(blockStackViewController: self, path: (0, 0), idx: r)
+            return BlockPos(blockStackViewController: self, path: .zero, idx: r)
         }
 
         let res = searchBlock()

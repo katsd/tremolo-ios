@@ -71,15 +71,18 @@ class ValueView: UIView {
 
 extension ValueView: BlockStackViewController {
 
-    func addBlockView(_ blockView: BlockView, path: (Int, Int), at idx: Int, animation: () -> Void) {
+    func addBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, animation: () -> Void) {
         CodeView.addBlockView(stackView: stackView, blockView: blockView, at: idx, animation: animation)
     }
 
-    func addBlankView(blockView: BlockView, path: (Int, Int), at idx: Int, animation: () -> Void) {
+    func floatBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int) {
+    }
+
+    func addBlankView(blockView: BlockView, path: BlockStackPath, at idx: Int, animation: () -> Void) {
         CodeView.addBlankView(stackView: stackView, blockView: blockView, at: idx, animation: animation)
     }
 
-    func removeBlankView(path: (Int, Int), at idx: Int, animation: () -> Void) {
+    func removeBlankView(path: BlockStackPath, at idx: Int, animation: () -> Void) {
         CodeView.removeBlankView(stackView: stackView, at: idx, animation: animation)
     }
 
@@ -156,7 +159,7 @@ extension ValueView: BlockStackViewController {
                 }
             }
 
-            return BlockPos(blockStackViewController: self, path: (0, 0), idx: r)
+            return BlockPos(blockStackViewController: self, path: .zero, idx: r)
         }
 
         let res = searchBlock()

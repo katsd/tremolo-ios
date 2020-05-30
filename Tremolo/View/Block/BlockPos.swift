@@ -12,7 +12,7 @@ struct BlockPos: Equatable {
 
     let blockStackViewController: BlockStackViewController
 
-    let path: (Int, Int)
+    let path: BlockStackPath
 
     let idx: Int
 
