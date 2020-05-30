@@ -145,7 +145,7 @@ class BlockView: UIView {
 
 extension BlockView: BlockStackViewController {
 
-    func addBlockView(_ blockView: UIView, path: (Int, Int), at idx: Int, animation: () -> Void) {
+    func addBlockView(_ blockView: BlockView, path: (Int, Int), at idx: Int, animation: () -> Void) {
         guard let stackView = blockContentsStackView.content(at: path) as? UIStackView else {
             return
         }
@@ -153,7 +153,7 @@ extension BlockView: BlockStackViewController {
         CodeView.addBlockView(stackView: stackView, blockView: blockView, at: idx, animation: animation)
     }
 
-    func addBlankView(blockView: UIView, path: (Int, Int), at idx: Int, animation: () -> Void) {
+    func addBlankView(blockView: BlockView, path: (Int, Int), at idx: Int, animation: () -> Void) {
         guard let stackView = blockContentsStackView.content(at: path) as? UIStackView else {
             return
         }
@@ -169,7 +169,7 @@ extension BlockView: BlockStackViewController {
         CodeView.removeBlankView(stackView: stackView, at: idx, animation: animation)
     }
 
-    func findBlockPos(blockView: UIView, velocity: CGPoint, selectedBlockPos: BlockPos?) -> BlockPos? {
+    func findBlockPos(blockView: BlockView, velocity: CGPoint, selectedBlockPos: BlockPos?) -> BlockPos? {
         for path in blockHStackViewPaths {
             guard  let valueView = blockContentsStackView.content(at: path) as? ValueView else {
                 continue

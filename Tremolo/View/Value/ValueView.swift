@@ -71,11 +71,11 @@ class ValueView: UIView {
 
 extension ValueView: BlockStackViewController {
 
-    func addBlockView(_ blockView: UIView, path: (Int, Int), at idx: Int, animation: () -> Void) {
+    func addBlockView(_ blockView: BlockView, path: (Int, Int), at idx: Int, animation: () -> Void) {
         CodeView.addBlockView(stackView: stackView, blockView: blockView, at: idx, animation: animation)
     }
 
-    func addBlankView(blockView: UIView, path: (Int, Int), at idx: Int, animation: () -> Void) {
+    func addBlankView(blockView: BlockView, path: (Int, Int), at idx: Int, animation: () -> Void) {
         CodeView.addBlankView(stackView: stackView, blockView: blockView, at: idx, animation: animation)
     }
 
@@ -83,7 +83,7 @@ extension ValueView: BlockStackViewController {
         CodeView.removeBlankView(stackView: stackView, at: idx, animation: animation)
     }
 
-    func findBlockPos(blockView: UIView, velocity: CGPoint, selectedBlockPos: BlockPos?) -> BlockPos? {
+    func findBlockPos(blockView: BlockView, velocity: CGPoint, selectedBlockPos: BlockPos?) -> BlockPos? {
         let blockFrame = blockView.globalFrame
         let blockX = blockFrame.minX
 
