@@ -31,6 +31,8 @@ class BlockView: UIView {
 
     private var blockHStackViewPaths = [BlockStackPath]()
 
+    private var path2Blocks = [BlockStackPath: [Block]]()
+
     init(tremolo: Tremolo, block: Block, blockController: BlockController? = nil) {
         self.tremolo = tremolo
 
@@ -84,8 +86,9 @@ class BlockView: UIView {
                     switch block.argValues[idx] {
                     case .value(_):
                         blockHStackViewPaths.append(.init(row: i, col: j))
-                    case .code(_):
+                    case .code(let blocks):
                         blockVStackViewPaths.append(.init(row: i, col: j))
+                        path2Blocks[.init(row: i, col: j)] = blocks
                     default:
                         break
                     }
@@ -150,11 +153,16 @@ extension BlockView: BlockStackViewController {
             return
         }
 
+        if case let .arg(aIdx) = block.contents[path.row][path.col] {
+            block.argValues[aIdx].insertBlock(blockView.block, at: idx)
+        }
         CodeView.addBlockView(stackView: stackView, blockView: blockView, at: idx, animation: animation)
     }
 
     func floatBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int) {
-
+        if case let .arg(aIdx) = block.contents[path.row][path.col] {
+            block.argValues[aIdx].removeBlock(at: idx)
+        }
     }
 
     func addBlankView(blockView: BlockView, path: BlockStackPath, at idx: Int, animation: () -> Void) {

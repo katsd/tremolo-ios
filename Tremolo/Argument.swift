@@ -45,6 +45,20 @@ public enum Argument: Equatable, Hashable {
             hasher.combine(v)
         }
     }
+
+    mutating func insertBlock(_ block: Block, at idx: Int) {
+        if case var .code(blocks) = self {
+            blocks.insert(block, at: idx)
+            self = .code(blocks)
+        }
+    }
+
+    mutating func removeBlock(at idx: Int) {
+        if case var .code(blocks) = self {
+            blocks.remove(at: idx)
+            self = .code(blocks)
+        }
+    }
 }
 
 extension Argument: CodeUnit {
