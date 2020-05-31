@@ -24,6 +24,8 @@ public class Block {
 
     private let specialFormatter: (([String]) -> String)?
 
+    let withArg: Bool
+
     var declaredVariable: Variable? {
         guard  let idx = declarableVariableIndex else {
             return nil
@@ -40,7 +42,7 @@ public class Block {
         self.init(name: template.name, type: template.type, argValues: template.argValues, contents: template.contents, declarableVariableIndex: template.declarableVariableIndex)
     }
 
-    init(name: String, type: Type, argValues: [Argument], contents: [[BlockContent]], declarableVariableIndex: Int? = nil, specialFormatter: (([String]) -> String)? = nil) {
+    init(name: String, type: Type, argValues: [Argument], contents: [[BlockContent]], declarableVariableIndex: Int? = nil, specialFormatter: (([String]) -> String)? = nil, withArg: Bool = true) {
         self.name = name
 
         self.type = type
@@ -52,6 +54,8 @@ public class Block {
         self.declarableVariableIndex = declarableVariableIndex
 
         self.specialFormatter = specialFormatter
+
+        self.withArg = withArg
     }
 
 }
@@ -82,6 +86,14 @@ extension Block: CodeUnit {
                 $0.toCode()
             }
             return "\(name)\(formatter(contentStr))"
+        }
+
+        if !withArg {
+            return name
+        }
+
+        if argValues.isEmpty {
+            return "\(name)()"
         }
 
         var code = "\(name)("
@@ -116,11 +128,11 @@ extension Block {
 extension Block {
 
     static public func variable(type: Type, name: String) -> Block {
-        .init(name: name, type: type, argValues: [], contents: [[.label(name)]])
+        .init(name: name, type: type, argValues: [], contents: [[.label(name)]], withArg: false)
     }
 
     static public func string(_ str: String) -> Block {
-        .init(name: str, type: .custom("str"), argValues: [], contents: [[.label(str)]])
+        .init(name: str, type: .custom("str"), argValues: [], contents: [[.label(str)]], withArg: false)
     }
 
 }
