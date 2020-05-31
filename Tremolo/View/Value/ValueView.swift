@@ -52,10 +52,9 @@ class ValueView: UIView {
     }
 
     private func setContents() {
-        value.value.forEach { block in
+        value.blockStack.blocks.forEach { block in
             stackView.addArrangedSubview(BlockView(tremolo: tremolo, block: block, blockController: blockController))
         }
-
     }
 
 }
@@ -63,10 +62,12 @@ class ValueView: UIView {
 extension ValueView: BlockStackViewController {
 
     func addBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, animation: () -> Void) {
+        value.blockStack.insertBlock(blockView.block, at: idx)
         CodeView.addBlockView(stackView: stackView, blockView: blockView, at: idx, animation: animation)
     }
 
     func floatBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int) {
+        value.blockStack.removeBlock(at: idx)
     }
 
     func addBlankView(blockView: BlockView, path: BlockStackPath, at idx: Int, animation: () -> Void) {

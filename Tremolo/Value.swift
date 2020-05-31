@@ -10,13 +10,13 @@ import Foundation
 
 public class Value {
 
-    public let type: Type
+    let type: Type
 
-    public var value: [Block]
+    let blockStack: BlockStack
 
-    init(type: Type, value: [Block]) {
+    public init(type: Type, blocks: [Block]) {
         self.type = type
-        self.value = value
+        self.blockStack = .init(blocks)
     }
 
 }
@@ -24,12 +24,12 @@ public class Value {
 extension Value: Hashable {
 
     public static func ==(lhs: Value, rhs: Value) -> Bool {
-        lhs.type == rhs.type && lhs.value == rhs.value
+        lhs.type == rhs.type && lhs.blockStack == rhs.blockStack
     }
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(type)
-        hasher.combine(value)
+        hasher.combine(blockStack)
     }
 
 }
@@ -37,7 +37,7 @@ extension Value: Hashable {
 extension Value: CodeUnit {
 
     func toCode() -> String {
-        value.reduce("") { (code, v) in
+        blockStack.blocks.reduce("") { (code, v) in
             code + v.toCode()
         }
     }
