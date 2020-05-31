@@ -10,9 +10,9 @@ import Foundation
 
 public class MathValue {
 
-    public var value: [ValueContent]
+    public var value: [MathValueContent]
 
-    init(value: [ValueContent]) {
+    init(value: [MathValueContent]) {
         self.value = value
     }
 

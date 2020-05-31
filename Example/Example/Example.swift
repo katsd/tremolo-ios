@@ -15,7 +15,11 @@ class Example {
             Block(name: "assign",
                   type: .void,
                   argValues: [.variable(Variable(type: .custom("type"), name: "var")),
-                              .value(.init(type: .custom(""), value: [.raw("128"), .variable(.init(type: .custom(""), name: "testVar")), .block(.init(name: "inArg", type: .custom(""), argValues: [.value(.init(type: .custom(""), value: [.raw("1024")]))], contents: [[.label("Func"), .arg(0)]])), .raw("Yay")]))],
+                              .value(.init(type: .custom(""),
+                                           value: [.string("128"),
+                                                   .variable(type: .custom(""), name: "testVar"),
+                                                   .init(name: "inArg", type: .custom(""), argValues: [.value(.init(type: .custom(""), value: [.string("1024")]))], contents: [[.label("Func"), .arg(0)]]),
+                                                   .string("Yay")]))],
                   contents: [[.label("Set"), .arg(0), .label("to"), .arg(1)]],
                   declarableVariableIndex: 0),
 

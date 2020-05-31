@@ -12,9 +12,9 @@ public class Value {
 
     public let type: Type
 
-    public var value: [ValueContent]
+    public var value: [Block]
 
-    init(type: Type, value: [ValueContent]) {
+    init(type: Type, value: [Block]) {
         self.type = type
         self.value = value
     }

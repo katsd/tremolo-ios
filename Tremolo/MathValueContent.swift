@@ -1,5 +1,5 @@
 //
-//  ValueContent.swift
+//  MathValueContent.swift
 //  Tremolo
 //  
 //  Created by Katsu Matsuda on 2020/05/28.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum ValueContent {
+public enum MathValueContent {
 
     case raw(String)
 
@@ -18,9 +18,9 @@ public enum ValueContent {
 
 }
 
-extension ValueContent: Hashable {
+extension MathValueContent: Hashable {
 
-    public static func ==(lhs: ValueContent, rhs: ValueContent) -> Bool {
+    public static func ==(lhs: MathValueContent, rhs: MathValueContent) -> Bool {
         switch (lhs, rhs) {
         case let (.raw(l), .raw(r)):
             return l == r
@@ -46,7 +46,7 @@ extension ValueContent: Hashable {
 
 }
 
-extension ValueContent: CodeUnit {
+extension MathValueContent: CodeUnit {
 
     func toCode() -> String {
         switch self {

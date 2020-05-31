@@ -112,3 +112,15 @@ extension Block {
     }
 
 }
+
+extension Block {
+
+    static public func variable(type: Type, name: String) -> Block {
+        .init(name: name, type: type, argValues: [], contents: [[.label(name)]])
+    }
+
+    static public func string(_ str: String) -> Block {
+        .init(name: str, type: .custom("str"), argValues: [], contents: [[.label(str)]])
+    }
+
+}

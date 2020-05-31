@@ -52,16 +52,7 @@ class ValueView: UIView {
     }
 
     private func setContents() {
-        value.value.forEach { v in
-            let block: Block
-            switch v {
-            case let .raw(str):
-                block = .init(name: "str", type: .custom(""), argValues: [], contents: [[.label(str)]])
-            case let .variable(variable):
-                block = .init(name: "var", type: .custom(""), argValues: [], contents: [[.label(variable.name)]])
-            case let .block(b):
-                block = b
-            }
+        value.value.forEach { block in
             stackView.addArrangedSubview(BlockView(tremolo: tremolo, block: block, blockController: blockController))
         }
 
