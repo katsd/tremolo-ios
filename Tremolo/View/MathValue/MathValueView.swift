@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-class MathValueView: UIView {
+final class MathValueView: UIView {
 
     private let tremolo: Tremolo
 

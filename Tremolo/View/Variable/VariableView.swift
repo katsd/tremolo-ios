@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-class VariableView: UIButton {
+final class VariableView: UIButton {
 
     private let tremolo: Tremolo
 

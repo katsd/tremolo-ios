@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ValueView: UIView {
+final class ValueView: UIView {
 
     private let tremolo: Tremolo
 
