@@ -39,12 +39,10 @@ final class MathValueView: UIView {
 
         greaterThanOrEqualToSize(width: 10, height: 25)
 
-        value.value.forEach { content in
+        value.contentStack.forEach { content in
             switch content {
             case let .raw(str):
-                str.forEach { char in
-                    self.stackView.addArrangedSubview(label(String(char)))
-                }
+                self.stackView.addArrangedSubview(label(str))
             case let .variable(variable):
                 self.stackView.addArrangedSubview(variableLabel(variable))
             case let .block(block):

@@ -10,10 +10,10 @@ import Foundation
 
 public class MathValue {
 
-    public var value: [MathValueContent]
+    public var contentStack: [MathValueContent]
 
     init(value: [MathValueContent]) {
-        self.value = value
+        self.contentStack = value
     }
 
 }
@@ -21,11 +21,11 @@ public class MathValue {
 extension MathValue: Hashable {
 
     public static func ==(lhs: MathValue, rhs: MathValue) -> Bool {
-        lhs.value == rhs.value
+        lhs.contentStack == rhs.contentStack
     }
 
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(value)
+        hasher.combine(contentStack)
     }
 
 }
@@ -33,7 +33,7 @@ extension MathValue: Hashable {
 extension MathValue: CodeUnit {
 
     func toCode() -> String {
-        value.reduce("") { (code, v) in
+        contentStack.reduce("") { (code, v) in
             code + v.toCode()
         }
     }
