@@ -255,3 +255,23 @@ extension MathValueView: VariableKeyboardReceiver {
     }
 
 }
+
+extension MathValueView: BlockStackViewController {
+
+    func addBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, animation: () -> Void) {
+    }
+
+    func floatBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int) {
+    }
+
+    func addBlankView(blockView: BlockView, path: BlockStackPath, at idx: Int, animation: () -> Void) {
+    }
+
+    func removeBlankView(path: BlockStackPath, at idx: Int, animation: () -> Void) {
+    }
+
+    func findBlockPos(blockView: BlockView, velocity: CGPoint, selectedBlockPos: BlockPos?) -> BlockPos? {
+        nil
+    }
+
+}
