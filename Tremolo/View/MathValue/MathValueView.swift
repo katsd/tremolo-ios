@@ -185,7 +185,7 @@ class MathValueView: UIView {
     private func variableLabel(_ variable: Variable) -> UILabel {
         UILabel()
             .text(variable.name)
-            .textColor(.blue)
+            .textColor(.red)
     }
 
     private func blockView(_ block: Block) -> BlockView {
