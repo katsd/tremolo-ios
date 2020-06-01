@@ -18,16 +18,20 @@ class MathValueView: UIView {
 
     private let value: MathValue
 
+    private let blockController: BlockController?
+
     @Binding var isEditable: Bool
 
     // 0   1   2   3  <- cursorPos
     // | A | B | C |
     private var cursorPos = 0
 
-    init(tremolo: Tremolo, value: MathValue, isEditable: Binding<Bool>) {
+    init(tremolo: Tremolo, value: MathValue, blockController: BlockController?, isEditable: Binding<Bool>) {
         self.tremolo = tremolo
 
         self.value = value
+
+        self.blockController = blockController
 
         self._isEditable = isEditable
 
@@ -189,7 +193,7 @@ class MathValueView: UIView {
     }
 
     private func blockView(_ block: Block) -> BlockView {
-        BlockView(tremolo: tremolo, block: block)
+        BlockView(tremolo: tremolo, block: block, blockController: blockController)
     }
 
 }

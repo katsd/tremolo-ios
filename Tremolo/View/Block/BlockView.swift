@@ -126,7 +126,7 @@ class BlockView: UIView {
             return ValueView(tremolo: tremolo, value: v, blockController: blockController)
 
         case let .mathValue(v):
-            return MathValueView(tremolo: tremolo, value: v, isEditable: isEditable)
+            return MathValueView(tremolo: tremolo, value: v, blockController: blockController, isEditable: isEditable)
 
         case let .variable(v):
             return VariableView(tremolo: tremolo, variable: v, types: [v.type], isEditable: isEditable)
