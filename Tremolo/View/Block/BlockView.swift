@@ -27,9 +27,11 @@ class BlockView: UIView {
 
     private var blockContentsStackView = BlockContentStackView()
 
-    private var blockVStackViewPaths = [BlockStackPath]()
+    private var blockStackViewPaths = [BlockStackPath]()
 
-    private var blockHStackViewPaths = [BlockStackPath]()
+    private var valueViewPaths = [BlockStackPath]()
+
+    private var mathValueViewPaths = [BlockStackPath]()
 
     init(tremolo: Tremolo, block: Block, blockController: BlockController? = nil) {
         self.tremolo = tremolo
@@ -83,9 +85,11 @@ class BlockView: UIView {
                 if case let .arg(idx) = block.contents[i][j] {
                     switch block.argValues[idx] {
                     case .value(_):
-                        blockHStackViewPaths.append(.init(row: i, col: j))
-                    case .code(let blocks):
-                        blockVStackViewPaths.append(.init(row: i, col: j))
+                        valueViewPaths.append(.init(row: i, col: j))
+                    case .mathValue(_):
+                        mathValueViewPaths.append(.init(row: i, col: j))
+                    case .code(_):
+                        blockStackViewPaths.append(.init(row: i, col: j))
                     default:
                         break
                     }
@@ -179,12 +183,24 @@ extension BlockView: BlockStackViewController {
     }
 
     func findBlockPos(blockView: BlockView, velocity: CGPoint, selectedBlockPos: BlockPos?) -> BlockPos? {
-        for path in blockHStackViewPaths {
+        for path in valueViewPaths {
             guard  let valueView = blockContentsStackView.content(at: path) as? ValueView else {
                 continue
             }
 
             let pos = valueView.findBlockPos(blockView: blockView, velocity: velocity, selectedBlockPos: selectedBlockPos)
+
+            if pos != nil {
+                return pos
+            }
+        }
+
+        for path in mathValueViewPaths {
+            guard  let mathValueView = blockContentsStackView.content(at: path) as? MathValueView else {
+                continue
+            }
+
+            let pos = mathValueView.findBlockPos(blockView: blockView, velocity: velocity, selectedBlockPos: selectedBlockPos)
 
             if pos != nil {
                 return pos
@@ -202,7 +218,7 @@ extension BlockView: BlockStackViewController {
             blockY = blockFrame.midY
         }
 
-        for path in blockVStackViewPaths {
+        for path in blockStackViewPaths {
             guard let stackView = blockContentsStackView.content(at: path) as? UIStackView else {
                 continue
             }
