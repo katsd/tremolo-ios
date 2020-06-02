@@ -31,7 +31,7 @@ extension MathValueGenerator {
 
 extension MathValueGenerator {
 
-    public static func generate(_ contents: () -> MathValueGenerator) -> MathValue {
+    public static func generate(@MathValueGenerator _ contents: () -> MathValueGenerator) -> MathValue {
         .init(value: contents().toMathValueContents())
     }
 
