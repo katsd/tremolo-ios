@@ -269,7 +269,46 @@ extension MathValueView: BlockStackViewController {
     }
 
     func findBlockPos(blockView: BlockView, velocity: CGPoint, selectedBlockPos: BlockPos?) -> BlockPos? {
-        nil
+        let blockPos: CGPoint
+
+        if velocity.y > 0 {
+            blockPos = CGPoint(x: blockView.globalFrame.minX, y: blockView.globalFrame.maxY)
+        } else {
+            blockPos = CGPoint(x: blockView.globalFrame.minX, y: blockView.globalFrame.minY)
+        }
+
+        if !globalFrame.contains(blockPos) {
+            return nil
+        }
+
+        var l = -1
+        var r = stackView.arrangedSubviews.count
+
+        while r - l > 1 {
+            let mid = (r + l) / 2
+
+            if stackView.arrangedSubviews[mid].globalFrame.minX < blockPos.x {
+                l = mid
+            } else {
+                r = mid
+            }
+        }
+
+        if l == -1 {
+            return BlockPos(blockStackViewController: self, path: .zero, idx: 0)
+        }
+
+        if let subBlockView = stackView.arrangedSubviews[l] as? BlockView {
+            if let pos = subBlockView.findBlockPos(blockView: blockView, velocity: velocity, selectedBlockPos: selectedBlockPos) {
+                return pos
+            }
+        }
+
+        if blockPos.x < stackView.arrangedSubviews[l].globalFrame.midX {
+            return BlockPos(blockStackViewController: self, path: .zero, idx: l)
+        } else {
+            return BlockPos(blockStackViewController: self, path: .zero, idx: l + 1)
+        }
     }
 
 }
