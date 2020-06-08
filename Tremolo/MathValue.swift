@@ -10,7 +10,7 @@ import Foundation
 
 public class MathValue {
 
-    public var contentStack: [MathValueContent]
+    public private(set) var contentStack: [MathValueContent]
 
     init(value: [MathValueContent]) {
         self.contentStack = value
@@ -26,6 +26,18 @@ extension MathValue: Hashable {
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(contentStack)
+    }
+
+}
+
+extension MathValue {
+
+    func insert(_ content: MathValueContent, at idx: Int) {
+        contentStack.insert(content, at: idx)
+    }
+
+    func remove(at idx: Int) {
+        contentStack.remove(at: idx)
     }
 
 }

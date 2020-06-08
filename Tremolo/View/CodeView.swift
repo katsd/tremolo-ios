@@ -10,6 +10,8 @@ import SwiftUI
 
 class CodeView: UIView {
 
+    static var __codeView: CodeView? = nil
+
     private let tremolo: Tremolo
 
     private var selectedBlockPos: BlockPos? = nil
@@ -45,16 +47,20 @@ class CodeView: UIView {
         blockStackView.equalTo(scrollView, inset: .init(top: 10, left: 0, bottom: 0, right: 0))
 
         setGesture()
+
+        CodeView.__codeView = self
     }
 
     required init?(coder: NSCoder) {
         fatalError()
     }
 
-    private func blockAnimation() {
-        UIView.animate(withDuration: 0.2) {
-            self.layoutIfNeeded()
-        }
+    private func updateLayout() {
+        self.layoutIfNeeded()
+    }
+
+    static private func blockAnimation(animation: @escaping () -> Void, completion: @escaping () -> Void = {}) {
+        UIView.animate(withDuration: 0.2, animations: animation, completion: { _ in completion() })
     }
 
     private func setGesture() {
@@ -80,7 +86,7 @@ extension CodeView: BlockController {
 
         if let pos = selectedBlockPos {
             pos.blockStackViewController.addBlankView(blockView: blockView, path: pos.path, at: pos.idx) {
-                self.blockAnimation()
+                self.updateLayout()
             }
 
             pos.blockStackViewController.floatBlockView(blockView, path: pos.path, at: pos.idx)
@@ -103,14 +109,14 @@ extension CodeView: BlockController {
                 pos.blockStackViewController.removeBlankView(path: pos.path, at: pos.idx) {
                     // if newSelectedBlockPos isn't nil, self.blockAnimation()(= self.layoutIfNeeded()) will be called below.
                     if newSelectedBlockPos == nil {
-                        self.blockAnimation()
+                        self.updateLayout()
                     }
                 }
             }
 
             if let pos = newSelectedBlockPos {
                 pos.blockStackViewController.addBlankView(blockView: blockView, path: pos.path, at: pos.idx) {
-                    self.blockAnimation()
+                    self.updateLayout()
                 }
             }
         }
@@ -128,7 +134,7 @@ extension CodeView: BlockController {
 
         if let pos = selectedBlockPos {
             pos.blockStackViewController.addBlockView(blockView, path: pos.path, at: pos.idx) {
-                self.blockAnimation()
+                self.updateLayout()
             }
         } else {
             blockView.removeFromSuperview()
@@ -143,21 +149,21 @@ extension CodeView: BlockController {
 
 extension CodeView: BlockStackViewController {
 
-    func addBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, animation: () -> Void) {
+    func addBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
         tremolo.blockStack.insertBlock(blockView.block, at: idx)
-        CodeView.addBlockView(stackView: blockStackView, blockView: blockView, at: idx, animation: animation)
+        CodeView.addBlockView(stackView: blockStackView, blockView: blockView, at: idx, updateLayout: updateLayout)
     }
 
     func floatBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int) {
         tremolo.blockStack.removeBlock(at: idx)
     }
 
-    func addBlankView(blockView: BlockView, path: BlockStackPath, at idx: Int, animation: () -> Void) {
-        CodeView.addBlankView(stackView: blockStackView, blockView: blockView, at: idx, animation: animation)
+    func addBlankView(blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
+        CodeView.addBlankView(stackView: blockStackView, blockView: blockView, at: idx, updateLayout: updateLayout)
     }
 
-    func removeBlankView(path: BlockStackPath, at idx: Int, animation: () -> Void) {
-        CodeView.removeBlankView(stackView: blockStackView, at: idx, animation: animation)
+    func removeBlankView(path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
+        CodeView.removeBlankView(stackView: blockStackView, at: idx, updateLayout: updateLayout)
     }
 
     func findBlockPos(blockView: BlockView, velocity: CGPoint, selectedBlockPos: BlockPos?) -> BlockPos? {
@@ -254,7 +260,7 @@ extension CodeView: BlockStackViewController {
 
 extension CodeView {
 
-    static func addBlockView(stackView: UIStackView, blockView: UIView, at idx: Int, animation: () -> Void) {
+    static func addBlockView(stackView: UIStackView, blockView: UIView, at idx: Int, updateLayout: @escaping () -> Void) {
         if idx < stackView.arrangedSubviews.count &&
                !(stackView.arrangedSubviews[idx] is BlockView) {
             stackView.arrangedSubviews[idx].removeFromSuperview()
@@ -264,8 +270,14 @@ extension CodeView {
         stackView.insertArrangedSubview(blankView, at: idx)
         blankView.equalToSizeOf(blockView)
 
-        //self.layoutIfNeeded()
         stackView.layoutIfNeeded()
+
+        blockAnimation(animation: {
+            blockView.center = blockView.convertFrame(parent: blockView.superview).center
+        }, completion: {
+            stackView.arrangedSubviews[idx].removeFromSuperview()
+            stackView.insertArrangedSubview(blockView, at: idx)
+        })
 
         UIView.animate(withDuration: 0.2, animations: {
             blockView.center = blankView.convertFrame(parent: blockView.superview).center
@@ -275,18 +287,46 @@ extension CodeView {
         })
     }
 
-    static func addBlankView(stackView: UIStackView, blockView: UIView, at idx: Int, animation: () -> Void) {
+    // add blockView without removing blank view
+    static func insertBlockView(stackView: UIStackView, blockView: UIView, at idx: Int, updateLayout: @escaping () -> Void) {
+        let measureView = UIView()
+        stackView.insertArrangedSubview(measureView, at: idx)
+        measureView.equalToSizeOf(blockView)
+        updateLayout()
+
+        let center = measureView.convertFrame(parent: blockView.superview).center
+        measureView.removeFromSuperview()
+        updateLayout()
+
         let blankView = UIView()
         stackView.insertArrangedSubview(blankView, at: idx)
         blankView.equalToSizeOf(blockView)
 
-        animation()
+        blockAnimation(animation: {
+            blockView.center = center
+            updateLayout()
+        }, completion: {
+            blankView.removeFromSuperview()
+            stackView.insertArrangedSubview(blockView, at: idx)
+        })
     }
 
-    static func removeBlankView(stackView: UIStackView, at idx: Int, animation: () -> Void) {
+    static func addBlankView(stackView: UIStackView, blockView: UIView, at idx: Int, updateLayout: @escaping () -> Void) {
+        let blankView = UIView()
+        stackView.insertArrangedSubview(blankView, at: idx)
+        blankView.equalToSizeOf(blockView)
+
+        blockAnimation(animation: {
+            updateLayout()
+        })
+    }
+
+    static func removeBlankView(stackView: UIStackView, at idx: Int, updateLayout: @escaping () -> Void) {
         stackView.arrangedSubviews[idx].removeFromSuperview()
 
-        animation()
+        blockAnimation(animation: {
+            updateLayout()
+        })
     }
 
 }

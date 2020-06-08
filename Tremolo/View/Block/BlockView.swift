@@ -149,7 +149,7 @@ class BlockView: UIView {
 
 extension BlockView: BlockStackViewController {
 
-    func addBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, animation: () -> Void) {
+    func addBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
         guard let stackView = blockContentsStackView.content(at: path) as? UIStackView else {
             return
         }
@@ -157,7 +157,7 @@ extension BlockView: BlockStackViewController {
         if case let .arg(aIdx) = block.contents[path.row][path.col] {
             block.argValues[aIdx].insertBlock(blockView.block, at: idx)
         }
-        CodeView.addBlockView(stackView: stackView, blockView: blockView, at: idx, animation: animation)
+        CodeView.addBlockView(stackView: stackView, blockView: blockView, at: idx, updateLayout: updateLayout)
     }
 
     func floatBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int) {
@@ -166,20 +166,20 @@ extension BlockView: BlockStackViewController {
         }
     }
 
-    func addBlankView(blockView: BlockView, path: BlockStackPath, at idx: Int, animation: () -> Void) {
+    func addBlankView(blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
         guard let stackView = blockContentsStackView.content(at: path) as? UIStackView else {
             return
         }
 
-        CodeView.addBlankView(stackView: stackView, blockView: blockView, at: idx, animation: animation)
+        CodeView.addBlankView(stackView: stackView, blockView: blockView, at: idx, updateLayout: updateLayout)
     }
 
-    func removeBlankView(path: BlockStackPath, at idx: Int, animation: () -> Void) {
+    func removeBlankView(path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
         guard let stackView = blockContentsStackView.content(at: path) as? UIStackView else {
             return
         }
 
-        CodeView.removeBlankView(stackView: stackView, at: idx, animation: animation)
+        CodeView.removeBlankView(stackView: stackView, at: idx, updateLayout: updateLayout)
     }
 
     func findBlockPos(blockView: BlockView, velocity: CGPoint, selectedBlockPos: BlockPos?) -> BlockPos? {

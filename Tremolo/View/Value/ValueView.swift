@@ -61,21 +61,21 @@ final class ValueView: UIView {
 
 extension ValueView: BlockStackViewController {
 
-    func addBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, animation: () -> Void) {
+    func addBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
         value.blockStack.insertBlock(blockView.block, at: idx)
-        CodeView.addBlockView(stackView: stackView, blockView: blockView, at: idx, animation: animation)
+        CodeView.addBlockView(stackView: stackView, blockView: blockView, at: idx, updateLayout: updateLayout)
     }
 
     func floatBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int) {
         value.blockStack.removeBlock(at: idx)
     }
 
-    func addBlankView(blockView: BlockView, path: BlockStackPath, at idx: Int, animation: () -> Void) {
-        CodeView.addBlankView(stackView: stackView, blockView: blockView, at: idx, animation: animation)
+    func addBlankView(blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
+        CodeView.addBlankView(stackView: stackView, blockView: blockView, at: idx, updateLayout: updateLayout)
     }
 
-    func removeBlankView(path: BlockStackPath, at idx: Int, animation: () -> Void) {
-        CodeView.removeBlankView(stackView: stackView, at: idx, animation: animation)
+    func removeBlankView(path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
+        CodeView.removeBlankView(stackView: stackView, at: idx, updateLayout: updateLayout)
     }
 
     func findBlockPos(blockView: BlockView, velocity: CGPoint, selectedBlockPos: BlockPos?) -> BlockPos? {

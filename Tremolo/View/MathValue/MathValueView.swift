@@ -12,7 +12,11 @@ final class MathValueView: UIView {
 
     private let tremolo: Tremolo
 
-    private let stackView = UIStackView(frame: .zero)
+    private let stackView =
+        UIStackView(frame: .zero)
+            .axis(.horizontal)
+            .distribution(.fill)
+            .alignment(.center)
 
     private let cursor = CursorView()
 
@@ -256,16 +260,21 @@ extension MathValueView: VariableKeyboardReceiver {
 
 extension MathValueView: BlockStackViewController {
 
-    func addBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, animation: () -> Void) {
+    func addBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
+        value.insert(.block(blockView.block), at: idx)
+        CodeView.insertBlockView(stackView: stackView, blockView: blockView, at: idx, updateLayout: updateLayout)
     }
 
     func floatBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int) {
+        value.remove(at: idx)
     }
 
-    func addBlankView(blockView: BlockView, path: BlockStackPath, at idx: Int, animation: () -> Void) {
+    func addBlankView(blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
+        //CodeView.addBlankView(stackView: stackView, blockView: blockView, at: idx, animation: animation)
     }
 
-    func removeBlankView(path: BlockStackPath, at idx: Int, animation: () -> Void) {
+    func removeBlankView(path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
+        //CodeView.removeBlankView(stackView: stackView, at: idx, animation: animation)
     }
 
     func findBlockPos(blockView: BlockView, velocity: CGPoint, selectedBlockPos: BlockPos?) -> BlockPos? {
