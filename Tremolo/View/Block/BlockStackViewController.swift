@@ -12,7 +12,7 @@ protocol BlockStackViewController: AnyObject {
 
     func addBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void)
 
-    func floatBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int)
+    func floatBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void)
 
     func addBlankView(blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void)
 

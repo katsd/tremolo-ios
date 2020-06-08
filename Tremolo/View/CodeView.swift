@@ -89,7 +89,9 @@ extension CodeView: BlockController {
                 self.updateLayout()
             }
 
-            pos.blockStackViewController.floatBlockView(blockView, path: pos.path, at: pos.idx)
+            pos.blockStackViewController.floatBlockView(blockView, path: pos.path, at: pos.idx) {
+                self.updateLayout()
+            }
         }
     }
 
@@ -154,7 +156,7 @@ extension CodeView: BlockStackViewController {
         CodeView.addBlockView(stackView: blockStackView, blockView: blockView, at: idx, updateLayout: updateLayout)
     }
 
-    func floatBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int) {
+    func floatBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
         tremolo.blockStack.removeBlock(at: idx)
     }
 
@@ -322,11 +324,17 @@ extension CodeView {
     }
 
     static func removeBlankView(stackView: UIStackView, at idx: Int, updateLayout: @escaping () -> Void) {
-        stackView.arrangedSubviews[idx].removeFromSuperview()
+        if !(stackView.arrangedSubviews[idx] is BlockView) {
+            stackView.arrangedSubviews[idx].removeFromSuperview()
+        }
 
         blockAnimation(animation: {
             updateLayout()
         })
+    }
+
+    static func updateLayoutWithAnimation(updateLayout: @escaping () -> Void) {
+        blockAnimation(animation: updateLayout)
     }
 
 }

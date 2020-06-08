@@ -66,7 +66,7 @@ extension ValueView: BlockStackViewController {
         CodeView.addBlockView(stackView: stackView, blockView: blockView, at: idx, updateLayout: updateLayout)
     }
 
-    func floatBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int) {
+    func floatBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
         value.blockStack.removeBlock(at: idx)
     }
 

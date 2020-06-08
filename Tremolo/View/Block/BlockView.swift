@@ -160,7 +160,7 @@ extension BlockView: BlockStackViewController {
         CodeView.addBlockView(stackView: stackView, blockView: blockView, at: idx, updateLayout: updateLayout)
     }
 
-    func floatBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int) {
+    func floatBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
         if case let .arg(aIdx) = block.contents[path.row][path.col] {
             block.argValues[aIdx].removeBlock(at: idx)
         }

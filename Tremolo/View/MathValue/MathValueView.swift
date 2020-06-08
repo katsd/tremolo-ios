@@ -265,16 +265,15 @@ extension MathValueView: BlockStackViewController {
         CodeView.insertBlockView(stackView: stackView, blockView: blockView, at: idx, updateLayout: updateLayout)
     }
 
-    func floatBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int) {
+    func floatBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
         value.remove(at: idx)
+        CodeView.updateLayoutWithAnimation(updateLayout: updateLayout)
     }
 
     func addBlankView(blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
-        //CodeView.addBlankView(stackView: stackView, blockView: blockView, at: idx, animation: animation)
     }
 
     func removeBlankView(path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
-        //CodeView.removeBlankView(stackView: stackView, at: idx, animation: animation)
     }
 
     func findBlockPos(blockView: BlockView, velocity: CGPoint, selectedBlockPos: BlockPos?) -> BlockPos? {
