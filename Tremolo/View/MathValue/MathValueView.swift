@@ -155,6 +155,7 @@ final class MathValueView: UIView {
     }
 
     private func moveCursorView(withAnimation: Bool) {
+        addSubview(cursor)
         cursor.stopAnimation()
 
         let posX: CGFloat
@@ -271,10 +272,13 @@ extension MathValueView: BlockStackViewController {
     }
 
     func addBlankView(blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
+        cursorPos = idx
+        moveCursorView(withAnimation: false)
         CodeView.updateLayoutWithAnimation(updateLayout: updateLayout)
     }
 
     func removeBlankView(path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
+        removeCursor()
         CodeView.updateLayoutWithAnimation(updateLayout: updateLayout)
     }
 
