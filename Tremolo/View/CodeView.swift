@@ -10,8 +10,6 @@ import SwiftUI
 
 class CodeView: UIView {
 
-    static var __codeView: CodeView? = nil
-
     private let tremolo: Tremolo
 
     private var selectedBlockPos: BlockPos? = nil
@@ -47,8 +45,6 @@ class CodeView: UIView {
         blockStackView.equalTo(scrollView, inset: .init(top: 10, left: 0, bottom: 0, right: 0))
 
         setGesture()
-
-        CodeView.__codeView = self
     }
 
     required init?(coder: NSCoder) {
