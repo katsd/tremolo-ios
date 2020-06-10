@@ -208,6 +208,8 @@ extension MathValueView: KeyboardReceiver {
             return
         }
 
+        value.remove(at: cursorPos)
+
         stackView.arrangedSubviews[cursorPos - 1].removeFromSuperview()
 
         layoutIfNeeded()
@@ -237,6 +239,7 @@ extension MathValueView: MathKeyboardReceiver {
 
     func addTexts(_ texts: [String], cursor: Int) {
         for (idx, text) in texts.enumerated() {
+            value.insert(.raw(text), at: cursorPos + idx)
             stackView.insertArrangedSubview(label(text), at: cursorPos + idx)
         }
 
@@ -251,6 +254,8 @@ extension MathValueView: MathKeyboardReceiver {
 extension MathValueView: VariableKeyboardReceiver {
 
     func addVariable(_ variable: Variable) {
+        value.insert(.variable(variable), at: cursorPos)
+
         stackView.insertArrangedSubview(variableLabel(variable), at: cursorPos)
         layoutIfNeeded()
         cursorPos += 1
