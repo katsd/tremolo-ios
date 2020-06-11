@@ -271,15 +271,8 @@ extension CodeView {
         stackView.layoutIfNeeded()
 
         blockAnimation(animation: {
-            blockView.center = blockView.convertFrame(parent: blockView.superview).center
-        }, completion: {
-            stackView.arrangedSubviews[idx].removeFromSuperview()
-            stackView.insertArrangedSubview(blockView, at: idx)
-        })
-
-        UIView.animate(withDuration: 0.2, animations: {
             blockView.center = blankView.convertFrame(parent: blockView.superview).center
-        }, completion: { _ in
+        }, completion: {
             stackView.arrangedSubviews[idx].removeFromSuperview()
             stackView.insertArrangedSubview(blockView, at: idx)
         })
