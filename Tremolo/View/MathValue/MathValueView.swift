@@ -30,6 +30,8 @@ final class MathValueView: UIView {
     // | A | B | C |
     private var cursorPos = 0
 
+    private let blockViewPadding: CGFloat = 5
+
     init(tremolo: Tremolo, value: MathValue, blockController: BlockController?, isEditable: Binding<Bool>) {
         self.tremolo = tremolo
 
@@ -268,11 +270,26 @@ extension MathValueView: BlockStackViewController {
 
     func addBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
         value.insert(.block(blockView.block), at: idx)
-        CodeView.insertBlockView(stackView: stackView, blockView: blockView, at: idx, updateLayout: updateLayout)
+
+        let center = blockView.center
+
+        let parentView = UIView()
+
+        blockView.superview?.addSubview(parentView)
+        parentView.addSubview(blockView)
+
+        blockView.translatesAutoresizingMaskIntoConstraints = false
+        blockView.equalToEach(parentView, top: 0, left: blockViewPadding, bottom: 0, right: blockViewPadding)
+
+        parentView.frame.size = CGSize(width: blockView.frame.width + blockViewPadding * 2, height: blockView.frame.height)
+        parentView.center = center
+
+        CodeView.insertBlockView(stackView: stackView, blockView: parentView, at: idx, updateLayout: updateLayout)
     }
 
     func floatBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
         value.remove(at: idx)
+        stackView.arrangedSubviews[idx].removeFromSuperview()
         CodeView.updateLayoutWithAnimation(updateLayout: updateLayout)
     }
 
