@@ -313,7 +313,11 @@ extension BlockView: BlockStackViewController {
 
 extension BlockView: UIContextMenuInteractionDelegate {
     public func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
-        UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { actions -> UIMenu? in
+        if !isEditable.wrappedValue {
+            return nil
+        }
+
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { actions -> UIMenu? in
             let duplicate = UIAction(title: "Duplicate", image: UIImage(systemName: "plus.square.on.square")) { _ in
                 print("Duplicate Block")
             }
