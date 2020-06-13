@@ -70,6 +70,8 @@ class CodeView: UIView {
 extension CodeView: BlockController {
 
     func floatBlock(blockView: BlockView, gesture: UIPanGestureRecognizer) {
+        HapticFeedback.blockFloatFeedback()
+
         if let blockStackViewController = blockView.block.parent {
             selectedBlockPos = blockStackViewController.findBlockPos(blockView: blockView, velocity: .zero, selectedBlockPos: selectedBlockPos)
         } else {
@@ -103,6 +105,8 @@ extension CodeView: BlockController {
         let newSelectedBlockPos = findBlockPos(blockView: blockView, velocity: gesture.velocity(in: nil), selectedBlockPos: selectedBlockPos)
 
         if selectedBlockPos != newSelectedBlockPos {
+            HapticFeedback.blockPosChangedFeedback()
+
             if let pos = selectedBlockPos {
                 pos.blockStackViewController.removeBlankView(path: pos.path, at: pos.idx) {
                     // if newSelectedBlockPos isn't nil, self.blockAnimation()(= self.layoutIfNeeded()) will be called below.
@@ -127,6 +131,7 @@ extension CodeView: BlockController {
     }
 
     func dropBlock(blockView: BlockView, gesture: UIPanGestureRecognizer) {
+        HapticFeedback.blockDropFeedback()
 
         selectedBlockPos = findBlockPos(blockView: blockView, velocity: gesture.velocity(in: nil), selectedBlockPos: selectedBlockPos)
 
