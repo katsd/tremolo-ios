@@ -279,7 +279,22 @@ extension MathValueView: BlockStackViewController {
         parentView.addSubview(blockView)
 
         blockView.translatesAutoresizingMaskIntoConstraints = false
-        blockView.equalToEach(parentView, top: 0, left: blockViewPadding, bottom: 0, right: blockViewPadding)
+
+        let leftPadding: CGFloat
+        if idx == 0 {
+            leftPadding = 0
+        } else {
+            leftPadding = blockViewPadding
+        }
+
+        let rightPadding: CGFloat
+        if idx == stackView.arrangedSubviews.count {
+            rightPadding = 0
+        } else {
+            rightPadding = blockViewPadding
+        }
+
+        blockView.equalToEach(parentView, top: 0, left: leftPadding, bottom: 0, right: rightPadding)
 
         parentView.frame.size = CGSize(width: blockView.frame.width + blockViewPadding * 2, height: blockView.frame.height)
         parentView.center = center
