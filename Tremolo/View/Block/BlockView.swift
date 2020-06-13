@@ -51,6 +51,8 @@ class BlockView: UIView {
         blockContentsStackView = blockContents(block: block)
         addSubview(blockContentsStackView)
         blockContentsStackView.equalTo(self, inset: .init(top: 5, left: 5, bottom: 5, right: 5))
+
+        addInteraction(UIContextMenuInteraction(delegate: self))
     }
 
     required init?(coder: NSCoder) {
@@ -307,4 +309,18 @@ extension BlockView: BlockStackViewController {
         return nil
     }
 
+}
+
+extension BlockView: UIContextMenuInteractionDelegate {
+    public func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
+        UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { actions -> UIMenu? in
+            let duplicate = UIAction(title: "Duplicate", image: UIImage(systemName: "plus.square.on.square")) { _ in
+                print("Duplicate Block")
+            }
+            let delete = UIAction(title: "Delete", image: UIImage(systemName: "trash"), attributes: .destructive) { _ in
+                print("Delete Block")
+            }
+            return UIMenu(title: "", children: [duplicate, delete])
+        }
+    }
 }
