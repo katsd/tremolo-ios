@@ -18,6 +18,8 @@ class CodeView: UIView {
 
     private let topView: UIView
 
+    private var blockMenuView: BlockMenuView? = nil
+
     init(tremolo: Tremolo, topView: UIView) {
         self.tremolo = tremolo
 
@@ -63,6 +65,14 @@ class CodeView: UIView {
         tap { _ in
             Keyboard.closeKeyboard()
         }
+    }
+
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        if !(blockMenuView?.frame.contains(point) ?? true) {
+            blockMenuView?.removeFromSuperview()
+        }
+
+        return super.hitTest(point, with: event)
     }
 
 }
@@ -146,6 +156,20 @@ extension CodeView: BlockController {
         blockView.block.parent = selectedBlockPos?.blockStackViewController
 
         selectedBlockPos = nil
+    }
+
+    func showBlockMenu(blockView: BlockView) {
+        blockMenuView = BlockMenuView()
+
+        if let menuView = blockMenuView {
+            addSubview(menuView)
+            NSLayoutConstraint.activate(
+                [
+                    menuView.topAnchor.constraint(equalTo: blockView.bottomAnchor, constant: 10),
+                    menuView.leadingAnchor.constraint(equalTo: blockView.leadingAnchor)
+                ]
+            )
+        }
     }
 
 }

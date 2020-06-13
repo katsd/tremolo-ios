@@ -49,4 +49,11 @@ extension UIView {
         return self
     }
 
+    func border(color: UIColor, width: CGFloat = 2, radius: CGFloat = 10) -> UIView {
+        layer.borderWidth = width
+        layer.cornerRadius = radius
+        layer.borderColor = color.cgColor
+        return self
+    }
+
 }

@@ -16,4 +16,6 @@ protocol BlockController {
 
     func dropBlock(blockView: BlockView, gesture: UIPanGestureRecognizer)
 
+    func showBlockMenu(blockView: BlockView)
+
 }

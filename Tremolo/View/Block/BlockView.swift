@@ -52,7 +52,7 @@ class BlockView: UIView {
         addSubview(blockContentsStackView)
         blockContentsStackView.equalTo(self, inset: .init(top: 5, left: 5, bottom: 5, right: 5))
 
-        addInteraction(UIContextMenuInteraction(delegate: self))
+        //addInteraction(UIContextMenuInteraction(delegate: self))
     }
 
     required init?(coder: NSCoder) {
@@ -61,12 +61,14 @@ class BlockView: UIView {
 
     private func setStyle() {
         self.backgroundColor(.systemGray)
-            .cornerRadius(5)
+            .cornerRadius(10)
             .shadow(opacity: 0.7)
+        //.border(color: .systemGray5)
     }
 
     private func setGesture() {
         self.isUserInteractionEnabled = true
+
         self.drag { gesture in
             switch gesture.state {
             case .began:
@@ -78,6 +80,14 @@ class BlockView: UIView {
             default:
                 break
             }
+        }
+
+        self.longPress(minimumPressDuration: 0.5) { gesture in
+            if gesture.state != .began {
+                return
+            }
+
+            self.blockController?.showBlockMenu(blockView: self)
         }
     }
 
