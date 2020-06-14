@@ -82,7 +82,7 @@ class BlockView: UIView {
             }
         }
 
-        self.longPress(minimumPressDuration: 0.5) { gesture in
+        self.longPress(minimumPressDuration: 0.3) { gesture in
             if gesture.state != .began {
                 return
             }
