@@ -271,15 +271,6 @@ extension MathValueView: BlockStackViewController {
     func addBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
         value.insert(.block(blockView.block), at: idx)
 
-        let center = blockView.center
-
-        let parentView = UIView()
-
-        blockView.superview?.addSubview(parentView)
-        parentView.addSubview(blockView)
-
-        blockView.translatesAutoresizingMaskIntoConstraints = false
-
         let leftPadding: CGFloat
         if idx == 0 {
             leftPadding = 0
@@ -294,12 +285,9 @@ extension MathValueView: BlockStackViewController {
             rightPadding = blockViewPadding
         }
 
-        blockView.equalToEach(parentView, top: 0, left: leftPadding, bottom: 0, right: rightPadding)
+        let holderView = MathValueHolderView(blockView: blockView, leftPadding: leftPadding, rightPadding: rightPadding)
 
-        parentView.frame.size = CGSize(width: blockView.frame.width + blockViewPadding * 2, height: blockView.frame.height)
-        parentView.center = center
-
-        CodeView.insertBlockView(stackView: stackView, blockView: parentView, at: idx, updateLayout: updateLayout)
+        CodeView.insertBlockView(stackView: stackView, blockView: holderView, at: idx, updateLayout: updateLayout)
     }
 
     func floatBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
@@ -360,6 +348,28 @@ extension MathValueView: BlockStackViewController {
         } else {
             return BlockPos(blockStackViewController: self, path: .zero, idx: l + 1)
         }
+    }
+
+}
+
+private class MathValueHolderView: UIView {
+
+    init(blockView: BlockView, leftPadding: CGFloat, rightPadding: CGFloat) {
+        super.init(frame: .zero)
+
+        let center = blockView.center
+        blockView.superview?.addSubview(self)
+
+        addSubview(blockView)
+
+        blockView.equalToEach(self, top: 0, left: leftPadding, bottom: 0, right: rightPadding)
+
+        frame.size = CGSize(width: blockView.frame.width + leftPadding + rightPadding, height: blockView.frame.height)
+        self.center = center
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError()
     }
 
 }
