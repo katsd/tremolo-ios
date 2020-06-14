@@ -291,7 +291,6 @@ extension MathValueView: BlockStackViewController {
     }
 
     func floatBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
-        print("Yay")
         value.remove(at: idx)
         stackView.arrangedSubviews[idx].removeFromSuperview()
         CodeView.updateLayoutWithAnimation(updateLayout: updateLayout)
