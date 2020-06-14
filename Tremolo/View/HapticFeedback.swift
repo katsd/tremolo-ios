@@ -28,6 +28,18 @@ class HapticFeedback {
         return generator
     }()
 
+    private static let impactFeedbackGeneratorRigid: UIImpactFeedbackGenerator = {
+        let generator = UIImpactFeedbackGenerator(style: .rigid)
+        generator.prepare()
+        return generator
+    }()
+
+    private static let impactFeedbackGeneratorSoft: UIImpactFeedbackGenerator = {
+        let generator = UIImpactFeedbackGenerator(style: .soft)
+        generator.prepare()
+        return generator
+    }()
+
     private static let selectionFeedbackGenerator: UISelectionFeedbackGenerator = {
         let generator = UISelectionFeedbackGenerator()
         generator.prepare()
@@ -49,6 +61,12 @@ class HapticFeedback {
         case .heavy:
             impactFeedbackGeneratorHeavy.impactOccurred()
 
+        case .rigid:
+            impactFeedbackGeneratorRigid.impactOccurred()
+
+        case .soft:
+            impactFeedbackGeneratorSoft.impactOccurred()
+
         default:
             return
         }
@@ -64,6 +82,10 @@ class HapticFeedback {
 
     static func blockDropFeedback() {
         impactFeedback(style: .medium)
+    }
+
+    static func showMenuFeedback() {
+        impactFeedback(style: .rigid)
     }
 
 }
