@@ -288,6 +288,8 @@ extension MathValueView: BlockStackViewController {
         let holderView = MathValueHolderView(blockView: blockView, leftPadding: leftPadding, rightPadding: rightPadding)
 
         CodeView.insertBlockView(stackView: stackView, blockView: holderView, at: idx, updateLayout: updateLayout)
+
+        removeCursor()
     }
 
     func floatBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
