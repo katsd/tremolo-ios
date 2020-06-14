@@ -62,7 +62,7 @@ class BlockSelectView: UIView {
 
         stackView.contents(
             defaultBlocks.enumerated().map { (idx, block: BlockTemplate) in
-                self.blockViewInStackView(block: .init(block), stackView: stackView, idx: idx)
+                self.blockViewInStackView(blockTemplate: block, stackView: stackView, idx: idx)
             }
         )
 
@@ -76,13 +76,13 @@ class BlockSelectView: UIView {
         fatalError()
     }
 
-    func blockViewInStackView(block: Block, stackView: UIStackView, idx: Int) -> BlockView {
+    func blockViewInStackView(blockTemplate: BlockTemplate, stackView: UIStackView, idx: Int) -> BlockView {
         let blockView = BlockView(tremolo: tremolo,
-                                  block: block,
+                                  block: Block(blockTemplate),
                                   blockController: self.blockController,
                                   generateBlockOnSelectView: {
                                       stackView.insertArrangedSubview(
-                                          self.blockViewInStackView(block: block, stackView: stackView, idx: idx),
+                                          self.blockViewInStackView(blockTemplate: blockTemplate, stackView: stackView, idx: idx),
                                           at: idx)
                                   })
         blockView.isOnSelectView = true
