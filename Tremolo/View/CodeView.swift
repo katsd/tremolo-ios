@@ -159,6 +159,8 @@ extension CodeView: BlockController {
     }
 
     func showBlockMenu(blockView: BlockView) {
+        HapticFeedback.showMenuFeedback()
+
         let duplicateAction = BlockMenuAction(image: UIImage(systemName: "plus.square.on.square")) {
             print("duplicate")
         }
