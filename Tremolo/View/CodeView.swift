@@ -192,6 +192,9 @@ extension CodeView: BlockStackViewController {
     }
 
     func floatBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
+        if tremolo.blockStack.blocks[idx] !== blockView.block {
+            return
+        }
         tremolo.blockStack.removeBlock(at: idx)
     }
 
