@@ -159,7 +159,15 @@ extension CodeView: BlockController {
     }
 
     func showBlockMenu(blockView: BlockView) {
-        blockMenuView = BlockMenuView()
+        let duplicateAction = BlockMenuAction(image: UIImage(systemName: "plus.square.on.square")) {
+            print("duplicate")
+        }
+
+        let delete = BlockMenuAction(image: UIImage(systemName: "trash")) {
+            print("delete")
+        }
+
+        blockMenuView = BlockMenuView(actions: [duplicateAction, delete])
 
         if let menuView = blockMenuView {
             addSubview(menuView)

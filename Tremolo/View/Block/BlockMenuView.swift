@@ -8,24 +8,30 @@
 
 import UIKit
 
+struct BlockMenuAction {
+
+    let image: UIImage?
+
+    let action: () -> ()
+
+    init(image: UIImage?, action: @escaping () -> ()) {
+        self.image = image
+        self.action = action
+    }
+
+}
+
 class BlockMenuView: UIStackView {
 
-    init() {
+    init(actions: [BlockMenuAction]) {
         super.init(frame: .zero)
-
-        let duplicate = BlockMenuButtonView(image: UIImage(systemName: "plus.square.on.square")) {
-            print("duplicate")
-        }
-
-        let delete = BlockMenuButtonView(image: UIImage(systemName: "trash")) {
-            print("delete")
-        }
 
         axis = .horizontal
         spacing = 10
 
-        addArrangedSubview(duplicate)
-        addArrangedSubview(delete)
+        for action in actions {
+            addArrangedSubview(BlockMenuButtonView(image: action.image, action.action))
+        }
 
         translatesAutoresizingMaskIntoConstraints = false
     }
@@ -52,6 +58,10 @@ private class BlockMenuButtonView: UIButton {
         setImage(image, for: .normal)
         backgroundColor = .white
         layer.cornerRadius = min(size.width, size.height) / 2
+
+        layer.shadowColor = UIColor.systemGray.cgColor
+        layer.shadowOpacity = 0.5
+        layer.shadowOffset = .zero
     }
 
     required init?(coder: NSCoder) {
