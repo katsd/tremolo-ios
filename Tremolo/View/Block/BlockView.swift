@@ -33,12 +33,16 @@ class BlockView: UIView {
 
     private var mathValueViewPaths = [BlockStackPath]()
 
-    init(tremolo: Tremolo, block: Block, blockController: BlockController? = nil) {
+    private let generateBlockOnSelectView: () -> ()
+
+    init(tremolo: Tremolo, block: Block, blockController: BlockController? = nil, generateBlockOnSelectView: @escaping () -> () = {}) {
         self.tremolo = tremolo
 
         self.block = block
 
         self.blockController = blockController
+
+        self.generateBlockOnSelectView = generateBlockOnSelectView
 
         super.init(frame: .zero)
 
@@ -72,6 +76,10 @@ class BlockView: UIView {
         self.drag { gesture in
             switch gesture.state {
             case .began:
+                if self.isOnSelectView {
+                    self.generateBlockOnSelectView()
+                    self.isOnSelectView = false
+                }
                 self.blockController?.floatBlock(blockView: self, gesture: gesture)
             case .changed:
                 self.blockController?.dragBlock(blockView: self, gesture: gesture, drop: false)
@@ -83,6 +91,10 @@ class BlockView: UIView {
         }
 
         self.longPress(minimumPressDuration: 0.3) { gesture in
+            if !self.isEditable.wrappedValue {
+                return
+            }
+
             if gesture.state != .began {
                 return
             }
