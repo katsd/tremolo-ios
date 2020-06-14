@@ -337,8 +337,8 @@ extension MathValueView: BlockStackViewController {
             return BlockPos(blockStackViewController: self, path: .zero, idx: 0)
         }
 
-        if let subBlockView = stackView.arrangedSubviews[l] as? BlockView {
-            if let pos = subBlockView.findBlockPos(blockView: blockView, velocity: velocity, selectedBlockPos: selectedBlockPos) {
+        if let blockHolderView = stackView.arrangedSubviews[l] as? MathValueHolderView {
+            if let pos = blockHolderView.blockView.findBlockPos(blockView: blockView, velocity: velocity, selectedBlockPos: selectedBlockPos) {
                 return pos
             }
         }
@@ -354,7 +354,11 @@ extension MathValueView: BlockStackViewController {
 
 private class MathValueHolderView: UIView {
 
+    let blockView: BlockView
+
     init(blockView: BlockView, leftPadding: CGFloat, rightPadding: CGFloat) {
+        self.blockView = blockView
+
         super.init(frame: .zero)
 
         let center = blockView.center
