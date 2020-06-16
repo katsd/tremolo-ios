@@ -76,7 +76,7 @@ class BlockView: UIView {
         self.drag { gesture in
             switch gesture.state {
             case .began:
-                if self.isOnSelectView {
+                if (self.blockController?.canMoveBlock ?? false) && self.isOnSelectView {
                     self.generateBlockOnSelectView()
                     self.isOnSelectView = false
                 }

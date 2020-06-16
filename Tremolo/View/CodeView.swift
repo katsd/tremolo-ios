@@ -201,6 +201,9 @@ extension CodeView: BlockController {
         }
     }
 
+    var canMoveBlock: Bool {
+        movingBlockView == nil
+    }
 }
 
 extension CodeView: BlockStackViewController {

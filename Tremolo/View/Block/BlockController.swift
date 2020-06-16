@@ -18,4 +18,6 @@ protocol BlockController {
 
     func showBlockMenu(blockView: BlockView)
 
+    var canMoveBlock: Bool { get }
+
 }
