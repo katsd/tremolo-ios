@@ -61,9 +61,9 @@ final class ValueView: UIView {
 
 extension ValueView: BlockStackViewController {
 
-    func addBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
+    func addBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> (), completion: @escaping () -> ()) {
         value.blockStack.insertBlock(blockView.block, at: idx)
-        CodeView.addBlockView(stackView: stackView, blockView: blockView, at: idx, updateLayout: updateLayout)
+        CodeView.addBlockView(stackView: stackView, blockView: blockView, at: idx, updateLayout: updateLayout, completion: completion)
     }
 
     func floatBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {

@@ -268,7 +268,7 @@ extension MathValueView: VariableKeyboardReceiver {
 
 extension MathValueView: BlockStackViewController {
 
-    func addBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
+    func addBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> (), completion: @escaping () -> ()) {
         value.insert(.block(blockView.block), at: idx)
 
         let leftPadding: CGFloat
@@ -287,7 +287,7 @@ extension MathValueView: BlockStackViewController {
 
         let holderView = MathValueHolderView(blockView: blockView, leftPadding: leftPadding, rightPadding: rightPadding)
 
-        CodeView.insertBlockView(stackView: stackView, blockView: holderView, at: idx, updateLayout: updateLayout)
+        CodeView.insertBlockView(stackView: stackView, blockView: holderView, at: idx, updateLayout: updateLayout, completion: completion)
 
         removeCursor()
     }

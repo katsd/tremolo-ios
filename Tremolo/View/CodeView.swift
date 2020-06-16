@@ -20,6 +20,8 @@ class CodeView: UIView {
 
     private var blockMenuView: BlockMenuView? = nil
 
+    private var movingBlockView: BlockView? = nil
+
     init(tremolo: Tremolo, topView: UIView) {
         self.tremolo = tremolo
 
@@ -80,6 +82,12 @@ class CodeView: UIView {
 extension CodeView: BlockController {
 
     func floatBlock(blockView: BlockView, gesture: UIPanGestureRecognizer) {
+        if movingBlockView != nil {
+            return
+        }
+
+        movingBlockView = blockView
+
         HapticFeedback.blockFloatFeedback()
 
         if let blockStackViewController = blockView.block.parent {
@@ -104,6 +112,10 @@ extension CodeView: BlockController {
     }
 
     func dragBlock(blockView: BlockView, gesture: UIPanGestureRecognizer, drop: Bool = false) {
+        if movingBlockView !== blockView {
+            return
+        }
+
         blockView.frame.origin.x += gesture.translation(in: nil).x
         blockView.frame.origin.y += gesture.translation(in: nil).y
         gesture.setTranslation(.zero, in: nil)
@@ -141,16 +153,23 @@ extension CodeView: BlockController {
     }
 
     func dropBlock(blockView: BlockView, gesture: UIPanGestureRecognizer) {
+        if movingBlockView !== blockView {
+            return
+        }
+
         HapticFeedback.blockDropFeedback()
 
         selectedBlockPos = findBlockPos(blockView: blockView, velocity: gesture.velocity(in: nil), selectedBlockPos: selectedBlockPos)
 
         if let pos = selectedBlockPos {
-            pos.blockStackViewController.addBlockView(blockView, path: pos.path, at: pos.idx) {
+            pos.blockStackViewController.addBlockView(blockView, path: pos.path, at: pos.idx, updateLayout: {
                 self.updateLayout()
-            }
+            }, completion: {
+                self.movingBlockView = nil
+            })
         } else {
             blockView.removeFromSuperview()
+            movingBlockView = nil
         }
 
         blockView.block.parent = selectedBlockPos?.blockStackViewController
@@ -186,9 +205,9 @@ extension CodeView: BlockController {
 
 extension CodeView: BlockStackViewController {
 
-    func addBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
+    func addBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> (), completion: @escaping () -> ()) {
         tremolo.blockStack.insertBlock(blockView.block, at: idx)
-        CodeView.addBlockView(stackView: blockStackView, blockView: blockView, at: idx, updateLayout: updateLayout)
+        CodeView.addBlockView(stackView: blockStackView, blockView: blockView, at: idx, updateLayout: updateLayout, completion: completion)
     }
 
     func floatBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
@@ -300,7 +319,7 @@ extension CodeView: BlockStackViewController {
 
 extension CodeView {
 
-    static func addBlockView(stackView: UIStackView, blockView: UIView, at idx: Int, updateLayout: @escaping () -> Void) {
+    static func addBlockView(stackView: UIStackView, blockView: UIView, at idx: Int, updateLayout: @escaping () -> Void, completion: @escaping () -> ()) {
         if idx < stackView.arrangedSubviews.count &&
                !(stackView.arrangedSubviews[idx] is BlockView) {
             stackView.arrangedSubviews[idx].removeFromSuperview()
@@ -317,11 +336,12 @@ extension CodeView {
         }, completion: {
             stackView.arrangedSubviews[idx].removeFromSuperview()
             stackView.insertArrangedSubview(blockView, at: idx)
+            completion()
         })
     }
 
     // add blockView without removing blank view
-    static func insertBlockView(stackView: UIStackView, blockView: UIView, at idx: Int, updateLayout: @escaping () -> Void) {
+    static func insertBlockView(stackView: UIStackView, blockView: UIView, at idx: Int, updateLayout: @escaping () -> (), completion: @escaping () -> ()) {
         let measureView = UIView()
         stackView.insertArrangedSubview(measureView, at: idx)
         measureView.equalToSizeOf(blockView)
@@ -341,6 +361,7 @@ extension CodeView {
         }, completion: {
             blankView.removeFromSuperview()
             stackView.insertArrangedSubview(blockView, at: idx)
+            completion()
         })
     }
 

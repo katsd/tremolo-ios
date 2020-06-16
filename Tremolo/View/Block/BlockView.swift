@@ -173,7 +173,7 @@ class BlockView: UIView {
 
 extension BlockView: BlockStackViewController {
 
-    func addBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
+    func addBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> (), completion: @escaping () -> ()) {
         guard let stackView = blockContentsStackView.content(at: path) as? UIStackView else {
             return
         }
@@ -181,7 +181,7 @@ extension BlockView: BlockStackViewController {
         if case let .arg(aIdx) = block.contents[path.row][path.col] {
             block.argValues[aIdx].insertBlock(blockView.block, at: idx)
         }
-        CodeView.addBlockView(stackView: stackView, blockView: blockView, at: idx, updateLayout: updateLayout)
+        CodeView.addBlockView(stackView: stackView, blockView: blockView, at: idx, updateLayout: updateLayout, completion: completion)
     }
 
     func floatBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
