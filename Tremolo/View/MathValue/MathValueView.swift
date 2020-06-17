@@ -30,7 +30,7 @@ final class MathValueView: UIView {
     // | A | B | C |
     private var cursorPos = 0
 
-    private let blockViewPadding: CGFloat = 5
+    private let blockViewPadding: CGFloat = 2
 
     init(tremolo: Tremolo, value: MathValue, blockController: BlockController?, isEditable: Binding<Bool>) {
         self.tremolo = tremolo
@@ -57,7 +57,7 @@ final class MathValueView: UIView {
         }
 
         addSubview(stackView)
-        stackView.equalTo(self, inset: .init(top: 3, left: 3, bottom: 3, right: 3))
+        stackView.equalTo(self, inset: .init(top: 4, left: 2, bottom: 4, right: 2))
 
         setStyle()
 
@@ -271,21 +271,7 @@ extension MathValueView: BlockStackViewController {
     func addBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> (), completion: @escaping () -> ()) {
         value.insert(.block(blockView.block), at: idx)
 
-        let leftPadding: CGFloat
-        if idx == 0 {
-            leftPadding = 0
-        } else {
-            leftPadding = blockViewPadding
-        }
-
-        let rightPadding: CGFloat
-        if idx == stackView.arrangedSubviews.count {
-            rightPadding = 0
-        } else {
-            rightPadding = blockViewPadding
-        }
-
-        let holderView = MathValueHolderView(blockView: blockView, leftPadding: leftPadding, rightPadding: rightPadding)
+        let holderView = MathValueHolderView(blockView: blockView, padding: blockViewPadding)
 
         CodeView.insertBlockView(stackView: stackView, blockView: holderView, at: idx, updateLayout: updateLayout, completion: completion)
 
@@ -360,7 +346,7 @@ private class MathValueHolderView: UIView {
 
     let blockView: BlockView
 
-    init(blockView: BlockView, leftPadding: CGFloat, rightPadding: CGFloat) {
+    init(blockView: BlockView, padding: CGFloat) {
         self.blockView = blockView
 
         super.init(frame: .zero)
@@ -370,9 +356,9 @@ private class MathValueHolderView: UIView {
 
         addSubview(blockView)
 
-        blockView.equalToEach(self, top: 0, left: leftPadding, bottom: 0, right: rightPadding)
+        blockView.equalToEach(self, top: 0, left: padding, bottom: 0, right: padding)
 
-        frame.size = CGSize(width: blockView.frame.width + leftPadding + rightPadding, height: blockView.frame.height)
+        frame.size = CGSize(width: blockView.frame.width + padding * 2, height: blockView.frame.height)
         self.center = center
     }
 
