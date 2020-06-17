@@ -14,25 +14,25 @@ class BlockSelectView: UIView {
         BlockTemplate(
             name: "default",
             type: .void,
-            argValues: [],
+            argTypes: [],
             contents: [[.label("Yay")]]),
 
         BlockTemplate(
             name: "default+arg",
             type: .void,
-            argValues: [.mathValue(MathValue(value: [.raw("Yay")]))],
+            argTypes: [.mathValue],
             contents: [[.label("Nyan"), .arg(0)]]),
 
         BlockTemplate(
             name: "default+arg2",
             type: .void,
-            argValues: [.variable(Variable(type: .custom("type"), name: "Variable"))],
+            argTypes: [.variable(type: .custom("variable"), name: "Variable")],
             contents: [[.label("Nyan"), .arg(0)]]),
 
         BlockTemplate(
             name: "default+code",
             type: .void,
-            argValues: [.code(.init([]))],
+            argTypes: [.code],
             contents: [[.label("Piyo")], [.arg(0)]]),
     ]
 
@@ -77,6 +77,7 @@ class BlockSelectView: UIView {
     }
 
     func blockViewInStackView(blockTemplate: BlockTemplate, stackView: UIStackView, idx: Int) -> BlockView {
+        //dump(blockTemplate, maxDepth: 4)
         let blockView = BlockView(tremolo: tremolo,
                                   block: Block(blockTemplate),
                                   blockController: self.blockController,

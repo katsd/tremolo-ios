@@ -39,7 +39,8 @@ public class Block {
     }
 
     public convenience init(_ template: BlockTemplate) {
-        self.init(name: template.name, type: template.type, argValues: template.argValues, contents: template.contents, declarableVariableIndex: template.declarableVariableIndex)
+        let argValues = template.argTypes.map { $0.value }
+        self.init(name: template.name, type: template.type, argValues: argValues, contents: template.contents, declarableVariableIndex: template.declarableVariableIndex)
     }
 
     init(name: String, type: Type, argValues: [Argument], contents: [[BlockContent]], declarableVariableIndex: Int? = nil, specialFormatter: (([String]) -> String)? = nil, withArg: Bool = true) {
