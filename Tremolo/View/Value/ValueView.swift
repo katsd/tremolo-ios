@@ -35,7 +35,7 @@ final class ValueView: UIView {
         greaterThanOrEqualToSize(width: 10, height: 25)
 
         addSubview(stackView)
-        stackView.equalTo(self, inset: .init(top: 3, left: 3, bottom: 3, right: 3))
+        stackView.equalTo(self, inset: .init(top: 4, left: 3, bottom: 4, right: 3))
 
         setStyle()
 
