@@ -54,7 +54,9 @@ class BlockView: UIView {
 
         blockContentsStackView = blockContents(block: block)
         addSubview(blockContentsStackView)
-        blockContentsStackView.equalTo(self, inset: .init(top: 5, left: 5, bottom: 5, right: 5))
+
+        let spacing: CGFloat = 8
+        blockContentsStackView.equalTo(self, inset: .init(top: spacing, left: spacing, bottom: spacing, right: spacing))
 
         //addInteraction(UIContextMenuInteraction(delegate: self))
     }
