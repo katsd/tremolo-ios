@@ -16,7 +16,7 @@ class BlockStackView: UIStackView {
         self.axis(.vertical)
             .distribution(.fill)
             .alignment(.leading)
-            .spacing(5)
+            .spacing(7)
             .contents(blocks)
 
         self.greaterThanOrEqualToSize(height: 10)
