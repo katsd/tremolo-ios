@@ -210,7 +210,7 @@ extension MathValueView: KeyboardReceiver {
             return
         }
 
-        value.remove(at: cursorPos)
+        value.remove(at: cursorPos - 1)
 
         stackView.arrangedSubviews[cursorPos - 1].removeFromSuperview()
 
