@@ -20,4 +20,6 @@ protocol BlockStackViewController: AnyObject {
 
     func findBlockPos(blockView: BlockView, velocity: CGPoint, selectedBlockPos: BlockPos?) -> BlockPos?
 
+    var parentBlock: Block? { get }
+
 }

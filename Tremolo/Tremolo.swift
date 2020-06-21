@@ -6,7 +6,7 @@
 //  Copyright © 2020 Katsu Matsuda. All rights reserved.
 //
 
-import SwiftUI
+import UIKit
 
 @available(iOS 13.0, macOS 10.15, *)
 public class Tremolo: ObservableObject {
@@ -35,6 +35,20 @@ public class Tremolo: ObservableObject {
 
     var blocks: [Block] {
         blockStack.blocks
+    }
+
+}
+
+extension Tremolo {
+
+    func getVariables(above block: Block, type: Type) -> [Variable] {
+        var res = [Variable]()
+
+        variables.compactMap { variable in
+            variable.type == type ? variable : nil
+        }.forEach { res.append($0) }
+
+        return []
     }
 
 }

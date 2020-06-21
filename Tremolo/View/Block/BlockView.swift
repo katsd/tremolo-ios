@@ -23,6 +23,8 @@ class BlockView: UIView {
         )
     }
 
+    var parent: BlockStackViewController? = nil
+
     private let blockController: BlockController?
 
     private var blockContentsStackView = BlockContentStackView()
@@ -34,6 +36,14 @@ class BlockView: UIView {
     private var mathValueViewPaths = [BlockStackPath]()
 
     private let generateBlockOnSelectView: () -> ()
+
+    private let defaultColor =
+        UIColor.dynamicColor(light: UIColor(red: 0.9, green: 0.9, blue: 0.93, alpha: 1),
+                             dark: UIColor(red: 0.2, green: 0.2, blue: 0.25, alpha: 1))
+
+    private let defaultBorderColor =
+        UIColor.dynamicColor(light: UIColor(red: 0.8, green: 0.8, blue: 0.83, alpha: 1),
+                             dark: UIColor(red: 0.0, green: 0.0, blue: 0.05, alpha: 1))
 
     init(tremolo: Tremolo, block: Block, blockController: BlockController? = nil, generateBlockOnSelectView: @escaping () -> () = {}) {
         self.tremolo = tremolo
@@ -66,10 +76,10 @@ class BlockView: UIView {
     }
 
     private func setStyle() {
-        self.backgroundColor(.systemGray)
+        self.backgroundColor(defaultColor)
             .cornerRadius(10)
-            .shadow(opacity: 0.7)
-        //.border(color: .systemGray5)
+            .shadow(color: UIColor(white: 0.7, alpha: 1), opacity: 0.5, radius: 3)
+        //.border(color: defaultBorderColor, width: 1)
     }
 
     private func setGesture() {
@@ -153,10 +163,10 @@ class BlockView: UIView {
     private func argView(arg: Argument) -> UIView {
         switch arg {
         case let .value(v):
-            return ValueView(tremolo: tremolo, value: v, blockController: blockController)
+            return ValueView(tremolo: tremolo, value: v, blockController: blockController, parent: self)
 
         case let .mathValue(v):
-            return MathValueView(tremolo: tremolo, value: v, blockController: blockController, isEditable: isEditable)
+            return MathValueView(tremolo: tremolo, value: v, blockController: blockController, parent: self, isEditable: isEditable)
 
         case let .variable(v):
             return VariableView(tremolo: tremolo, variable: v, types: [v.type], isEditable: isEditable)
@@ -164,7 +174,7 @@ class BlockView: UIView {
         case let .code(blockStack):
             return BlockStackView(blocks:
                                   blockStack.blocks.map {
-                                      BlockView(tremolo: tremolo, block: $0.parent(self), blockController: self.blockController)
+                                      BlockView(tremolo: tremolo, block: $0.parent(self.block), blockController: self.blockController).parent(self)
                                   },
                                   blockController: blockController)
         }
@@ -333,6 +343,10 @@ extension BlockView: BlockStackViewController {
         return nil
     }
 
+    var parentBlock: Block? {
+        block
+    }
+
 }
 
 extension BlockView: UIContextMenuInteractionDelegate {
@@ -351,4 +365,13 @@ extension BlockView: UIContextMenuInteractionDelegate {
             return UIMenu(title: "", children: [duplicate, delete])
         }
     }
+}
+
+extension BlockView {
+
+    func parent(_ parent: BlockStackViewController?) -> BlockView {
+        self.parent = parent
+        return self
+    }
+
 }

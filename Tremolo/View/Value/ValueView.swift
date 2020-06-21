@@ -23,12 +23,16 @@ final class ValueView: UIView {
 
     private let blockController: BlockController?
 
-    init(tremolo: Tremolo, value: Value, blockController: BlockController?) {
+    private let parent: BlockStackViewController
+
+    init(tremolo: Tremolo, value: Value, blockController: BlockController?, parent: BlockStackViewController) {
         self.tremolo = tremolo
 
         self.value = value
 
         self.blockController = blockController
+
+        self.parent = parent
 
         super.init(frame: .zero)
 
@@ -160,6 +164,10 @@ extension ValueView: BlockStackViewController {
         }
 
         return searchIdx()
+    }
+
+    var parentBlock: Block? {
+        parent.parentBlock
     }
 
 }

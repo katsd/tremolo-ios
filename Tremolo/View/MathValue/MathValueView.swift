@@ -24,6 +24,8 @@ final class MathValueView: UIView {
 
     private let blockController: BlockController?
 
+    private let parent: BlockStackViewController
+
     @Binding var isEditable: Bool
 
     // 0   1   2   3  <- cursorPos
@@ -32,12 +34,14 @@ final class MathValueView: UIView {
 
     private let blockViewPadding: CGFloat = 2
 
-    init(tremolo: Tremolo, value: MathValue, blockController: BlockController?, isEditable: Binding<Bool>) {
+    init(tremolo: Tremolo, value: MathValue, blockController: BlockController?, parent: BlockStackViewController, isEditable: Binding<Bool>) {
         self.tremolo = tremolo
 
         self.value = value
 
         self.blockController = blockController
+
+        self.parent = parent
 
         self._isEditable = isEditable
 
@@ -338,6 +342,10 @@ extension MathValueView: BlockStackViewController {
         } else {
             return BlockPos(blockStackViewController: self, path: .zero, idx: l + 1)
         }
+    }
+
+    var parentBlock: Block? {
+        parent.parentBlock
     }
 
 }

@@ -41,7 +41,7 @@ class CodeView: UIView {
         blockStackView =
             BlockStackView(blocks:
                            tremolo.blocks.map {
-                               BlockView(tremolo: tremolo, block: $0.parent(self), blockController: self)
+                               BlockView(tremolo: tremolo, block: $0, blockController: self).parent(self)
                            },
                            blockController: self)
 
@@ -90,7 +90,7 @@ extension CodeView: BlockController {
 
         HapticFeedback.blockFloatFeedback()
 
-        if let blockStackViewController = blockView.block.parent {
+        if let blockStackViewController = blockView.parent {
             selectedBlockPos = blockStackViewController.findBlockPos(blockView: blockView, velocity: .zero, selectedBlockPos: selectedBlockPos)
         } else {
             selectedBlockPos = findBlockPos(blockView: blockView, velocity: .zero, selectedBlockPos: selectedBlockPos)
@@ -172,7 +172,8 @@ extension CodeView: BlockController {
             movingBlockView = nil
         }
 
-        blockView.block.parent = selectedBlockPos?.blockStackViewController
+        blockView.parent = selectedBlockPos?.blockStackViewController
+        blockView.block.parent = selectedBlockPos?.blockStackViewController.parentBlock
 
         selectedBlockPos = nil
     }
@@ -316,6 +317,10 @@ extension CodeView: BlockStackViewController {
         }
 
         return searchIdx()
+    }
+
+    var parentBlock: Block? {
+        nil
     }
 
 }

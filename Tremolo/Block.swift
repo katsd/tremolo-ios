@@ -10,7 +10,7 @@ import Foundation
 
 public class Block {
 
-    var parent: BlockStackViewController? = nil
+    public var parent: Block? = nil
 
     public let name: String
 
@@ -43,7 +43,9 @@ public class Block {
         self.init(name: template.name, type: template.type, argValues: argValues, contents: template.contents, declarableVariableIndex: template.declarableVariableIndex)
     }
 
-    init(name: String, type: Type, argValues: [Argument], contents: [[BlockContent]], declarableVariableIndex: Int? = nil, specialFormatter: (([String]) -> String)? = nil, withArg: Bool = true) {
+    init(parent: Block? = nil, name: String, type: Type, argValues: [Argument], contents: [[BlockContent]], declarableVariableIndex: Int? = nil, specialFormatter: (([String]) -> String)? = nil, withArg: Bool = true) {
+        self.parent = parent
+
         self.name = name
 
         self.type = type
@@ -119,8 +121,8 @@ extension Block: CodeUnit {
 
 extension Block {
 
-    func parent(_ parent: BlockStackViewController?) -> Block {
-        self.parent = parent
+    func parent(_ block: Block) -> Block {
+        self.parent = block
         return self
     }
 
