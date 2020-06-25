@@ -25,7 +25,7 @@ public struct BlockTemplate {
     public let declarableVariableIndex: Int?
 
     public init(name: String, type: Type, argTypes: [ArgumentType], contents: [[BlockContent]], declarableVariableIndex: Int? = nil) {
-        self.init(name: name, type: type, argTypes: argTypes, contents: [BlockTemplate.defaultLanguage: contents])
+        self.init(name: name, type: type, argTypes: argTypes, contents: [BlockTemplate.defaultLanguage: contents], declarableVariableIndex: declarableVariableIndex)
     }
 
     public init(name: String, type: Type, argTypes: [ArgumentType], contents: Dictionary<String, [[BlockContent]]>, declarableVariableIndex: Int? = nil) {
