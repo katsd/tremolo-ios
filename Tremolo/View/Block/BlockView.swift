@@ -174,7 +174,7 @@ class BlockView: UIView {
         case let .code(blockStack):
             return BlockStackView(blocks:
                                   blockStack.blocks.map {
-                                      BlockView(tremolo: tremolo, block: $0.parent(self.block), blockController: self.blockController).parent(self)
+                                      BlockView(tremolo: tremolo, block: $0, blockController: self.blockController).parent(self)
                                   },
                                   blockController: blockController)
         }

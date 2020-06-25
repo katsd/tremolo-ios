@@ -10,11 +10,17 @@ import Foundation
 
 public class Value {
 
+    var parentBlock: Block? = nil {
+        didSet {
+            blockStack.parentBlock = parentBlock
+        }
+    }
+
     let type: Type
 
     let blockStack: BlockStack
 
-    public init(type: Type, blocks: [Block]) {
+    public init(type: Type, blocks: [Block] = []) {
         self.type = type
         self.blockStack = .init(blocks)
     }

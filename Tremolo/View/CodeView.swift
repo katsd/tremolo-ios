@@ -173,7 +173,6 @@ extension CodeView: BlockController {
         }
 
         blockView.parent = selectedBlockPos?.blockStackViewController
-        blockView.block.parent = selectedBlockPos?.blockStackViewController.parentBlock
 
         selectedBlockPos = nil
     }
@@ -189,7 +188,28 @@ extension CodeView: BlockController {
             print("delete")
         }
 
+        #if DEBUG
+        let showVariables = BlockMenuAction(image: UIImage(systemName: "v.circle")) {
+            let variables = blockView.block.findVariablesAboveThis()
+
+            print("""
+
+                  ### VARIABLES ###
+                  """)
+
+            for variable in variables {
+                print(variable.name)
+            }
+
+            print("""
+                  #################
+
+                  """)
+        }
+        blockMenuView = BlockMenuView(actions: [duplicateAction, delete, showVariables])
+        #else
         blockMenuView = BlockMenuView(actions: [duplicateAction, delete])
+        #endif
 
         if let menuView = blockMenuView {
             addSubview(menuView)

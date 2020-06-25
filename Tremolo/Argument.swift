@@ -57,6 +57,20 @@ public enum Argument: Equatable, Hashable {
             blockStack.removeBlock(at: idx)
         }
     }
+
+    func setParent(_ block: Block) {
+        switch self {
+        case let .value(v):
+            v.parentBlock = block
+        case let .mathValue(v):
+            v.parentBlock = block
+        case let .variable(v):
+            break
+        case let .code(v):
+            v.parentBlock = block
+        }
+    }
+
 }
 
 extension Argument: CodeUnit {

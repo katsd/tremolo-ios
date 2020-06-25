@@ -10,6 +10,16 @@ import Foundation
 
 public class MathValue {
 
+    var parentBlock: Block? = nil {
+        didSet {
+            contentStack.forEach { content in
+                if case let .block(block) = content {
+                    block.parent = self
+                }
+            }
+        }
+    }
+
     public private(set) var contentStack: [MathValueContent]
 
     init(value: [MathValueContent]) {
@@ -48,6 +58,27 @@ extension MathValue: CodeUnit {
         contentStack.reduce("") { (code, v) in
             code + v.toCode()
         }
+    }
+
+}
+
+extension MathValue: ContentStack {
+
+    func findVariables(above selectedBlock: Block) -> [Variable] {
+        var res = parentBlock?.findVariablesAboveThis() ?? [Variable]()
+
+        for content in contentStack {
+            if case let .block(block) = content {
+                if selectedBlock === block {
+                    break
+                }
+                if let variable = block.getDeclaredVariable() {
+                    res.append(variable)
+                }
+            }
+        }
+
+        return res
     }
 
 }

@@ -10,10 +10,18 @@ import Foundation
 
 public class BlockStack {
 
+    var parentBlock: Block? = nil {
+        didSet {
+            blocks.forEach { $0.parent = self }
+        }
+    }
+
     private (set) var blocks: [Block]
 
-    public init(_ blocks: [Block]) {
+    public init(_ blocks: [Block] = []) {
         self.blocks = blocks
+
+        blocks.forEach { $0.parent = self }
     }
 
     func insertBlock(_ block: Block, at idx: Int) {
@@ -22,6 +30,12 @@ public class BlockStack {
 
     func removeBlock(at idx: Int) {
         blocks.remove(at: idx)
+    }
+
+    func block(_ block: Block) -> BlockStack {
+        block.parent = self
+        blocks.append(block)
+        return self
     }
 
 }
@@ -51,6 +65,25 @@ extension BlockStack: CodeUnit {
             code + block.toCode() + "\n"
         })}
         """
+    }
+
+}
+
+extension BlockStack: ContentStack {
+
+    func findVariables(above selectedBlock: Block) -> [Variable] {
+        var res = parentBlock?.findVariablesAboveThis() ?? [Variable]()
+
+        for block in blocks {
+            if selectedBlock == block {
+                break
+            }
+            if let variable = block.getDeclaredVariable() {
+                res.append(variable)
+            }
+        }
+
+        return res
     }
 
 }

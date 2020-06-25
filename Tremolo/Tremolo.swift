@@ -42,13 +42,13 @@ public class Tremolo: ObservableObject {
 extension Tremolo {
 
     func getVariables(above block: Block, type: Type) -> [Variable] {
-        var res = [Variable]()
+        var res = block.findVariablesAboveThis()
 
         variables.compactMap { variable in
             variable.type == type ? variable : nil
         }.forEach { res.append($0) }
 
-        return []
+        return res
     }
 
 }

@@ -10,7 +10,7 @@ import Foundation
 
 public class Block {
 
-    public var parent: Block? = nil
+    var parent: ContentStack? = nil
 
     public let name: String
 
@@ -43,7 +43,7 @@ public class Block {
         self.init(name: template.name, type: template.type, argValues: argValues, contents: template.contents, declarableVariableIndex: template.declarableVariableIndex)
     }
 
-    init(parent: Block? = nil, name: String, type: Type, argValues: [Argument], contents: [[BlockContent]], declarableVariableIndex: Int? = nil, specialFormatter: (([String]) -> String)? = nil, withArg: Bool = true) {
+    init(parent: ContentStack? = nil, name: String, type: Type, argValues: [Argument], contents: [[BlockContent]], declarableVariableIndex: Int? = nil, specialFormatter: (([String]) -> String)? = nil, withArg: Bool = true) {
         self.parent = parent
 
         self.name = name
@@ -59,6 +59,8 @@ public class Block {
         self.specialFormatter = specialFormatter
 
         self.withArg = withArg
+
+        argValues.forEach { $0.setParent(self) }
     }
 
 }
@@ -121,21 +123,36 @@ extension Block: CodeUnit {
 
 extension Block {
 
-    func parent(_ block: Block) -> Block {
-        self.parent = block
-        return self
-    }
-
-}
-
-extension Block {
-
     static public func variable(type: Type, name: String) -> Block {
         .init(name: name, type: type, argValues: [], contents: [[.label(name)]], withArg: false)
     }
 
     static public func string(_ str: String) -> Block {
         .init(name: str, type: .custom("str"), argValues: [], contents: [[.label(str)]], withArg: false)
+    }
+
+}
+
+extension Block {
+
+    func getDeclaredVariable() -> Variable? {
+        if let idx = declarableVariableIndex {
+            if case let .variable(variable) = argValues[idx] {
+                return variable
+            }
+        }
+
+        return nil
+    }
+
+    func findVariablesAboveThis() -> [Variable] {
+        var res = parent?.findVariables(above: self) ?? [Variable]()
+
+        if let variable = getDeclaredVariable() {
+            res.append(variable)
+        }
+
+        return res
     }
 
 }
