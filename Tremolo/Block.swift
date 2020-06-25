@@ -135,20 +135,10 @@ extension Block {
 
 extension Block {
 
-    func getDeclaredVariable() -> Variable? {
-        if let idx = declarableVariableIndex {
-            if case let .variable(variable) = argValues[idx] {
-                return variable
-            }
-        }
-
-        return nil
-    }
-
     func findVariablesAboveThis() -> [Variable] {
         var res = parent?.findVariables(above: self) ?? [Variable]()
 
-        if let variable = getDeclaredVariable() {
+        if let variable = declaredVariable {
             res.append(variable)
         }
 

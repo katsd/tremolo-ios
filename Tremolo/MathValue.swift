@@ -43,6 +43,9 @@ extension MathValue: Hashable {
 extension MathValue {
 
     func insert(_ content: MathValueContent, at idx: Int) {
+        if case let .block(block) = content {
+            block.parent = self
+        }
         contentStack.insert(content, at: idx)
     }
 
@@ -72,7 +75,7 @@ extension MathValue: ContentStack {
                 if selectedBlock === block {
                     break
                 }
-                if let variable = block.getDeclaredVariable() {
+                if let variable = block.declaredVariable {
                     res.append(variable)
                 }
             }

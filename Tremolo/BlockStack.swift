@@ -25,6 +25,7 @@ public class BlockStack {
     }
 
     func insertBlock(_ block: Block, at idx: Int) {
+        block.parent = self
         blocks.insert(block, at: idx)
     }
 
@@ -75,10 +76,10 @@ extension BlockStack: ContentStack {
         var res = parentBlock?.findVariablesAboveThis() ?? [Variable]()
 
         for block in blocks {
-            if selectedBlock == block {
+            if selectedBlock === block {
                 break
             }
-            if let variable = block.getDeclaredVariable() {
+            if let variable = block.declaredVariable {
                 res.append(variable)
             }
         }
