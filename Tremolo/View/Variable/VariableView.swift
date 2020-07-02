@@ -27,15 +27,21 @@ final class VariableView: UIButton {
 
         self.contentEdgeInsets(.init(top: 3, left: 3, bottom: 3, right: 3))
             .cornerRadius(5)
-            .backgroundColor(.init(white: 1, alpha: 0.5))
+            .backgroundColor(.systemGray6)
+        //.backgroundColor(UIColor.systemGray6.withAlphaComponent(0.5))
 
         setTitle(variable.name, for: .normal)
-        setTitleColor(.black, for: .normal)
+        setStyle()
         sizeToFit()
     }
 
     required init?(coder: NSCoder) {
         fatalError()
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        setStyle()
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -64,7 +70,10 @@ final class VariableView: UIButton {
         UIView.animate(withDuration: 0.3) {
             self.alpha = 1
         }
+    }
 
+    private func setStyle() {
+        setTitleColor(.label, for: .normal)
     }
 
 
