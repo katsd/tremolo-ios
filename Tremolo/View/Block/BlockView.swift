@@ -38,12 +38,8 @@ class BlockView: UIView {
     private let generateBlockOnSelectView: () -> ()
 
     private let defaultColor =
-        UIColor.dynamicColor(light: UIColor(red: 0.9, green: 0.9, blue: 0.93, alpha: 1),
-                             dark: UIColor(red: 0.2, green: 0.2, blue: 0.25, alpha: 1))
-
-    private let defaultBorderColor =
-        UIColor.dynamicColor(light: UIColor(red: 0.8, green: 0.8, blue: 0.83, alpha: 1),
-                             dark: UIColor(red: 0.0, green: 0.0, blue: 0.05, alpha: 1))
+        UIColor.dynamicColor(light: UIColor(red: 1, green: 1, blue: 1, alpha: 1),
+                             dark: UIColor(red: 0.25, green: 0.25, blue: 0.25, alpha: 1))
 
     init(tremolo: Tremolo, block: Block, blockController: BlockController? = nil, generateBlockOnSelectView: @escaping () -> () = {}) {
         self.tremolo = tremolo
@@ -67,8 +63,11 @@ class BlockView: UIView {
 
         let spacing: CGFloat = 8
         blockContentsStackView.equalTo(self, inset: .init(top: spacing, left: spacing, bottom: spacing, right: spacing))
+    }
 
-        //addInteraction(UIContextMenuInteraction(delegate: self))
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        setColor()
     }
 
     required init?(coder: NSCoder) {
@@ -78,8 +77,15 @@ class BlockView: UIView {
     private func setStyle() {
         self.backgroundColor(defaultColor)
             .cornerRadius(10)
-            .shadow(color: UIColor(white: 0.7, alpha: 1), opacity: 0.5, radius: 3)
-        //.border(color: defaultBorderColor, width: 1)
+            .shadow(color: .black, opacity: 0.15, radius: 5, offset: CGSize(width: 0, height: 3))
+    }
+
+    private func setColor() {
+        if UITraitCollection.current.userInterfaceStyle == .light {
+            layer.shadowOpacity = 0.15
+        } else {
+            layer.shadowOpacity = 0.7
+        }
     }
 
     private func setGesture() {

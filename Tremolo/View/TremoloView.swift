@@ -41,6 +41,7 @@ public struct TremoloView: View {
             TopView(tremolo.topView)
                 .frame(width: 0, height: 0)
         }
+            .background(Color(.systemGroupedBackground))
             .edgesIgnoringSafeArea(.all)
     }
 

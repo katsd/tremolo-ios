@@ -51,7 +51,8 @@ final class ValueView: UIView {
     }
 
     private func setStyle() {
-        backgroundColor(.white)
+        //TODO: specify color from BlockView
+        backgroundColor(.systemGray6)
         cornerRadius(5)
     }
 

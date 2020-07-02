@@ -73,7 +73,7 @@ final class MathValueView: UIView {
     }
 
     private func setStyle() {
-        backgroundColor(.white)
+        backgroundColor(.systemGray6)
         cornerRadius(5)
     }
 
@@ -192,7 +192,6 @@ final class MathValueView: UIView {
     private func label(_ text: String) -> UILabel {
         UILabel()
             .text(text)
-            .textColor(.black)
     }
 
     private func variableLabel(_ variable: Variable) -> UILabel {
