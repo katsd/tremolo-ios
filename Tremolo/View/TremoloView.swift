@@ -18,10 +18,10 @@ public struct TremoloView: View {
     }
 
     public var body: some View {
-        ZStack {
-            CodeViewRepresentable(tremolo.mainCodeView)
+        GeometryReader { geo in
+            ZStack {
+                CodeViewRepresentable(self.tremolo.mainCodeView)
 
-            GeometryReader { geo in
                 VStack(spacing: 0) {
                     ZStack {
                         Color.clear
@@ -36,13 +36,13 @@ public struct TremoloView: View {
                     KeyboardView(safeAreaInsets: geo.safeAreaInsets)
                         .environmentObject(self.tremolo)
                 }
-            }
 
-            TopView(tremolo.topView)
-                .frame(width: 0, height: 0)
+                TopView(self.tremolo.topView)
+                    .frame(width: 0, height: 0)
+            }
+                .background(Color(.systemGroupedBackground))
+                .edgesIgnoringSafeArea(.all)
         }
-            .background(Color(.systemGroupedBackground))
-            .edgesIgnoringSafeArea(.all)
     }
 
 }
