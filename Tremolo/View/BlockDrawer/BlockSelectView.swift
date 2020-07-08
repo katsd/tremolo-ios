@@ -24,10 +24,11 @@ class BlockSelectView: UIView {
             contents: [[.label("Nyan"), .arg(0)]]),
 
         BlockTemplate(
-            name: "default+arg2",
+            name: "default+setVar",
             type: .void,
             argTypes: [.variable(type: .custom("variable"), name: "Variable")],
-            contents: [[.label("Nyan"), .arg(0)]]),
+            contents: [[.label("Set"), .arg(0)]],
+            declarableVariableIndex: 0),
 
         BlockTemplate(
             name: "default+code",

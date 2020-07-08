@@ -12,7 +12,15 @@ struct VariableKeyboardView: View {
 
     @EnvironmentObject var tremolo: Tremolo
 
-    @Binding var variableTypes: [Type]
+    //@Binding var variableTypes: [Type]
+
+    @State var variables: [Variable]
+
+    /*
+    init(variables: [Variable]) {
+        self.variables = variables
+    }
+    */
 
     var body: some View {
         VStack {
@@ -27,20 +35,16 @@ struct VariableKeyboardView: View {
     }
 
     private func variableButtons() -> some View {
-        ForEach(tremolo.variables, id: \.self) { (variable: Variable) in
-            Group {
-                if self.variableTypes.contains(variable.type) {
-                    Button(action: {
-                        Keyboard.variableKeyboardReceiver?.addVariable(variable)
-                    }) {
-                        HStack {
-                            Text(variable.name)
-                            Spacer()
-                        }
-                    }
-                        .foregroundColor(.primary)
+        ForEach(variables, id: \.self) { (variable: Variable) in
+            Button(action: {
+                Keyboard.variableKeyboardReceiver?.addVariable(variable)
+            }) {
+                HStack {
+                    Text(variable.name)
+                    Spacer()
                 }
             }
+                .foregroundColor(.primary)
         }
     }
 

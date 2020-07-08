@@ -10,6 +10,8 @@ import Foundation
 
 public class Variable {
 
+    var parentBlock: Block? = nil
+
     public var type: Type
 
     public var name: String

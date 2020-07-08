@@ -73,7 +73,7 @@ extension BlockStack: CodeUnit {
 extension BlockStack: ContentStack {
 
     func findVariables(above selectedBlock: Block) -> [Variable] {
-        var res = parentBlock?.findVariablesAboveThis() ?? [Variable]()
+        var res = parentBlock?.findLocalVariablesAboveThis() ?? [Variable]()
 
         for block in blocks {
             if selectedBlock === block {

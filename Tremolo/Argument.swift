@@ -65,7 +65,7 @@ public enum Argument: Equatable, Hashable {
         case let .mathValue(v):
             v.parentBlock = block
         case let .variable(v):
-            break
+            v.parentBlock = block
         case let .code(v):
             v.parentBlock = block
         }

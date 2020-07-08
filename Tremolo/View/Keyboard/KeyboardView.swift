@@ -74,7 +74,7 @@ struct KeyboardView: View {
                 if observer.type == .math {
                     MathKeyboardView()
                 } else {
-                    VariableKeyboardView(variableTypes: $observer.variableTypes)
+                    VariableKeyboardView(variables: observer.availableVariables)
                         .environmentObject(tremolo)
                 }
             }

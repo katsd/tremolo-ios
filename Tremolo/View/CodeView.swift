@@ -190,7 +190,7 @@ extension CodeView: BlockController {
 
         #if DEBUG
         let showVariables = BlockMenuAction(image: UIImage(systemName: "v.circle")) {
-            let variables = blockView.block.findVariablesAboveThis()
+            let variables = blockView.block.findLocalVariablesAboveThis()
 
             print("""
 

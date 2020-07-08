@@ -84,7 +84,7 @@ final class MathValueView: UIView {
             if !self.isEditable {
                 return
             }
-            Keyboard.open(keyboardReceiver: self, mathKeyboardReceiver: self, variableKeyboardReceiver: self, type: .math)
+            Keyboard.open(keyboardReceiver: self, mathKeyboardReceiver: self, variableKeyboardReceiver: self, type: .math, availableVariables: self.getAvailableVariables())
             self.addCursor(tapLocation: gesture.location(in: nil))
         }
 
@@ -345,6 +345,18 @@ extension MathValueView: BlockStackViewController {
 
     var parentBlock: Block? {
         parent.parentBlock
+    }
+
+}
+
+extension MathValueView {
+
+    func getAvailableVariables() -> [Variable] {
+        if let block = value.parentBlock {
+            return tremolo.getVariables(above: block, type: value.type)
+        } else {
+            return []
+        }
     }
 
 }

@@ -135,7 +135,7 @@ extension Block {
 
 extension Block {
 
-    func findVariablesAboveThis() -> [Variable] {
+    func findLocalVariablesAboveThis() -> [Variable] {
         var res = parent?.findVariables(above: self) ?? [Variable]()
 
         if let variable = declaredVariable {

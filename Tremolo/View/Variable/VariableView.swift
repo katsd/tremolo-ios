@@ -64,7 +64,7 @@ final class VariableView: UIButton {
 
     private func touchEnd() {
         if self.isEditable {
-            Keyboard.open(keyboardReceiver: self, variableKeyboardReceiver: self, type: .variable, selectOneVariable: true)
+            Keyboard.open(keyboardReceiver: self, variableKeyboardReceiver: self, type: .variable, availableVariables: getAvailableVariables(), selectOneVariable: true)
         }
 
         UIView.animate(withDuration: 0.3) {
@@ -97,6 +97,18 @@ extension VariableView: KeyboardReceiver {
     }
 
     func moveCursor(_ direction: CursorDirection) {
+    }
+
+}
+
+extension VariableView {
+
+    func getAvailableVariables() -> [Variable] {
+        if let block = variable.parentBlock {
+            return tremolo.getVariables(above: block, type: variable.type)
+        } else {
+            return []
+        }
     }
 
 }

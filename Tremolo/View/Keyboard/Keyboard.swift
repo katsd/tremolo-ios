@@ -30,6 +30,7 @@ class Keyboard {
                      mathKeyboardReceiver: MathKeyboardReceiver? = nil,
                      variableKeyboardReceiver: VariableKeyboardReceiver? = nil,
                      type: KeyboardType,
+                     availableVariables: [Variable],
                      selectOneVariable: Bool = false) {
 
         releaseReceiver()
@@ -57,6 +58,8 @@ class Keyboard {
             observer.enableControlKeys = true
             observer.selectOneVariable = false
         }
+
+        observer.availableVariables = availableVariables
 
         animation {
             observer.show = true
@@ -95,6 +98,6 @@ class KeyboardObserver: ObservableObject {
 
     @Published var selectOneVariable = false
 
-    @Published var variableTypes: [Type] = [.custom("value")]
+    var availableVariables = [Variable]()
 
 }

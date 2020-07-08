@@ -173,3 +173,14 @@ extension ValueView: BlockStackViewController {
 
 }
 
+extension ValueView {
+
+    func getAvailableVariables() -> [Variable] {
+        if let block = value.parentBlock {
+            return tremolo.getVariables(above: block, type: value.type)
+        } else {
+            return []
+        }
+    }
+
+}

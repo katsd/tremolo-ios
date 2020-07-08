@@ -10,6 +10,8 @@ import Foundation
 
 public class MathValue {
 
+    let type = Type.custom("value")
+
     var parentBlock: Block? = nil {
         didSet {
             contentStack.forEach { content in
@@ -68,7 +70,7 @@ extension MathValue: CodeUnit {
 extension MathValue: ContentStack {
 
     func findVariables(above selectedBlock: Block) -> [Variable] {
-        var res = parentBlock?.findVariablesAboveThis() ?? [Variable]()
+        var res = parentBlock?.findLocalVariablesAboveThis() ?? [Variable]()
 
         for content in contentStack {
             if case let .block(block) = content {
