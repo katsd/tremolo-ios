@@ -98,6 +98,6 @@ class KeyboardObserver: ObservableObject {
 
     @Published var selectOneVariable = false
 
-    var availableVariables = [Variable]()
+    @Published var availableVariables = [Variable]()
 
 }

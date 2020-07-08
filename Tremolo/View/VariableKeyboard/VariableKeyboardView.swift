@@ -12,15 +12,9 @@ struct VariableKeyboardView: View {
 
     @EnvironmentObject var tremolo: Tremolo
 
-    //@Binding var variableTypes: [Type]
+    @State var type: Type = .custom("value")
 
     @State var variables: [Variable]
-
-    /*
-    init(variables: [Variable]) {
-        self.variables = variables
-    }
-    */
 
     var body: some View {
         VStack {
@@ -70,7 +64,7 @@ struct VariableKeyboardView: View {
         let ac = UIAlertController(title: "New Variable", message: "Enter a name for this variable.", preferredStyle: .alert)
 
         let add = UIAlertAction(title: "Add", style: .default) { _ in
-            print("Add")
+            self.variables.append(Variable(type: self.type, name: ac.textFields?.first?.text ?? ""))
         }
 
         let cancel = UIAlertAction(title: "Cancel", style: .cancel)
