@@ -58,7 +58,7 @@ struct KeyboardView: View {
     }
 
     private func keyboardTypePicker() -> some View {
-        Picker(selection: $observer.type, label: EmptyView()) {
+        Picker(selection: $observer.keyboardType, label: EmptyView()) {
             Image(systemName: "textformat.123").tag(KeyboardType.math)
             Image(systemName: "xmark").tag(KeyboardType.variable)
         }
@@ -71,10 +71,10 @@ struct KeyboardView: View {
     private func keysView() -> some View {
         HStack(alignment: .bottom) {
             Group {
-                if observer.type == .math {
+                if observer.keyboardType == .math {
                     MathKeyboardView()
                 } else {
-                    VariableKeyboardView(variables: observer.availableVariables)
+                    VariableKeyboardView(type: $observer.variableType, variables: observer.availableVariables)
                         .environmentObject(tremolo)
                 }
             }

@@ -12,7 +12,7 @@ struct VariableKeyboardView: View {
 
     @EnvironmentObject var tremolo: Tremolo
 
-    @State var type: Type = .custom("value")
+    @Binding var type: Type
 
     @State var variables: [Variable]
 

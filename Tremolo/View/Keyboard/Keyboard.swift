@@ -29,7 +29,8 @@ class Keyboard {
     static func open(keyboardReceiver: KeyboardReceiver,
                      mathKeyboardReceiver: MathKeyboardReceiver? = nil,
                      variableKeyboardReceiver: VariableKeyboardReceiver? = nil,
-                     type: KeyboardType,
+                     keyboardType: KeyboardType,
+                     variableType: Type,
                      availableVariables: [Variable],
                      selectOneVariable: Bool = false) {
 
@@ -45,10 +46,10 @@ class Keyboard {
             return
         }
 
-        if type == .math && mathKeyboardReceiver != nil {
-            observer.type = .math
+        if keyboardType == .math && mathKeyboardReceiver != nil {
+            observer.keyboardType = .math
         } else {
-            observer.type = .variable
+            observer.keyboardType = .variable
         }
 
         if selectOneVariable {
@@ -59,6 +60,7 @@ class Keyboard {
             observer.selectOneVariable = false
         }
 
+        observer.variableType = variableType
         observer.availableVariables = availableVariables
 
         animation {
@@ -92,11 +94,13 @@ class KeyboardObserver: ObservableObject {
 
     @Published var show = false
 
-    @Published var type: KeyboardType = .math
+    @Published var keyboardType: KeyboardType = .math
 
     @Published var enableControlKeys = true
 
     @Published var selectOneVariable = false
+
+    @Published var variableType = Type.void
 
     @Published var availableVariables = [Variable]()
 

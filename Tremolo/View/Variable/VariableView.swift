@@ -64,7 +64,12 @@ final class VariableView: UIButton {
 
     private func touchEnd() {
         if self.isEditable {
-            Keyboard.open(keyboardReceiver: self, variableKeyboardReceiver: self, type: .variable, availableVariables: getAvailableVariables(), selectOneVariable: true)
+            Keyboard.open(keyboardReceiver: self,
+                          variableKeyboardReceiver: self,
+                          keyboardType: .variable,
+                          variableType: variable.type,
+                          availableVariables: getAvailableVariables(),
+                          selectOneVariable: true)
         }
 
         UIView.animate(withDuration: 0.3) {

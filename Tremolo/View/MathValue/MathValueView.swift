@@ -84,7 +84,12 @@ final class MathValueView: UIView {
             if !self.isEditable {
                 return
             }
-            Keyboard.open(keyboardReceiver: self, mathKeyboardReceiver: self, variableKeyboardReceiver: self, type: .math, availableVariables: self.getAvailableVariables())
+            Keyboard.open(keyboardReceiver: self,
+                          mathKeyboardReceiver: self,
+                          variableKeyboardReceiver: self,
+                          keyboardType: .math,
+                          variableType: self.value.type,
+                          availableVariables: self.getAvailableVariables())
             self.addCursor(tapLocation: gesture.location(in: nil))
         }
 
