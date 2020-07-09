@@ -48,7 +48,11 @@ extension Tremolo {
             variable.type == type ? variable : nil
         }.forEach { res.append($0) }
 
-        return res
+        var addedVariables = [Variable: Bool]()
+
+        return res.filter {
+            addedVariables.updateValue(true, forKey: $0) == nil
+        }
     }
 
 }
