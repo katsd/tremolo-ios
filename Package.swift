@@ -1,11 +1,11 @@
-// swift-tools-version:5.1
+// swift-tools-version:5.3
 
 import PackageDescription
 
 let package = Package(
     name: "Tremolo",
     platforms: [
-        .macOS(.v10_15), .iOS(.v13), .tvOS(.v13), .watchOS(.v6)
+        .iOS(.v14)
     ],
     products: [
         .library(
