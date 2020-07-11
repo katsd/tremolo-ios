@@ -20,6 +20,8 @@ class CodeView: UIView {
 
     private var blockMenuView: BlockMenuView? = nil
 
+    private var unhighlightBlockView: (() -> ())? = nil
+
     private var movingBlockView: BlockView? = nil
 
     init(tremolo: Tremolo, topView: UIView) {
@@ -72,6 +74,7 @@ class CodeView: UIView {
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         if !(blockMenuView?.frame.contains(point) ?? true) {
             blockMenuView?.removeFromSuperview()
+            unhighlightBlockView?()
         }
 
         return super.hitTest(point, with: event)
@@ -180,6 +183,8 @@ extension CodeView: BlockController {
     func showBlockMenu(blockView: BlockView) {
         HapticFeedback.showMenuFeedback()
 
+        blockView.highlight(on: true)
+
         let duplicateAction = BlockMenuAction(image: UIImage(systemName: "plus.square.on.square")) {
             print("duplicate")
         }
@@ -210,6 +215,8 @@ extension CodeView: BlockController {
         #else
         blockMenuView = BlockMenuView(actions: [duplicateAction, delete])
         #endif
+
+        unhighlightBlockView = { blockView.highlight(on: false) }
 
         if let menuView = blockMenuView {
             addSubview(menuView)

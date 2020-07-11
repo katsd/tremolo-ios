@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-class BlockView: UIView {
+class BlockView: UIButton {
 
     private let tremolo: Tremolo
 
@@ -41,6 +41,10 @@ class BlockView: UIView {
         UIColor.dynamicColor(light: UIColor(red: 1, green: 1, blue: 1, alpha: 1),
                              dark: UIColor(red: 0.25, green: 0.25, blue: 0.25, alpha: 1))
 
+    private let defaultHighlightedColor =
+        UIColor.dynamicColor(light: UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1),
+                             dark: UIColor(red: 0.45, green: 0.45, blue: 0.45, alpha: 1))
+
     init(tremolo: Tremolo, block: Block, blockController: BlockController? = nil, generateBlockOnSelectView: @escaping () -> () = {}) {
         self.tremolo = tremolo
 
@@ -55,6 +59,8 @@ class BlockView: UIView {
         setStyle()
 
         setGesture()
+
+        setMenu()
 
         setBlockStackViewPaths(block: block)
 
@@ -72,6 +78,14 @@ class BlockView: UIView {
 
     required init?(coder: NSCoder) {
         fatalError()
+    }
+
+    func highlight(on: Bool) {
+        if on {
+            backgroundColor = defaultHighlightedColor
+        } else {
+            backgroundColor = defaultColor
+        }
     }
 
     private func setStyle() {
@@ -108,6 +122,7 @@ class BlockView: UIView {
             }
         }
 
+        /*
         self.longPress(minimumPressDuration: 0.3) { gesture in
             if !self.isEditable.wrappedValue {
                 return
@@ -119,6 +134,18 @@ class BlockView: UIView {
 
             self.blockController?.showBlockMenu(blockView: self)
         }
+        */
+    }
+
+    private func setMenu() {
+        let duplicate = UIAction(title: "Duplicate", image: UIImage(systemName: "plus.square.on.square")) { _ in
+            print("Duplicate Block")
+        }
+        let delete = UIAction(title: "Delete", image: UIImage(systemName: "trash"), attributes: .destructive) { _ in
+            print("Delete Block")
+        }
+        let menu = UIMenu(title: "", children: [duplicate, delete])
+        self.menu = menu
     }
 
     private func setBlockStackViewPaths(block: Block) {
