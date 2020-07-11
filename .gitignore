@@ -152,6 +152,18 @@ DerivedData/
 ### Xcode Patch ###
 **/xcshareddata/WorkspaceSettings.xcsettings
 
-# End of https://www.gitignore.io/api/xcode,macos,appcode,carthage
 
+# Created by https://www.toptal.com/developers/gitignore/api/swiftpm
+# Edit at https://www.toptal.com/developers/gitignore?templates=swiftpm
+
+### SwiftPM ###
+Packages
+.build/
+xcuserdata
+DerivedData/
 *.xcodeproj
+
+
+# End of https://www.toptal.com/developers/gitignore/api/swiftpm
+
+.swiftpm/
