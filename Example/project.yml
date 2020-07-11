@@ -3,7 +3,7 @@ name: Example
 options:
   bundlePrefix: app.mallet.tremolo
   deploymentTarget:
-    iOS: "13.0"
+    iOS: "14.0"
 
 attributes:
   ORGANIZATIONNAME: Katsu Matsuda
