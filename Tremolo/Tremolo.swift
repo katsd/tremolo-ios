@@ -46,7 +46,7 @@ extension Tremolo {
 
         variables.compactMap { variable in
             variable.type == type ? variable : nil
-        }.forEach { res.append($0) }
+        }.forEach { res.append($0.clone()) }
 
         var addedVariables = [Variable: Bool]()
 

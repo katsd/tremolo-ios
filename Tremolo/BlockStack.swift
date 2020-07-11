@@ -80,7 +80,7 @@ extension BlockStack: ContentStack {
                 break
             }
             if let variable = block.declaredVariable {
-                res.append(variable)
+                res.append(variable.clone())
             }
         }
 

@@ -139,7 +139,7 @@ extension Block {
         var res = parent?.findVariables(above: self) ?? [Variable]()
 
         if let variable = declaredVariable {
-            res.append(variable)
+            res.append(variable.clone())
         }
 
         return res

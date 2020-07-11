@@ -26,6 +26,10 @@ public class Variable {
         name = variable.name
     }
 
+    func clone() -> Variable {
+        Variable(type: type, name: name)
+    }
+
 }
 
 extension Variable: Hashable {
