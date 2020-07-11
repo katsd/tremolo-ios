@@ -21,7 +21,7 @@ public class Variable {
         self.name = name
     }
 
-    func copy(_ variable: Variable) {
+    func copy(from variable: Variable) {
         type = variable.type
         name = variable.name
     }

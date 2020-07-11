@@ -87,7 +87,7 @@ final class VariableView: UIButton {
 extension VariableView: VariableKeyboardReceiver {
 
     func addVariable(_ variable: Variable) {
-        self.variable.copy(variable)
+        self.variable.copy(from: variable)
         setTitle(variable.name, for: .normal)
     }
 

@@ -64,7 +64,9 @@ struct VariableKeyboardView: View {
         let ac = UIAlertController(title: "New Variable", message: "Enter a name for this variable.", preferredStyle: .alert)
 
         let add = UIAlertAction(title: "Add", style: .default) { _ in
-            self.variables.append(Variable(type: self.type, name: ac.textFields?.first?.text ?? ""))
+            let variable = Variable(type: self.type, name: ac.textFields?.first?.text ?? "")
+            self.variables.append(variable)
+            Keyboard.variableKeyboardReceiver?.addVariable(variable)
         }
 
         let cancel = UIAlertAction(title: "Cancel", style: .cancel)
