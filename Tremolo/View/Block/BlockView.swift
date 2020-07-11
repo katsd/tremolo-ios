@@ -121,20 +121,6 @@ class BlockView: UIButton {
                 break
             }
         }
-
-        /*
-        self.longPress(minimumPressDuration: 0.3) { gesture in
-            if !self.isEditable.wrappedValue {
-                return
-            }
-
-            if gesture.state != .began {
-                return
-            }
-
-            self.blockController?.showBlockMenu(blockView: self)
-        }
-        */
     }
 
     private func setMenu() {

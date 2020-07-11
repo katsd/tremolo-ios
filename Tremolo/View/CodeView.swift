@@ -18,10 +18,6 @@ class CodeView: UIView {
 
     private let topView: UIView
 
-    private var blockMenuView: BlockMenuView? = nil
-
-    private var unhighlightBlockView: (() -> ())? = nil
-
     private var movingBlockView: BlockView? = nil
 
     init(tremolo: Tremolo, topView: UIView) {
@@ -69,15 +65,6 @@ class CodeView: UIView {
         tap { _ in
             Keyboard.closeKeyboard()
         }
-    }
-
-    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        if !(blockMenuView?.frame.contains(point) ?? true) {
-            blockMenuView?.removeFromSuperview()
-            unhighlightBlockView?()
-        }
-
-        return super.hitTest(point, with: event)
     }
 
 }
@@ -178,55 +165,6 @@ extension CodeView: BlockController {
         blockView.parent = selectedBlockPos?.blockStackViewController
 
         selectedBlockPos = nil
-    }
-
-    func showBlockMenu(blockView: BlockView) {
-        HapticFeedback.showMenuFeedback()
-
-        blockView.highlight(on: true)
-
-        let duplicateAction = BlockMenuAction(image: UIImage(systemName: "plus.square.on.square")) {
-            print("duplicate")
-        }
-
-        let delete = BlockMenuAction(image: UIImage(systemName: "trash")) {
-            print("delete")
-        }
-
-        #if DEBUG
-        let showVariables = BlockMenuAction(image: UIImage(systemName: "v.circle")) {
-            let variables = blockView.block.findLocalVariablesAboveThis()
-
-            print("""
-
-                  ### VARIABLES ###
-                  """)
-
-            for variable in variables {
-                print(variable.name)
-            }
-
-            print("""
-                  #################
-
-                  """)
-        }
-        blockMenuView = BlockMenuView(actions: [duplicateAction, delete, showVariables])
-        #else
-        blockMenuView = BlockMenuView(actions: [duplicateAction, delete])
-        #endif
-
-        unhighlightBlockView = { blockView.highlight(on: false) }
-
-        if let menuView = blockMenuView {
-            addSubview(menuView)
-            NSLayoutConstraint.activate(
-                [
-                    menuView.topAnchor.constraint(equalTo: blockView.bottomAnchor, constant: 10),
-                    menuView.leadingAnchor.constraint(equalTo: blockView.leadingAnchor)
-                ]
-            )
-        }
     }
 
     var canMoveBlock: Bool {
