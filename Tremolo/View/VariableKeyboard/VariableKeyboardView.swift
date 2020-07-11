@@ -19,9 +19,7 @@ struct VariableKeyboardView: View {
     var body: some View {
         VStack {
             ScrollView(.vertical) {
-                VStack(spacing: 10) {
-                    variableButtons()
-                }
+                variableButtons()
             }
             addVariableButton()
                 .padding(.trailing, 30)
@@ -37,6 +35,7 @@ struct VariableKeyboardView: View {
                     Text(variable.name)
                     Spacer()
                 }
+                    .padding(5)
             }
                 .foregroundColor(.primary)
         }
