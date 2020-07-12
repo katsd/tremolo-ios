@@ -21,17 +21,17 @@ public struct TremoloView: View {
             ZStack {
                 CodeViewRepresentable(self.tremolo.mainCodeView)
 
-                VStack(spacing: 0) {
-                    ZStack {
-                        Color.clear
-                            .overlay(
-                            BlockDrawerView(blockController: self.tremolo.mainCodeView)
-                                .environmentObject(self.tremolo)
-                        )
+                Color.clear
+                    .overlay(
+                    BlockDrawerView(blockController: self.tremolo.mainCodeView, safeAreaInsets: geo.safeAreaInsets)
+                        .environmentObject(self.tremolo)
+                )
 
-                        TopView(self.tremolo.topView)
-                            .frame(width: 0, height: 0)
-                    }
+                TopView(self.tremolo.topView)
+                    .frame(width: 0, height: 0)
+
+                VStack {
+                    Color.clear
                     KeyboardView(safeAreaInsets: geo.safeAreaInsets)
                         .environmentObject(self.tremolo)
                 }
