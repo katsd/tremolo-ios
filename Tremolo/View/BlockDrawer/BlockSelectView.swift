@@ -10,41 +10,26 @@ import SwiftUI
 
 class BlockSelectView: UIView {
 
-    let defaultBlocks: [BlockTemplate] = [
-        BlockTemplate(
-            name: "default",
-            type: .void,
-            argTypes: [],
-            contents: [[.label("Yay")]]),
-
-        BlockTemplate(
-            name: "default+arg",
-            type: .void,
-            argTypes: [.mathValue],
-            contents: [[.label("Nyan"), .arg(0)]]),
-
-        BlockTemplate(
-            name: "default+setVar",
-            type: .void,
-            argTypes: [.variable(type: .custom("variable"), name: "Variable")],
-            contents: [[.label("Set"), .arg(0)]],
-            declarableVariableIndex: 0),
-
-        BlockTemplate(
-            name: "default+code",
-            type: .void,
-            argTypes: [.code],
-            contents: [[.label("Piyo")], [.arg(0)]]),
-    ]
-
     private let tremolo: Tremolo
+
+    private(set) var blockTemplates: [BlockTemplate]
 
     private let blockController: BlockController
 
-    init(tremolo: Tremolo, blockController: BlockController) {
+    private let stackView: UIStackView
+
+    init(tremolo: Tremolo, blockTemplates: [BlockTemplate], blockController: BlockController) {
         self.tremolo = tremolo
 
+        self.blockTemplates = blockTemplates
+
         self.blockController = blockController
+
+        stackView = UIStackView()
+            .axis(.vertical)
+            .distribution(.fill)
+            .alignment(.leading)
+            .spacing(10)
 
         super.init(frame: .zero)
 
@@ -55,17 +40,7 @@ class BlockSelectView: UIView {
             .alwaysBounceHorizontal(false)
             .clipsToBounds(true)
 
-        let stackView = UIStackView()
-            .axis(.vertical)
-            .distribution(.fill)
-            .alignment(.leading)
-            .spacing(10)
-
-        stackView.contents(
-            defaultBlocks.enumerated().map { (idx, block: BlockTemplate) in
-                self.blockViewInStackView(blockTemplate: block, stackView: stackView, idx: idx)
-            }
-        )
+        update(blockTemplates: blockTemplates)
 
         scrollView.addSubview(stackView)
         addSubview(scrollView)
@@ -75,6 +50,21 @@ class BlockSelectView: UIView {
 
     required init?(coder: NSCoder) {
         fatalError()
+    }
+
+    func update(blockTemplates: [BlockTemplate]) {
+        print("update")
+        self.blockTemplates = blockTemplates
+        stackView.arrangedSubviews.forEach {
+            stackView.removeArrangedSubview($0)
+            $0.removeFromSuperview()
+        }
+
+        stackView.contents(
+            blockTemplates.enumerated().map { (idx, block: BlockTemplate) in
+                self.blockViewInStackView(blockTemplate: block, stackView: stackView, idx: idx)
+            }
+        )
     }
 
     func blockViewInStackView(blockTemplate: BlockTemplate, stackView: UIStackView, idx: Int) -> BlockView {
@@ -103,18 +93,24 @@ struct BlockSelectViewRepresentable: UIViewRepresentable {
 
     private let tremolo: Tremolo
 
+    private let blockTemplates: [BlockTemplate]
+
     private let blockController: BlockController
 
-    init(tremolo: Tremolo, blockController: BlockController) {
+    init(tremolo: Tremolo, blockTemplates: [BlockTemplate], blockController: BlockController) {
         self.tremolo = tremolo
+        self.blockTemplates = blockTemplates
         self.blockController = blockController
     }
 
     func makeUIView(context: Context) -> BlockSelectView {
-        BlockSelectView(tremolo: tremolo, blockController: blockController)
+        BlockSelectView(tremolo: tremolo, blockTemplates: blockTemplates, blockController: blockController)
     }
 
-    func updateUIView(_ uiView: UIViewType, context: Context) {
-
+    func updateUIView(_ blockSelectView: BlockSelectView, context: Context) {
+        if blockSelectView.blockTemplates == blockTemplates {
+            return
+        }
+        blockSelectView.update(blockTemplates: blockTemplates)
     }
 }

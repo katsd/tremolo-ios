@@ -82,3 +82,34 @@ extension BlockTemplate {
 
 }
 
+extension BlockTemplate: Equatable {
+
+    public static func ==(lhs: BlockTemplate, rhs: BlockTemplate) -> Bool {
+        lhs.name == rhs.name &&
+            lhs.type == rhs.type &&
+            lhs.argTypes == rhs.argTypes &&
+            lhs.localizedContents == rhs.localizedContents &&
+            lhs.contents == rhs.contents &&
+            lhs.declarableVariableIndex == rhs.declarableVariableIndex
+    }
+
+}
+
+extension BlockTemplate.ArgumentType: Equatable {
+
+    public static func ==(lhs: BlockTemplate.ArgumentType, rhs: BlockTemplate.ArgumentType) -> Bool {
+        switch (lhs, rhs) {
+        case (.value, .value):
+            return true
+        case (.mathValue, .mathValue):
+            return true
+        case let (.variable(lType, lName), .variable(rType, rName)):
+            return (lType, lName) == (rType, rName)
+        case (.code, .code):
+            return true
+        default:
+            return false
+        }
+    }
+
+}

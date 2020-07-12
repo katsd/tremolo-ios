@@ -23,7 +23,7 @@ public struct TremoloView: View {
 
                 Color.clear
                     .overlay(
-                    BlockDrawerView(blockController: self.tremolo.mainCodeView, safeAreaInsets: geo.safeAreaInsets)
+                    BlockDrawerView(blockTemplates: tremolo.blockTemplates, blockController: self.tremolo.mainCodeView, safeAreaInsets: geo.safeAreaInsets)
                         .environmentObject(self.tremolo)
                 )
 

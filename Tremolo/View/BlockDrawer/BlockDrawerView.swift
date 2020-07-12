@@ -16,13 +16,13 @@ struct BlockDrawerView: View {
 
     @State var drawerWidth: CGFloat = 0
 
-    @State private var currentCategory = ""
+    @State private var currentCategory: BlockCategory = .custom("Apple")
+
+    @State var blockTemplates: [BlockCategory: [BlockTemplate]]
 
     let blockController: BlockController
 
     @State var safeAreaInsets: EdgeInsets
-
-    private let categories = ["Apple", "Orange", "Variable"]
 
     var body: some View {
         GeometryReader { geo in
@@ -30,7 +30,7 @@ struct BlockDrawerView: View {
                 HStack(spacing: 0) {
                     Color.clear
                     VStack {
-                        BlockSelectViewRepresentable(tremolo: self.tremolo, blockController: self.blockController)
+                        BlockSelectViewRepresentable(tremolo: self.tremolo, blockTemplates: blockTemplates[currentCategory] ?? [], blockController: self.blockController)
                         categoryButtons()
                     }
                         .padding(.bottom, safeAreaInsets.bottom)
@@ -46,7 +46,7 @@ struct BlockDrawerView: View {
     private func categoryButtons() -> some View {
         ScrollView(.horizontal) {
             HStack(spacing: 10) {
-                ForEach(categories, id: \.self) { category in
+                ForEach(blockTemplates.map { $0.key }, id: \.self) { category in
                     categoryButton(category: category)
                 }
             }
@@ -54,15 +54,17 @@ struct BlockDrawerView: View {
         }
     }
 
-    private func categoryButton(category: String) -> some View {
+    private func categoryButton(category: BlockCategory) -> some View {
         Button(action: {
             currentCategory = category
         }) {
             VStack(spacing: 3) {
                 Circle()
                     .foregroundColor(.blue)
-                Text(category)
-                    .foregroundColor(.primary)
+                if case let .custom(categoryName) = category {
+                    Text(categoryName)
+                        .foregroundColor(.primary)
+                }
             }
                 .padding(.vertical, 10)
                 .background(Color.gray.opacity(0.2))
