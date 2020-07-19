@@ -12,16 +12,30 @@ struct ContentView: View {
 
     @ObservedObject var tremolo = Example.tremolo
 
+    @State var code = ""
+
+    @State var showSheet = false
+
     var body: some View {
         NavigationView {
             TremoloView(tremolo)
                 .navigationBarTitle("Tremolo Example", displayMode: .inline)
                 .navigationBarItems(trailing:
-                                    Button(action: { print(self.tremolo.getCode()) }) {
+                                    Button(action: {
+                                        code = tremolo.getCode()
+                                        print(code)
+                                        showSheet = true
+                                    }) {
                                         Image(systemName: "chevron.left.slash.chevron.right")
                                     }
                 )
         }
+            .sheet(isPresented: $showSheet) {
+                TextEditor(text: $code)
+                    .disabled(true)
+                    .font(.system(size: 16, design: .monospaced))
+                    .padding()
+            }
     }
 
 }
