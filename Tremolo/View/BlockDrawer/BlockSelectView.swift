@@ -53,7 +53,6 @@ class BlockSelectView: UIView {
     }
 
     func update(blockTemplates: [BlockTemplate]) {
-        print("update")
         self.blockTemplates = blockTemplates
         stackView.arrangedSubviews.forEach {
             stackView.removeArrangedSubview($0)

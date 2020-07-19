@@ -20,55 +20,58 @@ public class Tremolo: ObservableObject {
 
     let topView = UIView()
 
-    let blockTemplates: [BlockCategory: [BlockTemplate]] =
+    let blockCategories: [BlockCategory] =
         [
-            .custom("Apple"):
-            [
-                BlockTemplate(
-                    name: "default",
-                    type: .void,
-                    argTypes: [],
-                    contents: [[.label("Yay")]]),
+            BlockCategory(
+                name: "Apple",
+                templates: [
+                    BlockTemplate(
+                        name: "default",
+                        type: .void,
+                        argTypes: [],
+                        contents: [[.label("Yay")]]),
 
-                BlockTemplate(
-                    name: "default+arg",
-                    type: .void,
-                    argTypes: [.mathValue],
-                    contents: [[.label("Nyan"), .arg(0)]]),
+                    BlockTemplate(
+                        name: "default+arg",
+                        type: .void,
+                        argTypes: [.mathValue],
+                        contents: [[.label("Nyan"), .arg(0)]]),
 
-                BlockTemplate(
-                    name: "default+setVar",
-                    type: .void,
-                    argTypes: [.variable(type: .custom("variable"), name: "Variable")],
-                    contents: [[.label("Set"), .arg(0)]],
-                    declarableVariableIndex: 0),
+                    BlockTemplate(
+                        name: "default+setVar",
+                        type: .void,
+                        argTypes: [.variable(type: .custom("variable"), name: "Variable")],
+                        contents: [[.label("Set"), .arg(0)]],
+                        declarableVariableIndex: 0),
 
-                BlockTemplate(
-                    name: "default+code",
-                    type: .void,
-                    argTypes: [.code],
-                    contents: [[.label("Piyo")], [.arg(0)]]),
-            ],
+                    BlockTemplate(
+                        name: "default+code",
+                        type: .void,
+                        argTypes: [.code],
+                        contents: [[.label("Piyo")], [.arg(0)]]),
+                ]
+            ),
 
-            .custom("Peach"):
-            [
-                BlockTemplate(
-                    name: "default",
-                    type: .void,
-                    argTypes: [],
-                    contents: [[.label("Apple")]]),
-                BlockTemplate(
-                    name: "default",
-                    type: .void,
-                    argTypes: [],
-                    contents: [[.label("Orange")]]),
-                BlockTemplate(
-                    name: "default",
-                    type: .void,
-                    argTypes: [],
-                    contents: [[.label("Peach")]]),
-            ]
-
+            BlockCategory(
+                name: "Peach",
+                templates: [
+                    BlockTemplate(
+                        name: "default",
+                        type: .void,
+                        argTypes: [],
+                        contents: [[.label("Apple")]]),
+                    BlockTemplate(
+                        name: "default",
+                        type: .void,
+                        argTypes: [],
+                        contents: [[.label("Orange")]]),
+                    BlockTemplate(
+                        name: "default",
+                        type: .void,
+                        argTypes: [],
+                        contents: [[.label("Peach")]]),
+                ]
+            ),
         ]
 
     public init(blocks: [Block], variables: [Variable]) {

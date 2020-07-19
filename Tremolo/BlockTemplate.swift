@@ -95,6 +95,19 @@ extension BlockTemplate: Equatable {
 
 }
 
+extension BlockTemplate: Hashable {
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
+        hasher.combine(type)
+        hasher.combine(argTypes)
+        hasher.combine(localizedContents)
+        hasher.combine(contents)
+        hasher.combine(declarableVariableIndex)
+    }
+
+}
+
 extension BlockTemplate.ArgumentType: Equatable {
 
     public static func ==(lhs: BlockTemplate.ArgumentType, rhs: BlockTemplate.ArgumentType) -> Bool {
@@ -109,6 +122,24 @@ extension BlockTemplate.ArgumentType: Equatable {
             return true
         default:
             return false
+        }
+    }
+
+}
+
+extension BlockTemplate.ArgumentType: Hashable {
+
+    public func hash(into hasher: inout Hasher) {
+        switch self {
+        case .value:
+            hasher.combine(0)
+        case .mathValue:
+            hasher.combine(1)
+        case let .variable(type, name):
+            hasher.combine(type)
+            hasher.combine(name)
+        case .code:
+            hasher.combine(2)
         }
     }
 

@@ -16,9 +16,9 @@ struct BlockDrawerView: View {
 
     @State var drawerWidth: CGFloat = 0
 
-    @State private var currentCategory: BlockCategory = .custom("Apple")
+    @State private var currentCategoryIdx: Int = 0
 
-    @State var blockTemplates: [BlockCategory: [BlockTemplate]]
+    @State var blockCategories: [BlockCategory]
 
     let blockController: BlockController
 
@@ -30,7 +30,7 @@ struct BlockDrawerView: View {
                 HStack(spacing: 0) {
                     Color.clear
                     VStack {
-                        BlockSelectViewRepresentable(tremolo: self.tremolo, blockTemplates: blockTemplates[currentCategory] ?? [], blockController: self.blockController)
+                        BlockSelectViewRepresentable(tremolo: self.tremolo, blockTemplates: blockCategories[currentCategoryIdx].templates, blockController: self.blockController)
                         categoryButtons()
                     }
                         .padding(.bottom, safeAreaInsets.bottom)
@@ -46,25 +46,23 @@ struct BlockDrawerView: View {
     private func categoryButtons() -> some View {
         ScrollView(.horizontal) {
             HStack(spacing: 10) {
-                ForEach(blockTemplates.map { $0.key }, id: \.self) { category in
-                    categoryButton(category: category)
+                ForEach(0..<blockCategories.count, id: \.self) { idx in
+                    categoryButton(categoryIdx: idx)
                 }
             }
                 .padding(.horizontal, 10)
         }
     }
 
-    private func categoryButton(category: BlockCategory) -> some View {
+    private func categoryButton(categoryIdx: Int) -> some View {
         Button(action: {
-            currentCategory = category
+            currentCategoryIdx = categoryIdx
         }) {
             VStack(spacing: 3) {
                 Circle()
                     .foregroundColor(.blue)
-                if case let .custom(categoryName) = category {
-                    Text(categoryName)
-                        .foregroundColor(.primary)
-                }
+                Text(blockCategories[categoryIdx].name)
+                    .foregroundColor(.primary)
             }
                 .padding(.vertical, 10)
                 .background(Color.gray.opacity(0.2))

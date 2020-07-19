@@ -8,23 +8,19 @@
 
 import Foundation
 
-public enum BlockCategory {
+public struct BlockCategory {
 
-    case none
+    let name: String
 
-    case custom(String)
+    let templates: [BlockTemplate]
 
 }
 
 extension BlockCategory: Hashable {
 
     public func hash(into hasher: inout Hasher) {
-        switch self {
-        case let .custom(str):
-            hasher.combine(str)
-        default:
-            break
-        }
+        hasher.combine(name)
+        hasher.combine(templates)
     }
 
 }
