@@ -110,7 +110,9 @@ class BlockView: UIButton {
             case .began:
                 if (self.blockController?.canMoveBlock ?? false) && self.isOnSelectView {
                     self.generateBlockOnSelectView()
+                    self.blockController?.floatBlock(blockView: self, gesture: gesture)
                     self.isOnSelectView = false
+                    break
                 }
                 self.blockController?.floatBlock(blockView: self, gesture: gesture)
             case .changed:
@@ -216,6 +218,9 @@ extension BlockView: BlockStackViewController {
     }
 
     func floatBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
+        if blockView.isOnSelectView {
+            return
+        }
         if case let .arg(aIdx) = block.contents[path.row][path.col] {
             block.argValues[aIdx].removeBlock(at: idx)
         }
