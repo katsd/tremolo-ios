@@ -95,8 +95,10 @@ extension CodeView: BlockController {
                 self.updateLayout()
             }
 
-            pos.blockStackViewController.floatBlockView(blockView, path: pos.path, at: pos.idx) {
-                self.updateLayout()
+            if !blockView.isOnSelectView {
+                pos.blockStackViewController.floatBlockView(blockView, path: pos.path, at: pos.idx) {
+                    self.updateLayout()
+                }
             }
         }
     }
