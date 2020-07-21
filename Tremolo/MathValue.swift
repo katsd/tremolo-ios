@@ -28,6 +28,10 @@ public class MathValue {
         self.contentStack = value
     }
 
+    func clone() -> MathValue {
+        MathValue(value: contentStack.map { $0.clone() })
+    }
+
 }
 
 extension MathValue: Hashable {
@@ -84,6 +88,17 @@ extension MathValue: ContentStack {
         }
 
         return res
+    }
+
+    func findIdx(of block: Block) -> Int? {
+        for (idx, content) in contentStack.enumerated() {
+            if case let .block(currentBlock) = content {
+                if currentBlock == block {
+                    return idx
+                }
+            }
+        }
+        return nil
     }
 
 }

@@ -127,10 +127,10 @@ class BlockView: UIButton {
 
     private func setMenu() {
         let duplicate = UIAction(title: "Duplicate", image: UIImage(systemName: "plus.square.on.square")) { _ in
-            print("Duplicate Block")
+            self.duplicateSelf()
         }
         let delete = UIAction(title: "Delete", image: UIImage(systemName: "trash"), attributes: .destructive) { _ in
-            print("Delete Block")
+            self.deleteSelf()
         }
         let menu = UIMenu(title: "", children: [duplicate, delete])
         self.menu = menu
@@ -202,11 +202,17 @@ class BlockView: UIButton {
 
     }
 
+    private func duplicateSelf() {
+        blockController?.duplicateBlock(blockView: self)
+    }
+
+    private func deleteSelf() {
+    }
 }
 
 extension BlockView: BlockStackViewController {
 
-    func addBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> (), completion: @escaping () -> ()) {
+    func addBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, insert: Bool, updateLayout: @escaping () -> (), completion: @escaping () -> ()) {
         guard let stackView = blockContentsStackView.content(at: path) as? UIStackView else {
             return
         }
@@ -214,7 +220,7 @@ extension BlockView: BlockStackViewController {
         if case let .arg(aIdx) = block.contents[path.row][path.col] {
             block.argValues[aIdx].insertBlock(blockView.block, at: idx)
         }
-        CodeView.addBlockView(stackView: stackView, blockView: blockView, at: idx, updateLayout: updateLayout, completion: completion)
+        CodeView.addBlockView(stackView: stackView, blockView: blockView, at: idx, insert: insert, updateLayout: updateLayout, completion: completion)
     }
 
     func floatBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {

@@ -25,6 +25,10 @@ public class Value {
         self.blockStack = .init(blocks)
     }
 
+    func clone() -> Value {
+        Value(type: type, blocks: blockStack.clone().blocks)
+    }
+
 }
 
 extension Value: Hashable {

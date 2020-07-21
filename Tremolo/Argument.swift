@@ -71,6 +71,19 @@ public enum Argument: Equatable, Hashable {
         }
     }
 
+    func clone() -> Argument {
+        switch self {
+        case let .value(v):
+            return .value(v.clone())
+        case let .mathValue(v):
+            return .mathValue(v.clone())
+        case let .variable(v):
+            return .variable(v.clone())
+        case let .code(v):
+            return .code(v.clone())
+        }
+    }
+
 }
 
 extension Argument: CodeUnit {

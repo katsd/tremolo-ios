@@ -146,3 +146,18 @@ extension Block {
     }
 
 }
+
+extension Block {
+
+    func clone() -> Block {
+        Block(parent: parent,
+              name: name,
+              type: type,
+              argValues: argValues.map { $0.clone() },
+              contents: contents,
+              declarableVariableIndex: declarableVariableIndex,
+              specialFormatter: specialFormatter,
+              withArg: withArg)
+    }
+
+}

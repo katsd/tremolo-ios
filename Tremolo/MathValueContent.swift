@@ -60,3 +60,18 @@ extension MathValueContent: CodeUnit {
     }
 
 }
+
+extension MathValueContent {
+
+    func clone() -> MathValueContent {
+        switch self {
+        case let .raw(v):
+            return .raw(v)
+        case let .variable(v):
+            return .variable(v.clone())
+        case let .block(v):
+            return .block(v.clone())
+        }
+    }
+
+}

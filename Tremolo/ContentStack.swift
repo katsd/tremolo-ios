@@ -12,4 +12,6 @@ protocol ContentStack {
 
     func findVariables(above selectedBlock: Block) -> [Variable]
 
+    func findIdx(of block: Block) -> Int?
+
 }

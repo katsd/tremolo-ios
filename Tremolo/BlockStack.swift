@@ -39,6 +39,10 @@ public class BlockStack {
         return self
     }
 
+    func clone() -> BlockStack {
+        BlockStack(blocks.map { $0.clone() })
+    }
+
 }
 
 extension BlockStack: Equatable {
@@ -85,6 +89,15 @@ extension BlockStack: ContentStack {
         }
 
         return res
+    }
+
+    func findIdx(of block: Block) -> Int? {
+        for (idx, currentBlock) in blocks.enumerated() {
+            if currentBlock === block {
+                return idx
+            }
+        }
+        return nil
     }
 
 }

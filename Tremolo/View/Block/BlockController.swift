@@ -16,6 +16,10 @@ protocol BlockController {
 
     func dropBlock(blockView: BlockView, gesture: UIPanGestureRecognizer)
 
+    func duplicateBlock(blockView: BlockView)
+
+    func deleteBlock(blockView: BlockView)
+
     var canMoveBlock: Bool { get }
 
 }
