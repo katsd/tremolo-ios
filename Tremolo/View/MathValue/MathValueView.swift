@@ -206,7 +206,7 @@ final class MathValueView: UIView {
     }
 
     private func blockView(_ block: Block) -> BlockView {
-        BlockView(tremolo: tremolo, block: block, blockController: blockController)
+        BlockView(tremolo: tremolo, block: block, blockController: blockController).parent(self)
     }
 
 }
