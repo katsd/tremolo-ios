@@ -58,7 +58,7 @@ final class ValueView: UIView {
 
     private func setContents() {
         value.blockStack.blocks.forEach { block in
-            stackView.addArrangedSubview(BlockView(tremolo: tremolo, block: block, blockController: blockController))
+            stackView.addArrangedSubview(BlockView(tremolo: tremolo, block: block, blockController: blockController).parent(self))
         }
     }
 
