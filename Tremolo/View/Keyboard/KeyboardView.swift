@@ -56,16 +56,6 @@ struct KeyboardView: View {
             .frame(height: 50)
     }
 
-    private func keyboardTypePicker() -> some View {
-        Picker(selection: $observer.keyboardType, label: EmptyView()) {
-            Image(systemName: "textformat.123").tag(KeyboardType.math)
-            Image(systemName: "xmark").tag(KeyboardType.variable)
-        }
-            .pickerStyle(SegmentedPickerStyle())
-            .frame(maxWidth: 120)
-            .disabled(observer.selectOneVariable)
-    }
-
     private func keysView() -> some View {
         HStack(alignment: .bottom) {
             Group {
