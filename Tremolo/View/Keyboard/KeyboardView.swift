@@ -14,26 +14,26 @@ struct KeyboardView: View {
 
     @ObservedObject var observer = Keyboard.observer
 
-    private let safeAreaInsets: EdgeInsets
-
     @State var keyboardType: KeyboardType = .math
 
-    init(safeAreaInsets: EdgeInsets) {
-        self.safeAreaInsets = safeAreaInsets
-    }
-
     var body: some View {
-        Group {
+        GeometryReader { geo in
             if observer.show {
                 VStack(spacing: 0) {
-                    topButtons()
-                    keysView()
-                    Spacer()
-                        .frame(height: safeAreaInsets.bottom)
+                    Color.clear
+                    VStack(spacing: 0) {
+                        topButtons()
+                        keysView()
+                        Spacer()
+                            .frame(height: geo.safeAreaInsets.bottom)
+                    }
+                        .padding(.horizontal, 10)
+                        .background(Blur(style: .systemThinMaterial)
+                                        .background(Color.black.opacity(0.2))
+                        )
                 }
-                    .padding(.horizontal, 10)
-                    .background(Blur(style: .systemThinMaterial).background(Color.black.opacity(0.2)))
                     .transition(.move(edge: .bottom))
+                    .ignoresSafeArea(edges: .bottom)
             }
         }
     }
@@ -65,7 +65,6 @@ struct KeyboardView: View {
             .pickerStyle(SegmentedPickerStyle())
             .frame(maxWidth: 120)
             .disabled(observer.selectOneVariable)
-
     }
 
     private func keysView() -> some View {

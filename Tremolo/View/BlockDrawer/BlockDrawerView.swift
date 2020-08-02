@@ -22,8 +22,6 @@ struct BlockDrawerView: View {
 
     let blockController: BlockController
 
-    @State var safeAreaInsets: EdgeInsets
-
     var body: some View {
         GeometryReader { geo in
             ZStack {
@@ -33,12 +31,14 @@ struct BlockDrawerView: View {
                         BlockSelectViewRepresentable(tremolo: self.tremolo, blockTemplates: blockCategories[currentCategoryIdx].templates, blockController: self.blockController)
                         categoryButtons()
                     }
-                        .padding(.bottom, safeAreaInsets.bottom)
+                        .padding(.bottom, geo.safeAreaInsets.bottom)
                         .frame(width: self.drawerWidth)
                         .background(Blur(style: .systemMaterial))
                         .transition(.move(edge: .trailing))
+                        .ignoresSafeArea(edges: .all)
                 }
                 toggleButton(geo: geo)
+                    .ignoresSafeArea(edges: .all)
             }
         }
     }
