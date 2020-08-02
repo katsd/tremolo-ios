@@ -109,11 +109,16 @@ extension Block: CodeUnit {
                     code += ") \(arg.toCode())"
                     break
                 }
+
                 code += "\(arg.toCode()))"
                 break
             }
 
-            code += "\(arg.toCode()), "
+            if idx > 0 {
+                code += ", "
+            }
+
+            code += "\(arg.toCode())"
         }
 
         return code
