@@ -14,8 +14,6 @@ struct KeyboardView: View {
 
     @ObservedObject var observer = Keyboard.observer
 
-    @State var keyboardType: KeyboardType = .math
-
     var body: some View {
         GeometryReader { geo in
             if observer.show {
@@ -41,7 +39,8 @@ struct KeyboardView: View {
     private func topButtons() -> some View {
         HStack {
             Group {
-                keyboardTypePicker()
+                KeyboardTypePicker(type: $observer.keyboardType, disabled: $observer.selectOneVariable)
+                    .equatable()
 
                 Spacer()
 
@@ -126,4 +125,26 @@ struct KeyboardView: View {
         observer.enableControlKeys ? 1 : 0.5
     }
 
+}
+
+private struct KeyboardTypePicker: View, Equatable {
+
+    @Binding var type: KeyboardType
+
+    @Binding var disabled: Bool
+
+    var body: some View {
+        Picker(selection: $type, label: EmptyView()) {
+            Image(systemName: "textformat.123").tag(KeyboardType.math)
+            Image(systemName: "xmark").tag(KeyboardType.variable)
+        }
+            .pickerStyle(SegmentedPickerStyle())
+            .frame(maxWidth: 120)
+            .disabled(disabled)
+    }
+
+    static func ==(lhs: KeyboardTypePicker, rhs: KeyboardTypePicker) -> Bool {
+        lhs.type == rhs.type &&
+            lhs.disabled == rhs.disabled
+    }
 }
