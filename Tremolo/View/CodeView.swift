@@ -225,11 +225,6 @@ extension CodeView: BlockStackViewController {
     }
 
     func findBlockPos(blockView: BlockView, velocity: CGPoint, selectedBlockPos: BlockPos?) -> BlockPos? {
-
-        if blockStackView.arrangedSubviews.count < 1 {
-            return nil
-        }
-
         let blockFrame = blockView.globalFrame
 
         let blockY: CGFloat
