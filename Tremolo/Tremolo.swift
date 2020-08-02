@@ -20,61 +20,10 @@ public class Tremolo: ObservableObject {
 
     let topView = UIView()
 
-    let blockCategories: [BlockCategory] =
-        [
-            BlockCategory(
-                name: "Apple",
-                templates: [
-                    BlockTemplate(
-                        name: "default",
-                        type: .void,
-                        argTypes: [],
-                        contents: [[.label("Yay")]]),
+    let blockCategories: [BlockCategory]
 
-                    BlockTemplate(
-                        name: "default+arg",
-                        type: .void,
-                        argTypes: [.mathValue],
-                        contents: [[.label("Nyan"), .arg(0)]]),
-
-                    BlockTemplate(
-                        name: "default+setVar",
-                        type: .void,
-                        argTypes: [.variable(type: .custom("variable"), name: "Variable")],
-                        contents: [[.label("Set"), .arg(0)]],
-                        declarableVariableIndex: 0),
-
-                    BlockTemplate(
-                        name: "default+code",
-                        type: .void,
-                        argTypes: [.code],
-                        contents: [[.label("Piyo")], [.arg(0)]]),
-                ]
-            ),
-
-            BlockCategory(
-                name: "Peach",
-                templates: [
-                    BlockTemplate(
-                        name: "default",
-                        type: .void,
-                        argTypes: [],
-                        contents: [[.label("Apple")]]),
-                    BlockTemplate(
-                        name: "default",
-                        type: .void,
-                        argTypes: [],
-                        contents: [[.label("Orange")]]),
-                    BlockTemplate(
-                        name: "default",
-                        type: .void,
-                        argTypes: [],
-                        contents: [[.label("Peach")]]),
-                ]
-            ),
-        ]
-
-    public init(blocks: [Block], variables: [Variable]) {
+    public init(blockCategories: [BlockCategory], blocks: [Block], variables: [Variable]) {
+        self.blockCategories = blockCategories
         self.blockStack = .init(blocks)
         self.variables = variables
         self.declaredLocalVariableNum = .init()
