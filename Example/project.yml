@@ -4,6 +4,7 @@ options:
   bundlePrefix: app.mallet.tremolo
   deploymentTarget:
     iOS: "14.0"
+  knownRegions: ["en", "Base", "ja"]
 
 attributes:
   ORGANIZATIONNAME: Katsu Matsuda
