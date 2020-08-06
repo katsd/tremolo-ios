@@ -30,6 +30,7 @@ struct ContentView: View {
                                     }
                 )
         }
+            .navigationViewStyle(StackNavigationViewStyle())
             .sheet(isPresented: $showSheet) {
                 TextEditor(text: $code)
                     .disabled(true)
