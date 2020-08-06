@@ -20,9 +20,9 @@ public class Block {
 
     public let contents: [[BlockContent]]
 
-    private let declarableVariableIndex: Int?
+    private let formatter: (([String]) -> String)?
 
-    private let specialFormatter: (([String]) -> String)?
+    private let declarableVariableIndex: Int?
 
     let withArg: Bool
 
@@ -40,10 +40,10 @@ public class Block {
 
     public convenience init(_ template: BlockTemplate) {
         let argValues = template.argTypes.map { $0.value }
-        self.init(name: template.name, type: template.type, argValues: argValues, contents: template.contents, declarableVariableIndex: template.declarableVariableIndex)
+        self.init(name: template.name, type: template.type, argValues: argValues, contents: template.contents, formatter: template.formatter, declarableVariableIndex: template.declarableVariableIndex)
     }
 
-    init(parent: ContentStack? = nil, name: String, type: Type, argValues: [Argument], contents: [[BlockContent]], declarableVariableIndex: Int? = nil, specialFormatter: (([String]) -> String)? = nil, withArg: Bool = true) {
+    init(parent: ContentStack? = nil, name: String, type: Type, argValues: [Argument], contents: [[BlockContent]], formatter: (([String]) -> String)? = nil, declarableVariableIndex: Int? = nil, withArg: Bool = true) {
         self.parent = parent
 
         self.name = name
@@ -56,7 +56,7 @@ public class Block {
 
         self.declarableVariableIndex = declarableVariableIndex
 
-        self.specialFormatter = specialFormatter
+        self.formatter = formatter
 
         self.withArg = withArg
 
@@ -86,11 +86,11 @@ extension Block: Hashable {
 extension Block: CodeUnit {
 
     func toCode() -> String {
-        if let formatter = specialFormatter {
+        if let formatter = formatter {
             let contentStr = argValues.map {
                 $0.toCode()
             }
-            return "\(name)\(formatter(contentStr))"
+            return formatter(contentStr)
         }
 
         if !withArg {
@@ -155,14 +155,7 @@ extension Block {
 extension Block {
 
     func clone() -> Block {
-        Block(parent: parent,
-              name: name,
-              type: type,
-              argValues: argValues.map { $0.clone() },
-              contents: contents,
-              declarableVariableIndex: declarableVariableIndex,
-              specialFormatter: specialFormatter,
-              withArg: withArg)
+        Block(parent: parent, name: name, type: type, argValues: argValues.map { $0.clone() }, contents: contents, formatter: formatter, declarableVariableIndex: declarableVariableIndex, withArg: withArg)
     }
 
 }

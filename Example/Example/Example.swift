@@ -36,11 +36,23 @@ class Example {
                     BlockTemplate(
                         name: "setVar",
                         type: .void,
-                        argTypes: [.variable(type: .custom("variable"), name: "Variable"), .value],
+                        argTypes: [.variable(type: .custom("value"), name: "Variable"), .value],
                         contents: [
                             "en": [[.label("Set"), .arg(0), .label("to"), .arg(1)]],
                             "ja": [[.arg(0), .label("の値を"), .arg(1), .label("にする")]],
-                        ]),
+                        ],
+                        formatter: { args in
+                            "\(args[0]) = \(args[1])"
+                        },
+                        declarableVariableIndex: 0),
+
+                    BlockTemplate(
+                        name: "yay",
+                        type: .custom("value"),
+                        argTypes: [],
+                        contents: [[.label("yay")]],
+                        formatter: { _ in "yay" }
+                    ),
                 ]
             ),
 
