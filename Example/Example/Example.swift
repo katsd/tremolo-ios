@@ -33,7 +33,7 @@ class Example {
                         type: .custom("value"),
                         argTypes: [.stringValue],
                         contents: [[.arg(0)]],
-                        formatter: { $0[0] }
+                        formatter: { "\"\($0[0])\"" }
                     ),
 
                     BlockTemplate(
