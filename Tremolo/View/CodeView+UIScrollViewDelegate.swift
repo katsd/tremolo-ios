@@ -12,6 +12,7 @@ extension CodeView: UIScrollViewDelegate {
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         Keyboard.closeKeyboard()
+        self.endEditing(true)
     }
 
 }

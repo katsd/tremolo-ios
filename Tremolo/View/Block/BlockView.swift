@@ -186,6 +186,9 @@ class BlockView: UIButton {
         case let .value(v):
             return ValueView(tremolo: tremolo, value: v, blockController: blockController, parent: self)
 
+        case let .stringValue(v):
+            return StringValueView(value: v)
+
         case let .mathValue(v):
             return MathValueView(tremolo: tremolo, value: v, blockController: blockController, parent: self, isEditable: isEditable)
 

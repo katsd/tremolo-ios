@@ -27,6 +27,22 @@ class Example {
                             "en": [[.label("Print"), .arg(0)]],
                             "ja": [[.arg(0), .label("を出力する")]],
                         ]),
+
+                    BlockTemplate(
+                        name: "string",
+                        type: .custom("value"),
+                        argTypes: [.stringValue],
+                        contents: [[.arg(0)]],
+                        formatter: { $0[0] }
+                    ),
+
+                    BlockTemplate(
+                        name: "math",
+                        type: .custom("value"),
+                        argTypes: [.mathValue],
+                        contents: [[.arg(0)]],
+                        formatter: { $0[0] }
+                    ),
                 ]
             ),
 

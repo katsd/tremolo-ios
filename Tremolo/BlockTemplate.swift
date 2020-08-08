@@ -61,6 +61,9 @@ extension BlockTemplate {
         // ""
         case value
 
+        // ""
+        case stringValue
+
         // 0
         case mathValue
 
@@ -73,6 +76,8 @@ extension BlockTemplate {
             switch self {
             case .value:
                 return .value(Value(type: .custom("value"), blocks: []))
+            case .stringValue:
+                return .stringValue(StringValue(""))
             case .mathValue:
                 return .mathValue(MathValueGenerator.generate { MathValueGenerator.string("0") })
             case .variable(let type, let name):
@@ -137,13 +142,15 @@ extension BlockTemplate.ArgumentType: Hashable {
         switch self {
         case .value:
             hasher.combine(0)
-        case .mathValue:
+        case .stringValue:
             hasher.combine(1)
+        case .mathValue:
+            hasher.combine(2)
         case let .variable(type, name):
             hasher.combine(type)
             hasher.combine(name)
         case .code:
-            hasher.combine(2)
+            hasher.combine(3)
         }
     }
 

@@ -12,6 +12,8 @@ public enum Argument: Equatable, Hashable {
 
     case value(Value)
 
+    case stringValue(StringValue)
+
     case mathValue(MathValue)
 
     case variable(Variable)
@@ -21,6 +23,8 @@ public enum Argument: Equatable, Hashable {
     public static func ==(lhs: Argument, rhs: Argument) -> Bool {
         switch (lhs, rhs) {
         case let (.value(l), .value(r)):
+            return l == r
+        case let (.stringValue(l), .stringValue(r)):
             return l == r
         case let (.mathValue(l), .mathValue(r)):
             return l == r
@@ -36,6 +40,8 @@ public enum Argument: Equatable, Hashable {
     public func hash(into hasher: inout Hasher) {
         switch self {
         case let .value(v):
+            hasher.combine(v)
+        case let .stringValue(v):
             hasher.combine(v)
         case let .mathValue(v):
             hasher.combine(v)
@@ -68,6 +74,8 @@ public enum Argument: Equatable, Hashable {
             v.parentBlock = block
         case let .code(v):
             v.parentBlock = block
+        default:
+            break
         }
     }
 
@@ -75,6 +83,8 @@ public enum Argument: Equatable, Hashable {
         switch self {
         case let .value(v):
             return .value(v.clone())
+        case let .stringValue(v):
+            return .stringValue(v)
         case let .mathValue(v):
             return .mathValue(v.clone())
         case let .variable(v):
@@ -91,6 +101,8 @@ extension Argument: CodeUnit {
     func toCode() -> String {
         switch self {
         case let .value(value):
+            return value.toCode()
+        case let .stringValue(value):
             return value.toCode()
         case let .mathValue(value):
             return value.toCode()
