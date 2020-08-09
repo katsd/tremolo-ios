@@ -41,10 +41,6 @@ class BlockView: UIButton {
         UIColor.dynamicColor(light: UIColor(red: 1, green: 1, blue: 1, alpha: 1),
                              dark: UIColor(red: 0.25, green: 0.25, blue: 0.25, alpha: 1))
 
-    private let defaultHighlightedColor =
-        UIColor.dynamicColor(light: UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1),
-                             dark: UIColor(red: 0.45, green: 0.45, blue: 0.45, alpha: 1))
-
     init(tremolo: Tremolo, block: Block, blockController: BlockController? = nil, generateBlockOnSelectView: @escaping () -> () = {}) {
         self.tremolo = tremolo
 
@@ -78,14 +74,6 @@ class BlockView: UIButton {
 
     required init?(coder: NSCoder) {
         fatalError()
-    }
-
-    func highlight(on: Bool) {
-        if on {
-            backgroundColor = defaultHighlightedColor
-        } else {
-            backgroundColor = defaultColor
-        }
     }
 
     private func setStyle() {
