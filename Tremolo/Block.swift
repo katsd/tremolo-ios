@@ -12,15 +12,15 @@ public class Block {
 
     var parent: ContentStack? = nil
 
-    public let name: String
+    let name: String
 
-    public let type: Type
+    let type: Type
 
-    public var argValues: [Argument]
+    var argValues: [Argument]
 
-    public let contents: [[BlockContent]]
+    let contents: [[BlockContent]]
 
-    private let formatter: (([String]) -> String)?
+    let formatter: (([String]) -> String)?
 
     let style: BlockStyle?
 
