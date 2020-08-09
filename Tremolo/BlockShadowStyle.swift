@@ -25,8 +25,12 @@ public struct BlockShadowStyle {
         self.offset = offset
     }
 
-    public static var defaultStyle: BlockShadowStyle {
+    public static var defaultLightStyle: BlockShadowStyle {
         BlockShadowStyle(color: .black, opacity: 0.15, radius: 5, offset: CGSize(width: 0, height: 3))
+    }
+
+    public static var defaultDarkStyle: BlockShadowStyle {
+        BlockShadowStyle(color: .black, opacity: 0.7, radius: 5, offset: CGSize(width: 0, height: 3))
     }
 
     public static var none: BlockShadowStyle {

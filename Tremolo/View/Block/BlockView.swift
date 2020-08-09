@@ -79,15 +79,11 @@ class BlockView: UIButton {
     private func setStyle() {
         self.backgroundColor(style.color)
             .cornerRadius(style.cornerRadius)
-            .shadow(style.shadow)
+            .shadow(style.currentShadow)
     }
 
     private func setColor() {
-        if UITraitCollection.current.userInterfaceStyle == .light {
-            layer.shadowOpacity = 0.15
-        } else {
-            layer.shadowOpacity = 0.7
-        }
+        shadow(style.currentShadow)
     }
 
     private func setGesture() {
@@ -167,6 +163,7 @@ class BlockView: UIButton {
     private func label(text: String) -> UIView {
         UILabel()
             .text(text)
+            .textColor(style.textColor)
     }
 
     private func argView(arg: Argument) -> UIView {
