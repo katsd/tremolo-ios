@@ -12,6 +12,12 @@ class Example {
 
     static let blocks: [Block] =
         [
+            bPrint
+                .block([.value(Value(type: .custom("value"),
+                                     blocks: [
+                                         bString.block([.stringValue(StringValue("Yay"))])
+                                     ]))
+                       ])
         ]
 
     static let blockCategories: [BlockCategory] =
@@ -19,77 +25,24 @@ class Example {
             BlockCategory(
                 name: "Utility",
                 templates: [
-                    BlockTemplate(
-                        name: "print",
-                        type: .void,
-                        argTypes: [.value],
-                        contents: [
-                            "en": [[.label("Print"), .arg(0)]],
-                            "ja": [[.arg(0), .label("を出力する")]],
-                        ]),
-
-                    BlockTemplate(
-                        name: "string",
-                        type: .custom("value"),
-                        argTypes: [.stringValue],
-                        contents: [[.arg(0)]],
-                        formatter: { "\"\($0[0])\"" }
-                    ),
-
-                    BlockTemplate(
-                        name: "math",
-                        type: .custom("value"),
-                        argTypes: [.mathValue],
-                        contents: [[.arg(0)]],
-                        formatter: { $0[0] }
-                    ),
+                    bPrint,
+                    bString,
+                    bMath,
                 ]
             ),
 
             BlockCategory(
                 name: "Variable",
                 templates: [
-                    BlockTemplate(
-                        name: "setVar",
-                        type: .void,
-                        argTypes: [.variable(type: .custom("value"), name: "Variable"), .value],
-                        contents: [
-                            "en": [[.label("Set"), .arg(0), .label("to"), .arg(1)]],
-                            "ja": [[.arg(0), .label("の値を"), .arg(1), .label("にする")]],
-                        ],
-                        formatter: { args in
-                            "\(args[0]) = \(args[1])"
-                        },
-                        declarableVariableIndex: 0),
-
-                    BlockTemplate(
-                        name: "yay",
-                        type: .custom("value"),
-                        argTypes: [],
-                        contents: [[.label("yay")]],
-                        formatter: { _ in "yay" }
-                    ),
+                    bSetVar,
+                    bYay,
                 ]
             ),
 
             BlockCategory(
                 name: "Control",
                 templates: [
-                    BlockTemplate(
-                        name: "repeat",
-                        type: .void,
-                        argTypes: [.mathValue, .code],
-                        contents: [
-                            "en": [
-                                [.label("Repeat"), .arg(0), .label("times")],
-                                [.arg(1)]
-                            ],
-                            "ja": [
-                                [.arg(0), .label("回繰り返す")],
-                                [.arg(1)]
-                            ],
-                        ]),
-
+                    bControl,
                 ]
             ),
         ]
@@ -97,69 +50,82 @@ class Example {
     static let tremolo = Tremolo(
         blockCategories: blockCategories,
         blocks: blocks,
-        /*
-    [
-        Block(name: "assign",
-              type: .void,
-              argValues: [.variable(Variable(type: .custom("type"), name: "var")),
-                          .value(.init(type: .custom(""),
-                                       blocks: [.string("128"),
-                                                .variable(type: .custom(""), name: "testVar"),
-                                                .init(name: "inArg", type: .custom(""), argValues: [.value(.init(type: .custom(""), blocks: [.string("1024")]))], contents: [[.label("Func"), .arg(0)]]),
-                                                .string("Yay")]))],
-              contents: [[.label("Set"), .arg(0), .label("to"), .arg(1)]],
-              declarableVariableIndex: 0),
-
-        Block(name: "test",
-              type: .void,
-              argValues: [
-                  .mathValue(
-                      MathValueGenerator.generate {
-                          MathValueGenerator.string("1+2")
-                          MathValueGenerator.variable(.init(type: .custom(""), name: "var"))
-                      }
-                  )
-
-              ],
-              contents: [[.label("Test"), .arg(0)]]),
-
-        Block(name: "blacket",
-              type: .void,
-              argValues: [.code(
-                  .init([
-                            Block(name: "test",
-                                  type: .void,
-                                  argValues: [.mathValue(.init(value: []))],
-                                  contents: [[.label("test"), .arg(0)]]),
-                            Block(name: "test",
-                                  type: .void,
-                                  argValues: [.mathValue(.init(value: []))],
-                                  contents: [[.label("test"), .arg(0)]]),
-                        ]))],
-              contents: [[.label("Bracket")], [.arg(0)]]),
-
-        Block(name: "blacket",
-              type: .void,
-              argValues: [.code(
-                  .init([
-                            Block(name: "test",
-                                  type: .void,
-                                  argValues: [.mathValue(.init(value: []))],
-                                  contents: [[.label("test"), .arg(0)]]),
-                            Block(name: "test",
-                                  type: .void,
-                                  argValues: [.mathValue(.init(value: []))],
-                                  contents: [[.label("test"), .arg(0)]]),
-                        ]))],
-              contents: [[.label("Bracket")], [.arg(0)]]),
-
-    ],
-    */
         variables: [
             Variable(type: .custom("value"), name: "apple"),
             Variable(type: .custom("value"), name: "orange"),
             Variable(type: .custom("value"), name: "peach"),
         ]
     )
+
+}
+
+extension Example {
+
+    static let bPrint =
+        BlockTemplate(
+            name: "print",
+            type: .void,
+            argTypes: [.value],
+            contents: [
+                "en": [[.label("Print"), .arg(0)]],
+                "ja": [[.arg(0), .label("を出力する")]],
+            ])
+
+    static let bString =
+        BlockTemplate(
+            name: "string",
+            type: .custom("value"),
+            argTypes: [.stringValue],
+            contents: [[.arg(0)]],
+            formatter: { "\"\($0[0])\"" }
+        )
+
+    static let bMath =
+        BlockTemplate(
+            name: "math",
+            type: .custom("value"),
+            argTypes: [.mathValue],
+            contents: [[.arg(0)]],
+            formatter: { $0[0] }
+        )
+
+    static let bSetVar =
+        BlockTemplate(
+            name: "setVar",
+            type: .void,
+            argTypes: [.variable(type: .custom("value"), name: "Variable"), .value],
+            contents: [
+                "en": [[.label("Set"), .arg(0), .label("to"), .arg(1)]],
+                "ja": [[.arg(0), .label("の値を"), .arg(1), .label("にする")]],
+            ],
+            formatter: { args in
+                "\(args[0]) = \(args[1])"
+            },
+            declarableVariableIndex: 0)
+
+    static let bYay =
+        BlockTemplate(
+            name: "yay",
+            type: .custom("value"),
+            argTypes: [],
+            contents: [[.label("yay")]],
+            formatter: { _ in "yay" }
+        )
+
+    static let bControl =
+        BlockTemplate(
+            name: "repeat",
+            type: .void,
+            argTypes: [.mathValue, .code],
+            contents: [
+                "en": [
+                    [.label("Repeat"), .arg(0), .label("times")],
+                    [.arg(1)]
+                ],
+                "ja": [
+                    [.arg(0), .label("回繰り返す")],
+                    [.arg(1)]
+                ],
+            ])
 
 }
