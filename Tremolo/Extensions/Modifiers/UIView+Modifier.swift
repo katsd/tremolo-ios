@@ -38,6 +38,10 @@ extension UIView {
         return self
     }
 
+    func shadow(_ style: BlockShadowStyle) -> UIView {
+        shadow(color: style.color, opacity: style.opacity, radius: style.radius, offset: style.offset)
+    }
+
     func clipsToBounds(_ flag: Bool) -> UIView {
         self.clipsToBounds = flag
         return self
