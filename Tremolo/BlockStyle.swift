@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct BlockStyle {
+public struct BlockStyle {
 
     let color: UIColor
 
@@ -16,13 +16,13 @@ struct BlockStyle {
 
     let shadow: BlockShadowStyle
 
-    init(color: UIColor, cornerRadius: CGFloat = 10, shadow: BlockShadowStyle = .defaultStyle) {
+    public init(color: UIColor, cornerRadius: CGFloat = 10, shadow: BlockShadowStyle = .defaultStyle) {
         self.color = color
         self.cornerRadius = cornerRadius
         self.shadow = shadow
     }
 
-    static var defaultStyle: BlockStyle {
+    public static var defaultStyle: BlockStyle {
         BlockStyle(color:
                    UIColor.dynamicColor(light: UIColor(red: 1, green: 1, blue: 1, alpha: 1),
                                         dark: UIColor(red: 0.25, green: 0.25, blue: 0.25, alpha: 1))

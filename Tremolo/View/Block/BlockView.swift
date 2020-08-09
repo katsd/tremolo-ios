@@ -23,6 +23,8 @@ class BlockView: UIButton {
         )
     }
 
+    private let style: BlockStyle
+
     var parent: BlockStackViewController? = nil
 
     private let blockController: BlockController?
@@ -37,10 +39,6 @@ class BlockView: UIButton {
 
     private let generateBlockOnSelectView: () -> ()
 
-    private let defaultColor =
-        UIColor.dynamicColor(light: UIColor(red: 1, green: 1, blue: 1, alpha: 1),
-                             dark: UIColor(red: 0.25, green: 0.25, blue: 0.25, alpha: 1))
-
     init(tremolo: Tremolo, block: Block, blockController: BlockController? = nil, generateBlockOnSelectView: @escaping () -> () = {}) {
         self.tremolo = tremolo
 
@@ -49,6 +47,8 @@ class BlockView: UIButton {
         self.blockController = blockController
 
         self.generateBlockOnSelectView = generateBlockOnSelectView
+
+        style = tremolo.blockStyles[block.type] ?? BlockStyle.defaultStyle
 
         super.init(frame: .zero)
 
@@ -77,9 +77,9 @@ class BlockView: UIButton {
     }
 
     private func setStyle() {
-        self.backgroundColor(defaultColor)
-            .cornerRadius(10)
-            .shadow(color: .black, opacity: 0.15, radius: 5, offset: CGSize(width: 0, height: 3))
+        self.backgroundColor(style.color)
+            .cornerRadius(style.cornerRadius)
+            .shadow(style.shadow)
     }
 
     private func setColor() {

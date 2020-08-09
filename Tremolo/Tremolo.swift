@@ -14,6 +14,8 @@ public class Tremolo: ObservableObject {
 
     @Published var variables: [Variable]
 
+    let blockStyles: [Type: BlockStyle]
+
     var declaredLocalVariableNum: [LocalVariable: Int]
 
     lazy var mainCodeView: CodeView = CodeView(tremolo: self, topView: topView)
@@ -22,10 +24,11 @@ public class Tremolo: ObservableObject {
 
     let blockCategories: [BlockCategory]
 
-    public init(blockCategories: [BlockCategory], blocks: [Block], variables: [Variable]) {
+    public init(blockCategories: [BlockCategory], blocks: [Block], variables: [Variable], blockStyles: [Type: BlockStyle] = [:]) {
         self.blockCategories = blockCategories
         self.blockStack = .init(blocks)
         self.variables = variables
+        self.blockStyles = blockStyles
         self.declaredLocalVariableNum = .init()
     }
 
