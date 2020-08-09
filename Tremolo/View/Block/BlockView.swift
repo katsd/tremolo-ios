@@ -48,7 +48,7 @@ class BlockView: UIButton {
 
         self.generateBlockOnSelectView = generateBlockOnSelectView
 
-        style = tremolo.blockStyles[block.type] ?? BlockStyle.defaultStyle
+        style = block.style ?? tremolo.blockStyles[block.type] ?? BlockStyle.defaultStyle
 
         super.init(frame: .zero)
 

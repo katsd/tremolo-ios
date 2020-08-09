@@ -24,13 +24,15 @@ public struct BlockTemplate {
 
     let formatter: (([String]) -> String)?
 
+    let style: BlockStyle?
+
     let declarableVariableIndex: Int?
 
-    public init(name: String, type: Type, argTypes: [ArgumentType], contents: [[BlockContent]], formatter: (([String]) -> String)? = nil, declarableVariableIndex: Int? = nil) {
-        self.init(name: name, type: type, argTypes: argTypes, contents: [BlockTemplate.defaultLanguage: contents], formatter: formatter, declarableVariableIndex: declarableVariableIndex)
+    public init(name: String, type: Type, argTypes: [ArgumentType], contents: [[BlockContent]], formatter: (([String]) -> String)? = nil, style: BlockStyle? = nil, declarableVariableIndex: Int? = nil) {
+        self.init(name: name, type: type, argTypes: argTypes, contents: [BlockTemplate.defaultLanguage: contents], formatter: formatter, style: style, declarableVariableIndex: declarableVariableIndex)
     }
 
-    public init(name: String, type: Type, argTypes: [ArgumentType], contents: Dictionary<String, [[BlockContent]]>, formatter: (([String]) -> String)? = nil, declarableVariableIndex: Int? = nil) {
+    public init(name: String, type: Type, argTypes: [ArgumentType], contents: Dictionary<String, [[BlockContent]]>, formatter: (([String]) -> String)? = nil, style: BlockStyle? = nil, declarableVariableIndex: Int? = nil) {
         self.name = name
 
         self.type = type
@@ -40,6 +42,8 @@ public struct BlockTemplate {
         self.localizedContents = contents
 
         self.formatter = formatter
+
+        self.style = style
 
         self.declarableVariableIndex = declarableVariableIndex
 

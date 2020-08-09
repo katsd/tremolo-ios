@@ -22,6 +22,8 @@ public class Block {
 
     private let formatter: (([String]) -> String)?
 
+    let style: BlockStyle?
+
     private let declarableVariableIndex: Int?
 
     let withArg: Bool
@@ -40,14 +42,14 @@ public class Block {
 
     public convenience init(_ template: BlockTemplate, argValues: [Argument]? = nil) {
         if let argValues = argValues {
-            self.init(name: template.name, type: template.type, argValues: argValues, contents: template.contents, formatter: template.formatter, declarableVariableIndex: template.declarableVariableIndex)
+            self.init(name: template.name, type: template.type, argValues: argValues, contents: template.contents, formatter: template.formatter, style: template.style, declarableVariableIndex: template.declarableVariableIndex)
         } else {
             let defaultArgValues = template.argTypes.map { $0.value }
-            self.init(name: template.name, type: template.type, argValues: defaultArgValues, contents: template.contents, formatter: template.formatter, declarableVariableIndex: template.declarableVariableIndex)
+            self.init(name: template.name, type: template.type, argValues: defaultArgValues, contents: template.contents, formatter: template.formatter, style: template.style, declarableVariableIndex: template.declarableVariableIndex)
         }
     }
 
-    init(parent: ContentStack? = nil, name: String, type: Type, argValues: [Argument], contents: [[BlockContent]], formatter: (([String]) -> String)? = nil, declarableVariableIndex: Int? = nil, withArg: Bool = true) {
+    init(parent: ContentStack? = nil, name: String, type: Type, argValues: [Argument], contents: [[BlockContent]], formatter: (([String]) -> String)? = nil, style: BlockStyle? = nil, declarableVariableIndex: Int? = nil, withArg: Bool = true) {
         self.parent = parent
 
         self.name = name
@@ -57,6 +59,8 @@ public class Block {
         self.argValues = argValues
 
         self.contents = contents
+
+        self.style = style
 
         self.declarableVariableIndex = declarableVariableIndex
 
