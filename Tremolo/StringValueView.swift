@@ -12,12 +12,14 @@ final class StringValueView: UITextField, UITextFieldDelegate {
 
     let value: StringValue
 
-    init(value: StringValue) {
+    init(value: StringValue, textColor: UIColor) {
         self.value = value
 
         super.init(frame: .zero)
 
         self.text = value.string
+
+        self.textColor = textColor
 
         self.delegate = self
 
