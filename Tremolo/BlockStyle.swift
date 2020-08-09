@@ -12,12 +12,15 @@ public struct BlockStyle {
 
     let color: UIColor
 
+    let textColor: UIColor
+
     let cornerRadius: CGFloat
 
     let shadow: BlockShadowStyle
 
-    public init(color: UIColor, cornerRadius: CGFloat = 10, shadow: BlockShadowStyle = .defaultStyle) {
+    public init(color: UIColor, textColor: UIColor = .label, cornerRadius: CGFloat = 10, shadow: BlockShadowStyle = .defaultStyle) {
         self.color = color
+        self.textColor = textColor
         self.cornerRadius = cornerRadius
         self.shadow = shadow
     }
