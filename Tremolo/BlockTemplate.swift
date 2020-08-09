@@ -10,21 +10,21 @@ import Foundation
 
 public struct BlockTemplate {
 
-    public let name: String
+    let name: String
 
-    public let type: Type
+    let type: Type
 
-    public let argTypes: [ArgumentType]
+    let argTypes: [ArgumentType]
 
-    public let localizedContents: Dictionary<String, [[BlockContent]]>
+    let localizedContents: Dictionary<String, [[BlockContent]]>
 
-    public let contents: [[BlockContent]]
+    let contents: [[BlockContent]]
 
     static private let defaultLanguage = "en"
 
     let formatter: (([String]) -> String)?
 
-    public let declarableVariableIndex: Int?
+    let declarableVariableIndex: Int?
 
     public init(name: String, type: Type, argTypes: [ArgumentType], contents: [[BlockContent]], formatter: (([String]) -> String)? = nil, declarableVariableIndex: Int? = nil) {
         self.init(name: name, type: type, argTypes: argTypes, contents: [BlockTemplate.defaultLanguage: contents], formatter: formatter, declarableVariableIndex: declarableVariableIndex)
