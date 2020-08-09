@@ -155,7 +155,7 @@ extension Block {
 extension Block {
 
     func clone() -> Block {
-        Block(parent: parent, name: name, type: type, argValues: argValues.map { $0.clone() }, contents: contents, formatter: formatter, declarableVariableIndex: declarableVariableIndex)
+        Block(parent: parent, name: name, type: type, argValues: argValues.map { $0.clone() }, contents: contents, formatter: formatter, style: style, declarableVariableIndex: declarableVariableIndex)
     }
 
 }
