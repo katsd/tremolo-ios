@@ -56,6 +56,14 @@ public struct BlockTemplate {
 
 extension BlockTemplate {
 
+    public func block(_ argValues: [Argument]) -> Block {
+        Block(self, argValues: argValues)
+    }
+
+}
+
+extension BlockTemplate {
+
     public enum ArgumentType {
 
         // ""
