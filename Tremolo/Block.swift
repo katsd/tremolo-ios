@@ -26,8 +26,6 @@ public class Block {
 
     private let declarableVariableIndex: Int?
 
-    let withArg: Bool
-
     var declaredVariable: Variable? {
         guard  let idx = declarableVariableIndex else {
             return nil
@@ -49,7 +47,7 @@ public class Block {
         }
     }
 
-    init(parent: ContentStack? = nil, name: String, type: Type, argValues: [Argument], contents: [[BlockContent]], formatter: (([String]) -> String)? = nil, style: BlockStyle? = nil, declarableVariableIndex: Int? = nil, withArg: Bool = true) {
+    init(parent: ContentStack? = nil, name: String, type: Type, argValues: [Argument], contents: [[BlockContent]], formatter: (([String]) -> String)? = nil, style: BlockStyle? = nil, declarableVariableIndex: Int? = nil) {
         self.parent = parent
 
         self.name = name
@@ -65,8 +63,6 @@ public class Block {
         self.declarableVariableIndex = declarableVariableIndex
 
         self.formatter = formatter
-
-        self.withArg = withArg
 
         argValues.forEach { $0.setParent(self) }
     }
@@ -101,10 +97,6 @@ extension Block: CodeUnit {
             return formatter(contentStr)
         }
 
-        if !withArg {
-            return name
-        }
-
         if argValues.isEmpty {
             return "\(name)()"
         }
@@ -137,11 +129,11 @@ extension Block: CodeUnit {
 extension Block {
 
     static public func variable(type: Type, name: String) -> Block {
-        .init(name: name, type: type, argValues: [], contents: [[.label(name)]], withArg: false)
+        .init(name: name, type: type, argValues: [], contents: [[.label(name)]])
     }
 
     static public func string(_ str: String) -> Block {
-        .init(name: str, type: .custom("str"), argValues: [], contents: [[.label(str)]], withArg: false)
+        .init(name: str, type: .custom("str"), argValues: [], contents: [[.label(str)]])
     }
 
 }
@@ -163,7 +155,7 @@ extension Block {
 extension Block {
 
     func clone() -> Block {
-        Block(parent: parent, name: name, type: type, argValues: argValues.map { $0.clone() }, contents: contents, formatter: formatter, declarableVariableIndex: declarableVariableIndex, withArg: withArg)
+        Block(parent: parent, name: name, type: type, argValues: argValues.map { $0.clone() }, contents: contents, formatter: formatter, declarableVariableIndex: declarableVariableIndex)
     }
 
 }
