@@ -12,8 +12,6 @@ public enum Type: Hashable {
 
     case void
 
-    case code
-
     case custom(String)
 
     // case allValue
