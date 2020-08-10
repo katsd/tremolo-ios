@@ -32,8 +32,7 @@ class CodeView: UIView {
             .alwaysBounceVertical(true)
             .clipsToBounds(false)
         self.addSubview(scrollView)
-        scrollView.equalToEach(self, top: 0, left: 20, bottom: 0, right: 0, priority: 900)
-        scrollView.lessThanOrEqualToEach(self, left: 20, priority: 1000)
+        scrollView.equalToEach(self, top: 0, left: 0, bottom: 0, right: 0)
         scrollView.delegate = self
 
         blockStackView =
@@ -44,7 +43,7 @@ class CodeView: UIView {
                            blockController: self)
 
         scrollView.addSubview(blockStackView)
-        blockStackView.equalTo(scrollView, inset: .init(top: 10, left: 0, bottom: 0, right: 0))
+        blockStackView.equalTo(scrollView, inset: .init(top: 10, left: 20, bottom: 0, right: 0))
 
         setGesture()
     }
