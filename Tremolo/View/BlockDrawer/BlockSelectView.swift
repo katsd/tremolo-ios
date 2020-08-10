@@ -45,7 +45,7 @@ class BlockSelectView: UIView {
         scrollView.addSubview(stackView)
         addSubview(scrollView)
         scrollView.equalTo(self)
-        stackView.equalTo(scrollView, inset: .init(top: 10, left: 10, bottom: 0, right: 0))
+        stackView.equalTo(scrollView, inset: .init(top: 20, left: 20, bottom: 20, right: 20))
     }
 
     required init?(coder: NSCoder) {
