@@ -164,6 +164,10 @@ extension ValueView: BlockStackViewController {
             return res.pos
         }
 
+        if !blockView.block.type.isIncluded(in: value.type) {
+            return nil
+        }
+
         return searchIdx()
     }
 
