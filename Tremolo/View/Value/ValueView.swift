@@ -79,6 +79,11 @@ extension ValueView: BlockStackViewController {
         CodeView.addBlankView(stackView: stackView, blockView: blockView, at: idx, updateLayout: updateLayout)
     }
 
+    func removeBlockView(path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> (), completion: @escaping () -> ()) {
+        value.blockStack.removeBlock(at: idx)
+        CodeView.removeBlockView(stackView: stackView, at: idx, updateLayout: updateLayout, completion: completion)
+    }
+
     func removeBlankView(path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
         CodeView.removeBlankView(stackView: stackView, at: idx, updateLayout: updateLayout)
     }

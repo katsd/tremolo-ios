@@ -195,6 +195,7 @@ class BlockView: UIButton {
     }
 
     private func deleteSelf() {
+        blockController?.deleteBlock(blockView: self)
     }
 }
 
@@ -223,6 +224,17 @@ extension BlockView: BlockStackViewController {
         }
 
         CodeView.addBlankView(stackView: stackView, blockView: blockView, at: idx, updateLayout: updateLayout)
+    }
+
+    func removeBlockView(path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> (), completion: @escaping () -> ()) {
+        guard  let stackView = blockContentsStackView.content(at: path) as? UIStackView else {
+            return
+        }
+
+        if case let .arg(aIdx) = block.contents[path.row][path.col] {
+            block.argValues[aIdx].removeBlock(at: idx)
+        }
+        CodeView.removeBlockView(stackView: stackView, at: idx, updateLayout: updateLayout, completion: completion)
     }
 
     func removeBlankView(path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {

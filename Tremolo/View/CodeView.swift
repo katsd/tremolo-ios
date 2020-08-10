@@ -180,6 +180,8 @@ extension CodeView: BlockController {
         // FIXME:
         let path = blockView.parent?.findBlockPos(blockView: blockView, velocity: .zero, selectedBlockPos: nil)?.path ?? .zero
 
+        print(duplicatedBlockIdx - 1)
+
         movingBlockView = duplicatedBlockView
 
         topView.addSubview(duplicatedBlockView)
@@ -192,7 +194,18 @@ extension CodeView: BlockController {
     }
 
     func deleteBlock(blockView: BlockView) {
+        if movingBlockView != nil {
+            return
+        }
 
+        guard let idx = blockView.block.parent?.findIdx(of: blockView.block) else {
+            return
+        }
+
+        // FIXME:
+        let path = blockView.parent?.findBlockPos(blockView: blockView, velocity: .zero, selectedBlockPos: nil)?.path ?? .zero
+
+        blockView.parent?.removeBlockView(path: path, at: idx, updateLayout: { self.updateLayout() }, completion: { self.movingBlockView = nil })
     }
 
     var canMoveBlock: Bool {
@@ -217,6 +230,11 @@ extension CodeView: BlockStackViewController {
 
     func addBlankView(blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
         CodeView.addBlankView(stackView: blockStackView, blockView: blockView, at: idx, updateLayout: updateLayout)
+    }
+
+    func removeBlockView(path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> (), completion: @escaping () -> ()) {
+        tremolo.blockStack.removeBlock(at: idx)
+        CodeView.removeBlockView(stackView: blockStackView, at: idx, updateLayout: updateLayout, completion: completion)
     }
 
     func removeBlankView(path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
@@ -381,6 +399,15 @@ extension CodeView {
 
         blockAnimation(animation: {
             updateLayout()
+        })
+    }
+
+    static func removeBlockView(stackView: UIStackView, at idx: Int, updateLayout: @escaping () -> (), completion: @escaping () -> ()) {
+        stackView.arrangedSubviews[idx].removeFromSuperview()
+        blockAnimation(animation: {
+            updateLayout()
+        }, completion: {
+            completion()
         })
     }
 
