@@ -43,7 +43,7 @@ class CodeView: UIView {
                            blockController: self)
 
         scrollView.addSubview(blockStackView)
-        blockStackView.equalTo(scrollView, inset: .init(top: 10, left: 20, bottom: 0, right: 0))
+        blockStackView.equalTo(scrollView, inset: .init(top: 20, left: 20, bottom: 20, right: 20))
 
         setGesture()
     }
