@@ -330,7 +330,9 @@ extension MathValueView: BlockStackViewController {
         }
 
         if l == -1 {
-            return BlockPos(blockStackViewController: self, path: .zero, idx: 0)
+            if blockView.block.type.isIncluded(in: value.type) {
+                return BlockPos(blockStackViewController: self, path: .zero, idx: 0)
+            }
         }
 
         if let blockHolderView = stackView.arrangedSubviews[l] as? MathValueHolderView {
@@ -339,6 +341,10 @@ extension MathValueView: BlockStackViewController {
                     return pos
                 }
             }
+        }
+
+        if !blockView.block.type.isIncluded(in: value.type) {
+            return nil
         }
 
         if blockPos.x < stackView.arrangedSubviews[l].globalFrame.midX {
