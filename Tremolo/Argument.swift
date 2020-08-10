@@ -84,7 +84,7 @@ public enum Argument: Equatable, Hashable {
         case let .value(v):
             return .value(v.clone())
         case let .stringValue(v):
-            return .stringValue(v)
+            return .stringValue(v.clone())
         case let .mathValue(v):
             return .mathValue(v.clone())
         case let .variable(v):

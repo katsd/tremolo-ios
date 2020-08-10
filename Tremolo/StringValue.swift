@@ -16,6 +16,10 @@ public class StringValue {
         self.string = string
     }
 
+    func clone() -> StringValue {
+        StringValue(string)
+    }
+
 }
 
 extension StringValue: Hashable {
