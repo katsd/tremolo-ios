@@ -17,3 +17,14 @@ public enum Type: Hashable {
     case custom(String)
 
 }
+
+extension Type {
+
+    func isIncluded(in type: Type) -> Bool {
+        if type == .any {
+            return true
+        }
+        return type == self
+    }
+
+}
