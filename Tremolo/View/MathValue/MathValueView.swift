@@ -292,7 +292,7 @@ extension MathValueView: BlockStackViewController {
         CodeView.updateLayoutWithAnimation(updateLayout: updateLayout)
     }
 
-    func addBlankView(blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
+    func addEmptyView(blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
         cursorPos = idx
         moveCursorView(withAnimation: false)
         CodeView.updateLayoutWithAnimation(updateLayout: updateLayout)
@@ -303,7 +303,7 @@ extension MathValueView: BlockStackViewController {
         CodeView.removeBlockView(stackView: stackView, at: idx, updateLayout: updateLayout, completion: completion)
     }
 
-    func removeBlankView(path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
+    func removeEmptyView(path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
         removeCursor()
         CodeView.updateLayoutWithAnimation(updateLayout: updateLayout)
     }

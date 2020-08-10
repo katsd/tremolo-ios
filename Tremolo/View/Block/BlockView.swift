@@ -218,12 +218,12 @@ extension BlockView: BlockStackViewController {
         }
     }
 
-    func addBlankView(blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
+    func addEmptyView(blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
         guard let stackView = blockContentsStackView.content(at: path) as? UIStackView else {
             return
         }
 
-        CodeView.addBlankView(stackView: stackView, blockView: blockView, at: idx, updateLayout: updateLayout)
+        CodeView.addEmptyView(stackView: stackView, blockView: blockView, at: idx, updateLayout: updateLayout)
     }
 
     func removeBlockView(path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> (), completion: @escaping () -> ()) {
@@ -237,12 +237,12 @@ extension BlockView: BlockStackViewController {
         CodeView.removeBlockView(stackView: stackView, at: idx, updateLayout: updateLayout, completion: completion)
     }
 
-    func removeBlankView(path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
+    func removeEmptyView(path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
         guard let stackView = blockContentsStackView.content(at: path) as? UIStackView else {
             return
         }
 
-        CodeView.removeBlankView(stackView: stackView, at: idx, updateLayout: updateLayout)
+        CodeView.removeEmptyView(stackView: stackView, at: idx, updateLayout: updateLayout)
     }
 
     func findBlockPos(blockView: BlockView, velocity: CGPoint, selectedBlockPos: BlockPos?) -> BlockPos? {
@@ -328,11 +328,11 @@ extension BlockView: BlockStackViewController {
 
             // Search index where blockView should be
             let searchIdx: () -> BlockPos = {
-                let hasBlankView: Bool
+                let hasEmptyView: Bool
                 if let pos = selectedBlockPos {
-                    hasBlankView = pos.blockStackViewController === self && pos.path == path
+                    hasEmptyView = pos.blockStackViewController === self && pos.path == path
                 } else {
-                    hasBlankView = false
+                    hasEmptyView = false
                 }
 
                 var l = -1
@@ -348,7 +348,7 @@ extension BlockView: BlockStackViewController {
                     }
                 }
 
-                if hasBlankView {
+                if hasEmptyView {
                     if let pos = selectedBlockPos?.idx {
                         if pos < r {
                             r -= 1

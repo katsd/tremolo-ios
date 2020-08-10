@@ -75,8 +75,8 @@ extension ValueView: BlockStackViewController {
         value.blockStack.removeBlock(at: idx)
     }
 
-    func addBlankView(blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
-        CodeView.addBlankView(stackView: stackView, blockView: blockView, at: idx, updateLayout: updateLayout)
+    func addEmptyView(blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
+        CodeView.addEmptyView(stackView: stackView, blockView: blockView, at: idx, updateLayout: updateLayout)
     }
 
     func removeBlockView(path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> (), completion: @escaping () -> ()) {
@@ -84,8 +84,8 @@ extension ValueView: BlockStackViewController {
         CodeView.removeBlockView(stackView: stackView, at: idx, updateLayout: updateLayout, completion: completion)
     }
 
-    func removeBlankView(path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
-        CodeView.removeBlankView(stackView: stackView, at: idx, updateLayout: updateLayout)
+    func removeEmptyView(path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> Void) {
+        CodeView.removeEmptyView(stackView: stackView, at: idx, updateLayout: updateLayout)
     }
 
     func findBlockPos(blockView: BlockView, velocity: CGPoint, selectedBlockPos: BlockPos?) -> BlockPos? {
@@ -133,11 +133,11 @@ extension ValueView: BlockStackViewController {
         }
 
         let searchIdx: () -> BlockPos = {
-            let hasBlankView: Bool
+            let hasEmptyView: Bool
             if let pos = selectedBlockPos {
-                hasBlankView = pos.blockStackViewController === self
+                hasEmptyView = pos.blockStackViewController === self
             } else {
-                hasBlankView = false
+                hasEmptyView = false
             }
 
             var l = -1
@@ -153,7 +153,7 @@ extension ValueView: BlockStackViewController {
                 }
             }
 
-            if hasBlankView {
+            if hasEmptyView {
                 if let pos = selectedBlockPos?.idx {
                     if pos < r {
                         r -= 1

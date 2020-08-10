@@ -14,11 +14,11 @@ protocol BlockStackViewController: AnyObject {
 
     func floatBlockView(_ blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> ())
 
-    func addBlankView(blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> ())
+    func addEmptyView(blockView: BlockView, path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> ())
 
     func removeBlockView(path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> (), completion: @escaping () -> ())
 
-    func removeBlankView(path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> ())
+    func removeEmptyView(path: BlockStackPath, at idx: Int, updateLayout: @escaping () -> ())
 
     func findBlockPos(blockView: BlockView, velocity: CGPoint, selectedBlockPos: BlockPos?) -> BlockPos?
 
