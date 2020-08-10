@@ -19,7 +19,7 @@ class BlockStackView: UIStackView {
             .spacing(7)
             .contents(blocks)
 
-        self.greaterThanOrEqualToSize(height: 10)
+        self.greaterThanOrEqualToSize(height: 30)
     }
 
     required init(coder: NSCoder) {
