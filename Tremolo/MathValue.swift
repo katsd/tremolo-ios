@@ -93,7 +93,7 @@ extension MathValue: ContentStack {
     func findIdx(of block: Block) -> Int? {
         for (idx, content) in contentStack.enumerated() {
             if case let .block(currentBlock) = content {
-                if currentBlock == block {
+                if currentBlock === block {
                     return idx
                 }
             }
