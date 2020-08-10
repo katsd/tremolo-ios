@@ -10,6 +10,8 @@ import Foundation
 
 public enum Type: Hashable {
 
+    case any
+
     case void
 
     case custom(String)
