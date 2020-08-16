@@ -337,6 +337,8 @@ extension MathValueView: BlockStackViewController {
         if l == -1 {
             if blockView.block.type.isIncluded(in: value.type) {
                 return BlockPos(blockStackViewController: self, path: .zero, idx: 0)
+            } else {
+                return nil
             }
         }
 
