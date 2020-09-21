@@ -57,8 +57,8 @@ struct ContentView: View {
                             .frame(height: 20)
                     }
                 }
-                .navigationViewStyle(StackNavigationViewStyle())
         }
+            .navigationViewStyle(StackNavigationViewStyle())
             .sheet(item: $sheetMode) { mode in
                 switch mode {
                 case .codePreview:
@@ -70,8 +70,8 @@ struct ContentView: View {
                     NavigationView {
                         ToyTermView(toyTerm)
                             .navigationBarTitle("Console", displayMode: .inline)
-                            .navigationViewStyle(StackNavigationViewStyle())
                     }
+                        .navigationViewStyle(StackNavigationViewStyle())
                 }
             }
     }
@@ -84,7 +84,7 @@ struct ContentView: View {
         let eval = Xylo(source: tremolo.getCode(),
                         funcs: [
                             Xylo.Func(funcName: "put", argNum: 1) { objs in
-                                self.toyTerm.output(objs[0].string())
+                                self.toyTerm.output("\(objs[0].string())\n")
                                 return XyObj.zero
                             }
                         ])
