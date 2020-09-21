@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import ToyTerm
 
 struct ContentView: View {
 
@@ -14,29 +15,60 @@ struct ContentView: View {
 
     @State var code = ""
 
-    @State var showSheet = false
+    @State var showCodePreview = false
+
+    @State var showConsole = false
+
+    @StateObject var toyTerm = ToyTerm(text: "")
 
     var body: some View {
         NavigationView {
             TremoloView(tremolo)
                 .navigationBarTitle("Tremolo Example", displayMode: .inline)
-                .navigationBarItems(trailing:
-                                    Button(action: {
-                                        code = tremolo.getCode()
-                                        print(code)
-                                        showSheet = true
-                                    }) {
-                                        Image(systemName: "chevron.left.slash.chevron.right")
-                                    }
-                )
+                .toolbar {
+                    ToolbarItem {
+                        HStack {
+                            Button(action: {
+                                code = tremolo.getCode()
+                                print(code)
+                                showCodePreview = true
+                            }) {
+                                Image(systemName: "chevron.left.slash.chevron.right")
+                                    .resizable()
+                                    .scaledToFit()
+                            }
+
+                            Button(action: {
+                                runCode()
+                            }) {
+                                Image(systemName: "play.fill")
+                                    .resizable()
+                                    .scaledToFit()
+                            }
+                        }
+                            .frame(height: 20)
+                    }
+                }
+                .navigationViewStyle(StackNavigationViewStyle())
         }
-            .navigationViewStyle(StackNavigationViewStyle())
-            .sheet(isPresented: $showSheet) {
+            .sheet(isPresented: $showCodePreview) {
                 TextEditor(text: $code)
                     .disabled(true)
                     .font(.system(size: 16, design: .monospaced))
                     .padding()
             }
+            .sheet(isPresented: $showConsole) {
+                NavigationView {
+                    ToyTermView(toyTerm)
+                        .navigationBarTitle("Console", displayMode: .inline)
+                        .navigationViewStyle(StackNavigationViewStyle())
+                }
+            }
+    }
+
+    private func runCode() {
+        toyTerm.text = ""
+        showConsole = true
     }
 
 }
