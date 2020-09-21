@@ -11,14 +11,21 @@ import XyloSwift
 import ToyTerm
 
 struct ContentView: View {
+    enum SheetMode: Identifiable {
+        case codePreview
+
+        case console
+
+        var id: Int {
+            hashValue
+        }
+    }
 
     @ObservedObject var tremolo = Example.tremolo
 
     @State var code = ""
 
-    @State var showCodePreview = false
-
-    @State var showConsole = false
+    @State var sheetMode: SheetMode? = nil
 
     @StateObject var toyTerm = ToyTerm(text: "")
 
@@ -32,18 +39,12 @@ struct ContentView: View {
                             Button(action: {
                                 code = tremolo.getCode()
                                 print(code)
-                                showCodePreview = true
+                                sheetMode = .codePreview
                             }) {
                                 Image(systemName: "chevron.left.slash.chevron.right")
                                     .resizable()
                                     .scaledToFit()
                             }
-                                .sheet(isPresented: $showCodePreview) {
-                                    TextEditor(text: $code)
-                                        .disabled(true)
-                                        .font(.system(size: 16, design: .monospaced))
-                                        .padding()
-                                }
 
                             Button(action: {
                                 runCode()
@@ -52,25 +53,33 @@ struct ContentView: View {
                                     .resizable()
                                     .scaledToFit()
                             }
-                                .sheet(isPresented: $showConsole) {
-                                    NavigationView {
-                                        ToyTermView(toyTerm)
-                                            .navigationBarTitle("Console", displayMode: .inline)
-                                            .navigationViewStyle(StackNavigationViewStyle())
-                                    }
-                                }
                         }
                             .frame(height: 20)
                     }
                 }
                 .navigationViewStyle(StackNavigationViewStyle())
         }
+            .sheet(item: $sheetMode) { mode in
+                switch mode {
+                case .codePreview:
+                    TextEditor(text: $code)
+                        .disabled(true)
+                        .font(.system(size: 16, design: .monospaced))
+                        .padding()
+                case .console:
+                    NavigationView {
+                        ToyTermView(toyTerm)
+                            .navigationBarTitle("Console", displayMode: .inline)
+                            .navigationViewStyle(StackNavigationViewStyle())
+                    }
+                }
+            }
     }
 
     private func runCode() {
         toyTerm.text = ""
         toyTerm.delegate = self
-        showConsole = true
+        sheetMode = .console
 
         let eval = Xylo(source: tremolo.getCode(),
                         funcs: [
