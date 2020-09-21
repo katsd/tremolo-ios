@@ -47,14 +47,22 @@ class Example {
             ),
         ]
 
+    static let variables = [
+        Variable(type: .custom("value"), name: "apple"),
+        Variable(type: .custom("value"), name: "orange"),
+        Variable(type: .custom("value"), name: "peach"),
+    ]
+
+    static let blockStyles: [Type: BlockStyle] = [
+        .void: .defaultStyle,
+        .custom("value"): BlockStyle(color: .systemOrange)
+    ]
+
     static let tremolo = Tremolo(
         blockCategories: blockCategories,
         blocks: blocks,
-        variables: [
-            Variable(type: .custom("value"), name: "apple"),
-            Variable(type: .custom("value"), name: "orange"),
-            Variable(type: .custom("value"), name: "peach"),
-        ]
+        variables: variables,
+        blockStyles: blockStyles
     )
 
 }
@@ -77,7 +85,8 @@ extension Example {
             type: .custom("value"),
             argTypes: [.stringValue],
             contents: [[.arg(0)]],
-            formatter: { "\"\($0[0])\"" }
+            formatter: { "\"\($0[0])\"" },
+            style: BlockStyle(color: .white, textColor: .black)
         )
 
     static let bMath =

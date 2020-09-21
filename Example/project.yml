@@ -1,4 +1,4 @@
-name: Example
+name: Tremolo
 
 options:
   bundlePrefix: app.mallet.tremolo
@@ -12,13 +12,24 @@ attributes:
 settings:
   DEVELOPMENT_TEAM: T437NKTG46
 
+packages:
+    XyloSwift:
+        url: https://github.com/katsd/xylo-swift.git
+        branch: master
+    ToyTerm:
+        url: https://github.com/katsd/toyterm.git
+        branch: main
+
 targets:
-  Example:
+  Tremolo:
     type: application
     platform: iOS
     sources:
-      - Example
-      - ../Tremolo
+      - Tremolo
+      - ../Sources
+    dependencies:
+        - package: XyloSwift
+        - package: ToyTerm
     settings:
       base:
         PRODUCT_NAME: Tremolo
