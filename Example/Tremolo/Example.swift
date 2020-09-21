@@ -71,7 +71,7 @@ extension Example {
 
     static let bPrint =
         BlockTemplate(
-            name: "print",
+            name: "put",
             type: .void,
             argTypes: [.value],
             contents: [

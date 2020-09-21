@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import XyloSwift
 import ToyTerm
 
 struct ContentView: View {
@@ -37,6 +38,12 @@ struct ContentView: View {
                                     .resizable()
                                     .scaledToFit()
                             }
+                                .sheet(isPresented: $showCodePreview) {
+                                    TextEditor(text: $code)
+                                        .disabled(true)
+                                        .font(.system(size: 16, design: .monospaced))
+                                        .padding()
+                                }
 
                             Button(action: {
                                 runCode()
@@ -45,32 +52,42 @@ struct ContentView: View {
                                     .resizable()
                                     .scaledToFit()
                             }
+                                .sheet(isPresented: $showConsole) {
+                                    NavigationView {
+                                        ToyTermView(toyTerm)
+                                            .navigationBarTitle("Console", displayMode: .inline)
+                                            .navigationViewStyle(StackNavigationViewStyle())
+                                    }
+                                }
                         }
                             .frame(height: 20)
                     }
                 }
                 .navigationViewStyle(StackNavigationViewStyle())
         }
-            .sheet(isPresented: $showCodePreview) {
-                TextEditor(text: $code)
-                    .disabled(true)
-                    .font(.system(size: 16, design: .monospaced))
-                    .padding()
-            }
-            .sheet(isPresented: $showConsole) {
-                NavigationView {
-                    ToyTermView(toyTerm)
-                        .navigationBarTitle("Console", displayMode: .inline)
-                        .navigationViewStyle(StackNavigationViewStyle())
-                }
-            }
     }
 
     private func runCode() {
         toyTerm.text = ""
+        toyTerm.delegate = self
         showConsole = true
+
+        let eval = Xylo(source: tremolo.getCode(),
+                        funcs: [
+                            Xylo.Func(funcName: "put", argNum: 1) { objs in
+                                self.toyTerm.output(objs[0].string())
+                                return XyObj.zero
+                            }
+                        ])
+
+        eval.run()
     }
 
+}
+
+extension ContentView: ToyTermDelegate {
+    func input(_ text: String) {
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {
