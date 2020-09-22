@@ -150,6 +150,28 @@ extension Block {
         return res
     }
 
+    func findLocalVariablesUnderThis() -> [Variable] {
+        var res = [Variable]()
+        argValues.forEach { argument in
+            switch argument {
+            case let .code(code):
+                res = code.findInternalVariables()
+            case let .value(value):
+                res = value.blockStack.findInternalVariables()
+            case let .mathValue(mathValue):
+                res = mathValue.findInternalVariables()
+            default:
+                break
+            }
+        }
+
+        if let variable = declaredVariable {
+            res.append(variable.clone())
+        }
+
+        return res
+    }
+
 }
 
 extension Block {

@@ -91,6 +91,10 @@ extension BlockStack: ContentStack {
         return res
     }
 
+    func findInternalVariables() -> [Variable] {
+        blocks.flatMap { $0.findLocalVariablesUnderThis() }
+    }
+
     func findIdx(of block: Block) -> Int? {
         for (idx, currentBlock) in blocks.enumerated() {
             if currentBlock === block {

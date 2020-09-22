@@ -55,16 +55,21 @@ extension Tremolo {
             variable.type == type ? variable : nil
         }.forEach { res.append($0.clone()) }
 
-        var addedVariables = [Variable: Bool]()
-
-        return res.filter {
-            addedVariables.updateValue(true, forKey: $0) == nil
-        }
+        return Tremolo.filterVariables(res)
     }
 
     func getAllVariables() -> [Variable] {
-        return [Variable(type: .custom("value"), name: "Nyan"),
-                Variable(type: .custom("value"), name: "Apple")]
+        Tremolo.filterVariables(
+            [variables.map { $0.clone() },
+             blockStack.findInternalVariables()]
+                .flatMap { $0 })
+    }
+
+    static func filterVariables(_ variables: [Variable]) -> [Variable] {
+        var addedVariables = [Variable: Bool]()
+        return variables.filter {
+            addedVariables.updateValue(true, forKey: $0) == nil
+        }
     }
 
 }

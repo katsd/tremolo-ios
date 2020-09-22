@@ -90,6 +90,16 @@ extension MathValue: ContentStack {
         return res
     }
 
+    func findInternalVariables() -> [Variable] {
+        contentStack.map { (content) -> [Variable] in
+            if case let .block(block) = content {
+                return block.findLocalVariablesUnderThis()
+            } else {
+                return [Variable]()
+            }
+        }.flatMap { $0 }
+    }
+
     func findIdx(of block: Block) -> Int? {
         for (idx, content) in contentStack.enumerated() {
             if case let .block(currentBlock) = content {
