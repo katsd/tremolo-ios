@@ -35,7 +35,6 @@ class Example {
                 name: "Variable",
                 templates: [
                     bSetVar,
-                    bYay,
                 ]
             ),
 
@@ -111,15 +110,6 @@ extension Example {
                 "\(args[0]) = \(args[1])"
             },
             declarableVariableIndex: 0)
-
-    static let bYay =
-        BlockTemplate(
-            name: "yay",
-            type: .custom("value"),
-            argTypes: [],
-            contents: [[.label("yay")]],
-            formatter: { _ in "yay" }
-        )
 
     static let bControl =
         BlockTemplate(
