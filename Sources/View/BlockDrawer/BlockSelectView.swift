@@ -14,14 +14,18 @@ class BlockSelectView: UIView {
 
     private(set) var blockTemplates: [BlockTemplate]
 
+    private(set) var variables: [Variable]
+
     private let blockController: BlockController
 
     private let stackView: UIStackView
 
-    init(tremolo: Tremolo, blockTemplates: [BlockTemplate], blockController: BlockController) {
+    init(tremolo: Tremolo, blockTemplates: [BlockTemplate], blockController: BlockController, variables: [Variable] = []) {
         self.tremolo = tremolo
 
         self.blockTemplates = blockTemplates
+
+        self.variables = variables
 
         self.blockController = blockController
 
@@ -52,17 +56,25 @@ class BlockSelectView: UIView {
         fatalError()
     }
 
-    func update(blockTemplates: [BlockTemplate]) {
+    func update(blockTemplates: [BlockTemplate], variables: [Variable] = []) {
         self.blockTemplates = blockTemplates
+        self.variables = variables
+
         stackView.arrangedSubviews.forEach {
             stackView.removeArrangedSubview($0)
             $0.removeFromSuperview()
         }
 
         stackView.contents(
-            blockTemplates.enumerated().map { (idx, block: BlockTemplate) in
-                self.blockViewInStackView(blockTemplate: block, stackView: stackView, idx: idx)
-            }
+            [
+                blockTemplates.enumerated().map { (idx, block: BlockTemplate) in
+                    self.blockViewInStackView(blockTemplate: block, stackView: stackView, idx: idx)
+                },
+
+                variables.enumerated().map { (idx, variable: Variable) in
+                    self.blockViewInStackView(blockTemplate: BlockTemplate(variable), stackView: stackView, idx: blockTemplates.count + idx)
+                }
+            ].flatMap { $0 }
         )
     }
 
@@ -96,20 +108,23 @@ struct BlockSelectViewRepresentable: UIViewRepresentable {
 
     private let blockController: BlockController
 
-    init(tremolo: Tremolo, blockTemplates: [BlockTemplate], blockController: BlockController) {
+    private let showVariables: Bool
+
+    init(tremolo: Tremolo, blockTemplates: [BlockTemplate], blockController: BlockController, showVariables: Bool = false) {
         self.tremolo = tremolo
         self.blockTemplates = blockTemplates
         self.blockController = blockController
+        self.showVariables = showVariables
     }
 
     func makeUIView(context: Context) -> BlockSelectView {
-        BlockSelectView(tremolo: tremolo, blockTemplates: blockTemplates, blockController: blockController)
+        BlockSelectView(tremolo: tremolo, blockTemplates: blockTemplates, blockController: blockController, variables: showVariables ? tremolo.getAllVariables() : [])
     }
 
     func updateUIView(_ blockSelectView: BlockSelectView, context: Context) {
         if blockSelectView.blockTemplates == blockTemplates {
             return
         }
-        blockSelectView.update(blockTemplates: blockTemplates)
+        blockSelectView.update(blockTemplates: blockTemplates, variables: showVariables ? tremolo.getAllVariables() : [])
     }
 }

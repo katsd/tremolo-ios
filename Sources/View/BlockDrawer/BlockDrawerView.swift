@@ -22,13 +22,17 @@ struct BlockDrawerView: View {
 
     let blockController: BlockController
 
+    private var showVariables: Bool {
+        tremolo.categoryNameWithVariables == blockCategories[currentCategoryIdx].name
+    }
+
     var body: some View {
         GeometryReader { geo in
             ZStack {
                 HStack(spacing: 0) {
                     Color.clear
                     VStack {
-                        BlockSelectViewRepresentable(tremolo: self.tremolo, blockTemplates: blockCategories[currentCategoryIdx].templates, blockController: self.blockController)
+                        BlockSelectViewRepresentable(tremolo: self.tremolo, blockTemplates: blockCategories[currentCategoryIdx].templates, blockController: self.blockController, showVariables: showVariables)
                         categoryButtons()
                     }
                         .padding(.bottom, geo.safeAreaInsets.bottom)

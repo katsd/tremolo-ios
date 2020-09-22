@@ -24,6 +24,8 @@ public class Tremolo: ObservableObject {
 
     let blockCategories: [BlockCategory]
 
+    let categoryNameWithVariables = "Variable"
+
     public init(blockCategories: [BlockCategory], blocks: [Block], variables: [Variable], blockStyles: [Type: BlockStyle] = [:]) {
         self.blockCategories = blockCategories
         self.blockStack = .init(blocks)
@@ -58,6 +60,11 @@ extension Tremolo {
         return res.filter {
             addedVariables.updateValue(true, forKey: $0) == nil
         }
+    }
+
+    func getAllVariables() -> [Variable] {
+        return [Variable(type: .custom("value"), name: "Nyan"),
+                Variable(type: .custom("value"), name: "Apple")]
     }
 
 }
