@@ -35,7 +35,7 @@ struct ContentView: View {
                 .navigationBarTitle("Tremolo Example", displayMode: .inline)
                 .toolbar {
                     ToolbarItem {
-                        HStack {
+                        HStack(spacing: 20) {
                             Button(action: {
                                 code = tremolo.getCode()
                                 print(code)
