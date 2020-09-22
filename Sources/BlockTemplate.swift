@@ -32,6 +32,14 @@ public struct BlockTemplate {
         self.init(name: name, type: type, argTypes: argTypes, contents: [BlockTemplate.defaultLanguage: contents], formatter: formatter, style: style, declarableVariableIndex: declarableVariableIndex)
     }
 
+    public init(_ variable: Variable) {
+        BlockTemplate(name: variable.name,
+                      type: variable.type,
+                      argTypes: [],
+                      contents: [[.label(variable.name)]],
+                      formatter: { _ in variable.name })
+    }
+
     public init(name: String, type: Type, argTypes: [ArgumentType], contents: Dictionary<String, [[BlockContent]]>, formatter: (([String]) -> String)? = nil, style: BlockStyle? = nil, declarableVariableIndex: Int? = nil) {
         self.name = name
 
