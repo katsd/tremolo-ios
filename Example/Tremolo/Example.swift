@@ -54,7 +54,7 @@ class Example {
 
     static let blockStyles: [Type: BlockStyle] = [
         .void: .defaultStyle,
-        .custom("value"): BlockStyle(color: .systemOrange)
+        .custom("value"): BlockStyle(color: .systemTeal, textColor: .black, argumentAreaColor: .systemTeal)
     ]
 
     static let tremolo = Tremolo(
