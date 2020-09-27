@@ -175,7 +175,7 @@ class BlockView: UIButton {
             return StringValueView(value: v, textColor: style.textColor)
 
         case let .mathValue(v):
-            return MathValueView(tremolo: tremolo, value: v, blockController: blockController, parent: self, isEditable: isEditable)
+            return MathValueView(tremolo: tremolo, value: v, style: style, blockController: blockController, parent: self, isEditable: isEditable)
 
         case let .variable(v):
             return VariableView(tremolo: tremolo, variable: v, types: [v.type], isEditable: isEditable)

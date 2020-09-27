@@ -22,6 +22,8 @@ final class MathValueView: UIView {
 
     private let value: MathValue
 
+    private let style: BlockStyle
+
     private let blockController: BlockController?
 
     private let parent: BlockStackViewController
@@ -34,15 +36,12 @@ final class MathValueView: UIView {
 
     private let blockViewPadding: CGFloat = 2
 
-    init(tremolo: Tremolo, value: MathValue, blockController: BlockController?, parent: BlockStackViewController, isEditable: Binding<Bool>) {
+    init(tremolo: Tremolo, value: MathValue, style: BlockStyle, blockController: BlockController?, parent: BlockStackViewController, isEditable: Binding<Bool>) {
         self.tremolo = tremolo
-
         self.value = value
-
+        self.style = style
         self.blockController = blockController
-
         self.parent = parent
-
         self._isEditable = isEditable
 
         super.init(frame: .zero)
@@ -52,11 +51,11 @@ final class MathValueView: UIView {
         value.contentStack.forEach { content in
             switch content {
             case let .raw(str):
-                self.stackView.addArrangedSubview(label(str))
+                stackView.addArrangedSubview(label(str))
             case let .variable(variable):
-                self.stackView.addArrangedSubview(variableLabel(variable))
+                stackView.addArrangedSubview(variableLabel(variable))
             case let .block(block):
-                self.stackView.addArrangedSubview(blockView(block))
+                stackView.addArrangedSubview(blockView(block))
             }
         }
 
@@ -73,7 +72,7 @@ final class MathValueView: UIView {
     }
 
     private func setStyle() {
-        backgroundColor(.systemGray6)
+        backgroundColor(style.argumentAreaColor)
         cornerRadius(5)
     }
 
@@ -197,6 +196,7 @@ final class MathValueView: UIView {
     private func label(_ text: String) -> UILabel {
         UILabel()
             .text(text)
+            .textColor(style.textColor)
     }
 
     private func variableLabel(_ variable: Variable) -> UILabel {
