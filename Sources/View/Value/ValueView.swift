@@ -21,17 +21,17 @@ final class ValueView: UIView {
 
     private let value: Value
 
+    private let style: BlockStyle
+
     private let blockController: BlockController?
 
     private let parent: BlockStackViewController
 
-    init(tremolo: Tremolo, value: Value, blockController: BlockController?, parent: BlockStackViewController) {
+    init(tremolo: Tremolo, value: Value, style: BlockStyle, parent: BlockStackViewController, blockController: BlockController?) {
         self.tremolo = tremolo
-
         self.value = value
-
+        self.style = style
         self.blockController = blockController
-
         self.parent = parent
 
         super.init(frame: .zero)
@@ -51,9 +51,8 @@ final class ValueView: UIView {
     }
 
     private func setStyle() {
-        //TODO: specify color from BlockView
-        backgroundColor(.systemGray6)
-        cornerRadius(5)
+        backgroundColor(style.argumentAreaColor)
+        cornerRadius(style.cornerRadius)
     }
 
     private func setContents() {

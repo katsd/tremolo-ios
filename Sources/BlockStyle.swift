@@ -14,15 +14,19 @@ public struct BlockStyle {
 
     let textColor: UIColor
 
+    let argumentAreaColor: UIColor
+
     let cornerRadius: CGFloat
 
     let lightShadow: BlockShadowStyle
 
     let darkShadow: BlockShadowStyle
 
-    public init(color: UIColor, textColor: UIColor = .label, cornerRadius: CGFloat = 10, lightShadow: BlockShadowStyle = .defaultLightStyle, darkShadow: BlockShadowStyle = .defaultDarkStyle) {
+    public init(color: UIColor, textColor: UIColor = .label, argumentAreaColor: UIColor = .systemGray6, cornerRadius: CGFloat = 10, lightShadow: BlockShadowStyle = .defaultLightStyle, darkShadow: BlockShadowStyle = .defaultDarkStyle) {
         self.color = color
         self.textColor = textColor
+        //TODO: specify from color
+        self.argumentAreaColor = argumentAreaColor
         self.cornerRadius = cornerRadius
         self.lightShadow = lightShadow
         self.darkShadow = darkShadow

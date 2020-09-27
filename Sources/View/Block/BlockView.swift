@@ -169,7 +169,7 @@ class BlockView: UIButton {
     private func argView(arg: Argument) -> UIView {
         switch arg {
         case let .value(v):
-            return ValueView(tremolo: tremolo, value: v, blockController: blockController, parent: self)
+            return ValueView(tremolo: tremolo, value: v, style: style, parent: self, blockController: blockController)
 
         case let .stringValue(v):
             return StringValueView(value: v, textColor: style.textColor)
