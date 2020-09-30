@@ -18,6 +18,6 @@ let package = Package(
         .target(
             name: "Tremolo",
             dependencies: [],
-            path : "Tremolo"),
+            path : "Sources"),
     ]
 )
