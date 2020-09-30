@@ -110,7 +110,11 @@ extension Block: CodeUnit {
                     break
                 }
 
-                code += ", \(arg.toCode()))"
+                if argValues.count > 1 {
+                    code += ", \(arg.toCode()))"
+                } else {
+                    code += "\(arg.toCode()))"
+                }
                 break
             }
 
