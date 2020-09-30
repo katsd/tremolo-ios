@@ -110,11 +110,11 @@ extension Block: CodeUnit {
                     break
                 }
 
-                code += "\(arg.toCode()))"
+                code += ", \(arg.toCode()))"
                 break
             }
 
-            if idx >= 0 {
+            if idx > 0 {
                 code += ", "
             }
 
