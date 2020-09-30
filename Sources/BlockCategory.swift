@@ -14,6 +14,11 @@ public struct BlockCategory {
 
     let templates: [BlockTemplate]
 
+    public init(name: String, templates: [BlockTemplate]) {
+        self.name = name
+        self.templates = templates
+    }
+
 }
 
 extension BlockCategory: Hashable {
