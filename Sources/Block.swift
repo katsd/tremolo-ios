@@ -114,7 +114,7 @@ extension Block: CodeUnit {
                 break
             }
 
-            if idx > 0 {
+            if idx >= 0 {
                 code += ", "
             }
 
