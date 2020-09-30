@@ -12,7 +12,7 @@ public struct TremoloView: View {
 
     @ObservedObject var tremolo: Tremolo
 
-    init(_ tremolo: Tremolo) {
+    public init(_ tremolo: Tremolo) {
         self.tremolo = tremolo
     }
 
