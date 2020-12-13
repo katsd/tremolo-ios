@@ -76,7 +76,20 @@ struct VariableKeyboardView: View {
 
         ac.textFields?.first?.placeholder = "Variable Name"
 
-        UIApplication.shared.windows.first?.rootViewController?.present(ac, animated: true)
+        guard var frontViewController = UIApplication.shared.windows.first?.rootViewController else {
+            print("Failed to get frontViewController")
+            return
+        }
+
+        while true {
+            if let presented = frontViewController.presentedViewController {
+                frontViewController = presented
+            } else {
+                break
+            }
+        }
+
+        frontViewController.present(ac, animated: true)
     }
 
 }
