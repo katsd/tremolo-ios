@@ -37,7 +37,8 @@ struct BlockDrawerView: View {
                     }
                         .padding(.bottom, geo.safeAreaInsets.bottom)
                         .frame(width: self.drawerWidth)
-                        .background(Blur(style: .systemMaterial))
+                        .background(Blur(style: .systemUltraThinMaterial)
+                                        .shadow(color: Color.primary.opacity(0.2), radius: 3))
                         .transition(.move(edge: .trailing))
                         .ignoresSafeArea(edges: .all)
                 }
